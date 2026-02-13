@@ -13,17 +13,17 @@ export default function Overview() {
 
   return (
     <>
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h1" sx={{ mb: 1 }}>
+      <Box sx={{ mb: 3 }}>
+        <Typography variant="h4" gutterBottom>
           lexicons.bio
         </Typography>
-        <Typography variant="body2" sx={{ color: "text.secondary" }}>
+        <Typography variant="body2" color="textSecondary">
           AT Protocol lexicons for decentralized biodiversity observation data, aligned with{" "}
-          <MuiLink href="https://dwc.tdwg.org/" target="_blank" rel="noopener" sx={{ color: "primary.main" }}>
+          <MuiLink href="https://dwc.tdwg.org/" target="_blank" rel="noopener">
             Darwin Core
           </MuiLink>{" "}
           and{" "}
-          <MuiLink href="https://www.gbif.org/" target="_blank" rel="noopener" sx={{ color: "primary.main" }}>
+          <MuiLink href="https://www.gbif.org/" target="_blank" rel="noopener">
             GBIF
           </MuiLink>{" "}
           standards.
@@ -59,97 +59,66 @@ export default function Overview() {
               nsid={`bio.lexicons.${model.slug}`}
               title={model.name}
               description={model.description}
-              meta={`${fieldCount} fields · ${ms.pct.toFixed(0)}% DwC coverage`}
+              meta={`${fieldCount} fields \u00b7 ${ms.pct.toFixed(0)}% DwC coverage`}
               to={`/${model.slug}`}
             />
           );
         })}
       </Box>
 
-      <Divider sx={{ my: 5 }} />
+      <Divider sx={{ my: 4 }} />
 
-      <Typography variant="h2" sx={{ mb: 1 }}>
+      <Typography variant="h5" gutterBottom>
         Architecture
       </Typography>
-      <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
-        Records use AT Protocol's <Code>strongRef</Code> (URI + CID) to create
+      <Typography variant="body2" color="textSecondary" paragraph>
+        Records use AT Protocol's <code>strongRef</code> (URI + CID) to create
         immutable links. The occurrence record sits at the center, with
         identifications referencing it.
       </Typography>
 
       <ArchitectureDiagram />
 
-      <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
+      <Typography variant="body2" color="textSecondary" paragraph>
         Taxonomy lives in identification records, not occurrences — this enables
         community consensus identification where multiple users can propose IDs
         for the same observation.
       </Typography>
 
-      <Divider sx={{ my: 5 }} />
+      <Divider sx={{ my: 4 }} />
 
-      <Typography variant="h2" sx={{ mb: 1 }}>
+      <Typography variant="h5" gutterBottom>
         Usage
       </Typography>
-      <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
+      <Typography variant="body2" color="textSecondary" paragraph>
         These lexicons follow the{" "}
-        <MuiLink
-          href="https://atproto.com/specs/lexicon"
-          target="_blank"
-          rel="noopener"
-          sx={{ color: "primary.main" }}
-        >
+        <MuiLink href="https://atproto.com/specs/lexicon" target="_blank" rel="noopener">
           AT Protocol Lexicon
         </MuiLink>{" "}
         schema format. Records are stored in users' personal data servers (PDS)
         under the appropriate collection, referenced by NSID.
       </Typography>
 
-      <Typography variant="h3" sx={{ mt: 3.5, mb: 1 }}>
+      <Typography variant="h6" gutterBottom>
         Record keys
       </Typography>
-      <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
-        All records use <Code>tid</Code> (timestamp-based identifier) as their
+      <Typography variant="body2" color="textSecondary" paragraph>
+        All records use <code>tid</code> (timestamp-based identifier) as their
         record key, per the{" "}
-        <MuiLink
-          href="https://atproto.com/specs/record-key"
-          target="_blank"
-          rel="noopener"
-          sx={{ color: "primary.main" }}
-        >
+        <MuiLink href="https://atproto.com/specs/record-key" target="_blank" rel="noopener">
           AT Protocol record key spec
         </MuiLink>
         .
       </Typography>
 
-      <Typography variant="h3" sx={{ mt: 3.5, mb: 1 }}>
+      <Typography variant="h6" gutterBottom>
         Cross-references
       </Typography>
-      <Typography variant="body2" sx={{ color: "text.secondary" }}>
-        Records reference each other using{" "}
-        <Code>com.atproto.repo.strongRef</Code>, which contains both a URI and
-        CID. The CID ensures you're referencing a specific version of the target
-        record.
+      <Typography variant="body2" color="textSecondary">
+        Records reference each other using <code>com.atproto.repo.strongRef</code>,
+        which contains both a URI and CID. The CID ensures you're referencing a
+        specific version of the target record.
       </Typography>
     </>
-  );
-}
-
-function Code({ children }: { children: React.ReactNode }) {
-  return (
-    <Box
-      component="code"
-      sx={{
-        fontFamily: "monospace",
-        fontSize: "0.85em",
-        bgcolor: "background.paper",
-        border: 1,
-        borderColor: "divider",
-        borderRadius: "4px",
-        px: 0.75,
-        py: 0.25,
-      }}
-    >
-      {children}
-    </Box>
   );
 }

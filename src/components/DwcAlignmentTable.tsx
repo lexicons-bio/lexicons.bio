@@ -1,4 +1,7 @@
 import {
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
   Table,
   TableBody,
   TableCell,
@@ -7,8 +10,8 @@ import {
   TableRow,
   Typography,
   Link as MuiLink,
-  Box,
 } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import StatusBadge from "./StatusBadge";
 import type { DwcTerm } from "../data/dwcTerms";
 import type { LexiconProperty } from "../data/lexicons";
@@ -27,7 +30,6 @@ interface Props {
 }
 
 export default function DwcAlignmentTable({ classes, dwcTerms, lexProps }: Props) {
-  // Build mapping: DwC name -> (lexicon field name, prop)
   const lexByDwc: Record<string, { fieldName: string; prop: LexiconProperty & { required?: boolean } }> = {};
   const mappedLexFields = new Set<string>();
 
@@ -55,136 +57,125 @@ export default function DwcAlignmentTable({ classes, dwcTerms, lexProps }: Props
         const mappedCount = clsTerms.filter((t) => t.name in lexByDwc).length;
 
         return (
-          <Box key={cls}>
-            <Typography variant="h3" sx={{ mt: 3.5, mb: 1 }}>
-              {cls}{" "}
-              <Typography component="span" sx={{ color: "text.disabled", fontWeight: 400 }}>
-                ({mappedCount}/{clsTerms.length})
+          <Accordion key={cls} variant="outlined" disableGutters defaultExpanded={mappedCount > 0}>
+            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+              <Typography variant="subtitle1" fontWeight={600}>
+                {cls}
               </Typography>
-            </Typography>
+              <Typography variant="caption" color="textSecondary" sx={{ ml: 2, alignSelf: "center" }}>
+                {mappedCount}/{clsTerms.length} mapped
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails sx={{ p: 0 }}>
+              <TableContainer>
+                <Table size="small">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>DwC Term</TableCell>
+                      <TableCell>Definition</TableCell>
+                      <TableCell>Lexicon Field</TableCell>
+                      <TableCell>Type</TableCell>
+                      <TableCell>Status</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {clsTerms.map((term) => {
+                      const match = lexByDwc[term.name];
+                      return (
+                        <TableRow key={term.name}>
+                          <TableCell>
+                            <MuiLink href={term.term_iri} target="_blank" rel="noopener" variant="caption">
+                              {term.name}
+                            </MuiLink>
+                            {GBIF_REQUIRED.has(term.name) && (
+                              <> <StatusBadge status="gbif-req" /></>
+                            )}
+                            {GBIF_RECOMMENDED.has(term.name) && (
+                              <> <StatusBadge status="gbif-rec" /></>
+                            )}
+                          </TableCell>
+                          <TableCell sx={{ color: "text.secondary" }}>
+                            {term.definition}
+                          </TableCell>
+                          <TableCell>
+                            {match && (
+                              <>
+                                <code>{match.fieldName}</code>
+                                {match.prop.required && (
+                                  <Typography component="span" color="error" fontWeight={600} sx={{ ml: 0.5 }}>*</Typography>
+                                )}
+                              </>
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            {match && (
+                              <code style={{ color: "#7c3aed" }}>{typeLabel(match.prop)}</code>
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            <StatusBadge status={match ? "mapped" : "missing"} />
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </AccordionDetails>
+          </Accordion>
+        );
+      })}
 
+      {extFields.length > 0 && (
+        <Accordion variant="outlined" disableGutters>
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography variant="subtitle1" fontWeight={600}>
+              Lexicon-only
+            </Typography>
+            <Typography variant="caption" color="textSecondary" sx={{ ml: 2, alignSelf: "center" }}>
+              {extFields.length} fields
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails sx={{ p: 0 }}>
             <TableContainer>
               <Table size="small">
                 <TableHead>
                   <TableRow>
                     <TableCell>DwC Term</TableCell>
-                    <TableCell>Definition</TableCell>
+                    <TableCell>Description</TableCell>
                     <TableCell>Lexicon Field</TableCell>
                     <TableCell>Type</TableCell>
                     <TableCell>Status</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {clsTerms.map((term) => {
-                    const match = lexByDwc[term.name];
-                    return (
-                      <TableRow key={term.name}>
-                        <TableCell>
-                          <MuiLink
-                            href={term.term_iri}
-                            target="_blank"
-                            rel="noopener"
-                            sx={{ color: "primary.main", textDecoration: "none", fontSize: "0.8rem", "&:hover": { textDecoration: "underline" } }}
-                          >
-                            {term.name}
-                          </MuiLink>
-                          {GBIF_REQUIRED.has(term.name) && (
-                            <StatusBadge status="gbif-req" />
-                          )}
-                          {GBIF_RECOMMENDED.has(term.name) && (
-                            <StatusBadge status="gbif-rec" />
-                          )}
-                        </TableCell>
+                  {extFields
+                    .sort(([a], [b]) => a.localeCompare(b))
+                    .map(([fieldName, prop]) => (
+                      <TableRow key={fieldName}>
+                        <TableCell />
                         <TableCell sx={{ color: "text.secondary" }}>
-                          {term.definition}
+                          {prop.description ?? ""}
                         </TableCell>
                         <TableCell>
-                          {match && (
-                            <>
-                              <Typography component="span" sx={{ fontFamily: "monospace", fontSize: "0.8rem" }}>
-                                {match.fieldName}
-                              </Typography>
-                              {match.prop.required && (
-                                <Typography component="span" sx={{ color: "#dc2626", fontWeight: 600, ml: 0.25 }}>
-                                  *
-                                </Typography>
-                              )}
-                            </>
+                          <code>{fieldName}</code>
+                          {prop.required && (
+                            <Typography component="span" color="error" fontWeight={600} sx={{ ml: 0.5 }}>*</Typography>
                           )}
                         </TableCell>
                         <TableCell>
-                          {match && (
-                            <Typography component="span" sx={{ fontFamily: "monospace", fontSize: "0.75rem", color: "#7c3aed" }}>
-                              {typeLabel(match.prop)}
-                            </Typography>
-                          )}
+                          <code style={{ color: "#7c3aed" }}>{typeLabel(prop)}</code>
                         </TableCell>
                         <TableCell>
-                          <StatusBadge status={match ? "mapped" : "missing"} />
+                          <StatusBadge status="extension" />
                         </TableCell>
                       </TableRow>
-                    );
-                  })}
+                    ))}
                 </TableBody>
               </Table>
             </TableContainer>
-          </Box>
-        );
-      })}
-
-      {extFields.length > 0 && (
-        <Box>
-          <Typography variant="h3" sx={{ mt: 3.5, mb: 1 }}>
-            Lexicon-only{" "}
-            <Typography component="span" sx={{ color: "text.disabled", fontWeight: 400 }}>
-              ({extFields.length} fields)
-            </Typography>
-          </Typography>
-
-          <TableContainer>
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell>DwC Term</TableCell>
-                  <TableCell>Description</TableCell>
-                  <TableCell>Lexicon Field</TableCell>
-                  <TableCell>Type</TableCell>
-                  <TableCell>Status</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {extFields
-                  .sort(([a], [b]) => a.localeCompare(b))
-                  .map(([fieldName, prop]) => (
-                    <TableRow key={fieldName}>
-                      <TableCell />
-                      <TableCell sx={{ color: "text.secondary" }}>
-                        {prop.description ?? ""}
-                      </TableCell>
-                      <TableCell>
-                        <Typography component="span" sx={{ fontFamily: "monospace", fontSize: "0.8rem" }}>
-                          {fieldName}
-                        </Typography>
-                        {prop.required && (
-                          <Typography component="span" sx={{ color: "#dc2626", fontWeight: 600, ml: 0.25 }}>
-                            *
-                          </Typography>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        <Typography component="span" sx={{ fontFamily: "monospace", fontSize: "0.75rem", color: "#7c3aed" }}>
-                          {typeLabel(prop)}
-                        </Typography>
-                      </TableCell>
-                      <TableCell>
-                        <StatusBadge status="extension" />
-                      </TableCell>
-                    </TableRow>
-                  ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
+          </AccordionDetails>
+        </Accordion>
       )}
     </>
   );

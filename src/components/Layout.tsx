@@ -1,10 +1,12 @@
 import {
   AppBar,
   Toolbar,
-  Typography,
+  Button,
   Box,
   Link as MuiLink,
   Container,
+  Alert,
+  Typography,
 } from "@mui/material";
 import { Link, NavLink, Outlet } from "react-router-dom";
 
@@ -25,101 +27,66 @@ const footerLinks = [
 export default function Layout() {
   return (
     <>
-      <AppBar position="sticky" color="default">
-        <Toolbar
-          variant="dense"
-          sx={{ maxWidth: 960, width: "100%", mx: "auto", px: { xs: 2, sm: 3 } }}
-        >
-          <Typography
+      <AppBar position="sticky" elevation={0} color="default">
+        <Toolbar variant="dense" sx={{ maxWidth: 960, width: "100%", mx: "auto" }}>
+          <Button
             component={Link}
             to="/"
-            sx={{
-              fontWeight: 700,
-              fontSize: "0.95rem",
-              color: "primary.main",
-              textDecoration: "none",
-              letterSpacing: "-0.02em",
-              mr: 4,
-            }}
+            color="primary"
+            sx={{ textTransform: "none", fontWeight: 700, mr: 2 }}
           >
             lexicons.bio
-          </Typography>
+          </Button>
 
-          <Box sx={{ display: "flex", gap: 0.5 }}>
-            {navItems.map(({ to, label }) => (
-              <Typography
-                key={to}
-                component={NavLink}
-                to={to}
-                end={to === "/"}
-                sx={{
-                  fontSize: "0.85rem",
-                  color: "text.secondary",
-                  textDecoration: "none",
-                  px: 1.5,
-                  py: 0.75,
-                  borderRadius: "6px",
-                  transition: "background 0.15s, color 0.15s",
-                  "&:hover": { bgcolor: "background.paper", color: "text.primary" },
-                  "&.active": {
-                    bgcolor: "primary.light",
-                    color: "primary.main",
-                    fontWeight: 500,
-                  },
-                }}
-              >
-                {label}
-              </Typography>
-            ))}
-          </Box>
+          {navItems.map(({ to, label }) => (
+            <Button
+              key={to}
+              component={NavLink}
+              to={to}
+              end={to === "/"}
+              size="small"
+              sx={{
+                textTransform: "none",
+                color: "text.secondary",
+                "&.active": { color: "primary.main", fontWeight: 600 },
+              }}
+            >
+              {label}
+            </Button>
+          ))}
+
+          <Box sx={{ flex: 1 }} />
 
           <MuiLink
             href="https://github.com/lexicons-bio/lexicons"
             target="_blank"
             rel="noopener"
-            sx={{
-              ml: "auto",
-              fontSize: "0.8rem",
-              color: "text.disabled",
-              textDecoration: "none",
-              "&:hover": { color: "text.secondary" },
-            }}
+            variant="body2"
+            color="textSecondary"
           >
-            GitHub ↗
+            GitHub
           </MuiLink>
         </Toolbar>
       </AppBar>
 
-      <Container maxWidth={false} sx={{ maxWidth: 960, px: { xs: 2, sm: 3 }, py: 4, pb: 8 }}>
+      <Container maxWidth="md" sx={{ py: 4 }}>
+        <Alert severity="warning" sx={{ mb: 3 }}>
+          These lexicons are early drafts under active development. Field names, types, and
+          structure may change without notice.
+        </Alert>
+
         <Outlet />
 
         <Box
           component="footer"
-          sx={{
-            borderTop: 1,
-            borderColor: "divider",
-            mt: 6,
-            pt: 3,
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 3,
-          }}
+          sx={{ borderTop: 1, borderColor: "divider", mt: 6, pt: 2, display: "flex", gap: 3, flexWrap: "wrap" }}
         >
           {footerLinks.map(({ href, label }) => (
-            <MuiLink
-              key={href}
-              href={href}
-              target="_blank"
-              rel="noopener"
-              sx={{
-                fontSize: "0.8rem",
-                color: "text.secondary",
-                textDecoration: "none",
-                "&:hover": { color: "text.primary" },
-              }}
-            >
-              {label}
-            </MuiLink>
+            <Typography key={href} variant="body2">
+              <MuiLink href={href} target="_blank" rel="noopener" color="textSecondary">
+                {label}
+              </MuiLink>
+            </Typography>
           ))}
         </Box>
       </Container>
