@@ -55,7 +55,7 @@ Field-by-field mapping between atbio lexicons and [Darwin Core](https://dwc.tdwg
 | Lexicon Field | Darwin Core Term | Notes |
 |---------------|-----------------|-------|
 | `comment` | dwc:identificationRemarks | — |
-| `createdAt` | dwc:dateIdentified | — |
+| (repo commit timestamp) | dwc:dateIdentified | Derived from AT Protocol repo |
 | `identificationQualifier` | dwc:identificationQualifier | `cf.`, `aff.` |
 | (AT Protocol URI) | dwc:identificationID | — |
 | (repo owner DID) | dwc:identifiedBy | — |

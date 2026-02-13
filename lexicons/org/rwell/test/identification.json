@@ -8,7 +8,7 @@
       "key": "tid",
       "record": {
         "type": "object",
-        "required": ["subject", "taxon", "createdAt"],
+        "required": ["subject", "taxon"],
         "properties": {
           "subject": {
             "type": "ref",
@@ -53,11 +53,6 @@
             "description": "The identifier's confidence level in this identification.",
             "knownValues": ["low", "medium", "high"],
             "default": "medium"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "datetime",
-            "description": "Timestamp when this identification was created (Darwin Core dwc:dateIdentified)."
           }
         }
       }

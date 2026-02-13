@@ -35,7 +35,6 @@ FIELD_TO_DWC = {
     "comment": "identificationRemarks",
     "blobs": "associatedMedia",
     "recordedBy": "recordedBy",
-    "createdAt": "dateIdentified",
 }
 
 # Fields that are AT Protocol infrastructure (no DwC mapping)

@@ -35,7 +35,6 @@ RELEVANT_CLASSES = {
 FIELD_TO_DWC = {
     "notes": "occurrenceRemarks",
     "comment": "identificationRemarks",
-    "createdAt": "dateIdentified",  # only in identification context
 }
 
 # Fields that are AT Protocol infrastructure, not biodiversity data
@@ -57,7 +56,6 @@ ATPROTO_FIELDS = {
 # Fields that map to DwC but with different semantics per lexicon.
 # Format: field_name -> {lexicon_id_substring: dwc_term_name}
 CONTEXTUAL_MAPPINGS = {
-    "createdAt": {"identification": "dateIdentified"},
     "blobs": {"occurrence": "associatedMedia"},
     "recordedBy": {"occurrence": "recordedBy"},
 }
