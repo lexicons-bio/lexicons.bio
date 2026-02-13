@@ -245,24 +245,6 @@ tr:hover { background: #fafafa; }
 <tr><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/vernacularName">vernacularName</a></td><td class="def">A common or vernacular name.</td><td><span class="field-name">vernacularName</span></td><td><span class="type">string</span></td><td><span class="badge badge-mapped">mapped</span></td></tr>
 </tbody>
 </table>
-<h2>AT Protocol Extensions</h2>
-<table>
-<thead><tr><th>Field</th><th>Type</th><th class="def">Description</th><th>Lexicon</th><th>Status</th></tr></thead>
-<tbody>
-<tr><td><span class="field-name">alt</span></td><td><span class="type">string</span></td><td class="def">Alt text description of the image for accessibility.</td><td class="field-name">#imageEmbed</td><td><span class="badge badge-ext">extension</span></td></tr>
-<tr><td><span class="field-name">aspectRatio</span></td><td><span class="type">#aspectRatio</span></td><td class="def"></td><td class="field-name">#imageEmbed</td><td><span class="badge badge-ext">extension</span></td></tr>
-<tr><td><span class="field-name">confidence</span></td><td><span class="type">string</span></td><td class="def">The identifier&#x27;s confidence level in this identification.</td><td class="field-name">#main</td><td><span class="badge badge-ext">extension</span></td></tr>
-<tr><td><span class="field-name">height</span></td><td><span class="type">integer</span></td><td class="def"></td><td class="field-name">#aspectRatio</td><td><span class="badge badge-ext">extension</span></td></tr>
-<tr><td><span class="field-name">image</span></td><td><span class="type">blob</span></td><td class="def">The image blob reference.</td><td class="field-name">#imageEmbed</td><td><span class="badge badge-ext">extension</span></td></tr>
-<tr><td><span class="field-name">isAgreement</span></td><td><span class="type">boolean</span></td><td class="def">If true, this identification agrees with the current community ID rather than proposing a new one.</td><td class="field-name">#main</td><td><span class="badge badge-ext">extension</span></td></tr>
-<tr><td><span class="field-name">location</span></td><td><span class="type">#location</span></td><td class="def">Geographic location information for the observation.</td><td class="field-name">#main</td><td><span class="badge badge-ext">extension</span></td></tr>
-<tr><td><span class="field-name">subject</span></td><td><span class="type">ref</span></td><td class="def">A strong reference (CID + URI) to the observation being identified.</td><td class="field-name">#main</td><td><span class="badge badge-ext">extension</span></td></tr>
-<tr><td><span class="field-name">subjectIndex</span></td><td><span class="type">integer</span></td><td class="def">Index of the subject within the occurrence being identified. When multiple organisms are photographed together (e.g., butterfly on a flower), each gets a unique index starting from 0. Creating an identification with a new subjectIndex implicitly creates that subject.</td><td class="field-name">#main</td><td><span class="badge badge-ext">extension</span></td></tr>
-<tr><td><span class="field-name">taxon</span></td><td><span class="type">#taxon</span></td><td class="def">The taxonomic determination being proposed (Darwin Core Taxon class).</td><td class="field-name">#main</td><td><span class="badge badge-ext">extension</span></td></tr>
-<tr><td><span class="field-name">taxonId</span></td><td><span class="type">string</span></td><td class="def">[DEPRECATED: Use kingdom + scientificName for taxon resolution] External taxon identifier (e.g., gbif:2878688). Prefixed with source.</td><td class="field-name">#main</td><td><span class="badge badge-ext">extension</span></td></tr>
-<tr><td><span class="field-name">width</span></td><td><span class="type">integer</span></td><td class="def"></td><td class="field-name">#aspectRatio</td><td><span class="badge badge-ext">extension</span></td></tr>
-</tbody>
-</table>
 
 </body>
 </html>

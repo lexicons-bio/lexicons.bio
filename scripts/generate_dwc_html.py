@@ -179,12 +179,20 @@ def render_model_section(
     """Render tables for one model (Occurrence or Identification)."""
     # Build reverse lookup: dwc_name -> lexicon field info
     lex_by_dwc: dict[str, tuple[str, dict]] = {}
+    mapped_lex_fields: set[str] = set()
     for field_name, prop in lex_props.items():
         if field_name in ATPROTO_FIELDS:
             continue
         dwc_name = FIELD_TO_DWC.get(field_name, field_name)
         if dwc_name in dwc_terms:
             lex_by_dwc[dwc_name] = (field_name, prop)
+            mapped_lex_fields.add(field_name)
+
+    # Find extension fields: in lexicon but not mapped to any DwC term
+    ext_fields = {
+        name: prop for name, prop in lex_props.items()
+        if name not in mapped_lex_fields and name not in ATPROTO_FIELDS
+    }
 
     html = f'<h2>{escape(model_name)}</h2>\n'
 
@@ -227,37 +235,29 @@ def render_model_section(
 
         html += '</tbody>\n</table>\n'
 
-    return html
+    # Lexicon-only fields (no DwC equivalent)
+    if ext_fields:
+        html += f'<h3>Lexicon-only fields <span style="color:#888;font-weight:normal">'
+        html += f'({len(ext_fields)} fields with no DwC term)</span></h3>\n'
+        html += '<table>\n<thead><tr>'
+        html += '<th>DwC Term</th><th class="def">Description</th>'
+        html += '<th>Lexicon Field</th><th>Type</th><th>Status</th>'
+        html += '</tr></thead>\n<tbody>\n'
 
+        for field_name in sorted(ext_fields):
+            prop = ext_fields[field_name]
+            desc = escape(prop.get("description", ""))
+            lex_cell = f'<span class="field-name">{escape(field_name)}</span>'
+            if prop.get("required"):
+                lex_cell += ' <span class="req">*</span>'
+            type_cell = f'<span class="type">{escape(type_label(prop))}</span>'
 
-def render_extensions(lex_props: dict[str, dict], dwc_terms: dict[str, dict]) -> str:
-    """Render table for AT Protocol extension fields."""
-    ext_fields = {}
-    for field_name, prop in lex_props.items():
-        if field_name in ATPROTO_FIELDS:
-            ext_fields[field_name] = prop
-        elif FIELD_TO_DWC.get(field_name, field_name) not in dwc_terms and field_name not in dwc_terms:
-            ext_fields[field_name] = prop
+            html += f'<tr><td></td>'
+            html += f'<td class="def">{desc}</td>'
+            html += f'<td>{lex_cell}</td><td>{type_cell}</td><td>{badge("extension")}</td></tr>\n'
 
-    if not ext_fields:
-        return ""
+        html += '</tbody>\n</table>\n'
 
-    html = '<h2>AT Protocol Extensions</h2>\n'
-    html += '<table>\n<thead><tr>'
-    html += '<th>Field</th><th>Type</th><th class="def">Description</th><th>Lexicon</th><th>Status</th>'
-    html += '</tr></thead>\n<tbody>\n'
-
-    for field_name in sorted(ext_fields):
-        prop = ext_fields[field_name]
-        desc = escape(prop.get("description", ""))
-        def_name = prop.get("def", "")
-        html += f'<tr><td><span class="field-name">{escape(field_name)}</span></td>'
-        html += f'<td><span class="type">{escape(type_label(prop))}</span></td>'
-        html += f'<td class="def">{desc}</td>'
-        html += f'<td class="field-name">#{escape(def_name)}</td>'
-        html += f'<td>{badge("extension")}</td></tr>\n'
-
-    html += '</tbody>\n</table>\n'
     return html
 
 
@@ -295,8 +295,6 @@ def main():
     body = ""
     for model, props in zip(MODELS, model_props):
         body += render_model_section(model["name"], model["classes"], dwc_terms, props)
-
-    body += render_extensions(all_lex_props, dwc_terms)
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
