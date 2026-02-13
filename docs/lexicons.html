@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Darwin Core Alignment — atbio lexicons</title>
+<title>Lexicon Reference — atbio</title>
 <style>* { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
        color: #1a1a1a; max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
@@ -13,15 +13,19 @@ h1 { font-size: 1.5rem; margin-bottom: 0.5rem; }
 .stat { background: #f5f5f5; border-radius: 8px; padding: 0.75rem 1rem; }
 .stat-value { font-size: 1.25rem; font-weight: 600; }
 .stat-label { font-size: 0.8rem; color: #666; }
-h2 { font-size: 1.25rem; margin: 2rem 0 0.25rem; padding-bottom: 0.25rem;
+h2 { font-size: 1.25rem; margin: 2.5rem 0 0.25rem; padding-bottom: 0.25rem;
      border-bottom: 2px solid #e0e0e0; }
 h3 { font-size: 1rem; color: #444; margin: 1.25rem 0 0.5rem; }
+.lex-id { font-family: "SF Mono", Monaco, Consolas, monospace; font-size: 0.85rem;
+          color: #555; margin-bottom: 0.25rem; }
+.lex-desc { color: #555; margin-bottom: 1rem; font-size: 0.9rem; }
 table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 1rem; }
 th { background: #fafafa; text-align: left; padding: 0.5rem 0.75rem;
      border-bottom: 2px solid #ddd; font-weight: 600; white-space: nowrap; }
 td { padding: 0.5rem 0.75rem; border-bottom: 1px solid #eee; vertical-align: top; }
 tr:hover { background: #fafafa; }
-.def { color: #555; max-width: 350px; }
+.def { color: #555; }
+.constraints { color: #888; font-size: 0.8rem; }
 .term-link { color: #1a73e8; text-decoration: none; }
 .term-link:hover { text-decoration: underline; }
 .type { font-family: "SF Mono", Monaco, Consolas, monospace; font-size: 0.8rem; color: #6b21a8; }
@@ -32,17 +36,123 @@ tr:hover { background: #fafafa; }
 .badge-ext { background: #e0e7ff; color: #3730a3; }
 .req { color: #dc2626; font-weight: 600; }
 .field-name { font-family: "SF Mono", Monaco, Consolas, monospace; font-size: 0.8rem; }
+.section-sep { margin-top: 3rem; padding-top: 1.5rem; border-top: 3px solid #333; }
+.section-title { font-size: 1.3rem; margin-bottom: 0.25rem; }
 </style>
 </head>
 <body>
-<h1>Darwin Core Alignment</h1>
-<p class="subtitle">Cross-reference of atbio AT Protocol lexicons against Darwin Core terms</p>
+<h1>Lexicon Reference</h1>
+<p class="subtitle">AT Protocol lexicons for biodiversity observations</p>
+
+<h2>org.rwell.test.occurrence</h2>
+<h3>#main <span style="color:#888;font-weight:normal">(occurrence)</span></h3>
+<p class="lex-desc">A biodiversity observation record following Darwin Core standards. Represents a single occurrence of an organism at a specific place and time.</p>
+<table>
+<thead><tr><th>Field</th><th>Type</th><th>Description</th><th>Constraints</th><th>DwC</th></tr></thead>
+<tbody>
+<tr><td><span class="field-name">eventDate</span> <span class="req">*</span></td><td><span class="type">string (datetime)</span></td><td class="def">The date-time when the observation occurred, in ISO 8601 format (Darwin Core dwc:eventDate).</td><td></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/eventDate">dwc:eventDate</a></td></tr>
+<tr><td><span class="field-name">location</span> <span class="req">*</span></td><td><span class="type">#location</span></td><td class="def">Geographic location information for the observation.</td><td></td><td></td></tr>
+<tr><td><span class="field-name">verbatimLocality</span></td><td><span class="type">string</span></td><td class="def">The original textual description of the place (Darwin Core dwc:verbatimLocality).</td><td><span class="constraints">max: 1024</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/verbatimLocality">dwc:verbatimLocality</a></td></tr>
+<tr><td><span class="field-name">blobs</span></td><td><span class="type">#imageEmbed[]</span></td><td class="def">Array of image references documenting the observation.</td><td><span class="constraints">max: 10</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/associatedMedia">dwc:associatedMedia</a></td></tr>
+<tr><td><span class="field-name">notes</span></td><td><span class="type">string</span></td><td class="def">Additional notes or comments about the observation.</td><td><span class="constraints">max: 3000</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/occurrenceRemarks">dwc:occurrenceRemarks</a></td></tr>
+<tr><td><span class="field-name">license</span></td><td><span class="type">string</span></td><td class="def">SPDX license identifier for this observation (maps to Dublin Core dcterms:license).</td><td><span class="constraints">max: 32, 5 values</span></td><td><a class="term-link" href="http://purl.org/dc/terms/license">dwc:license</a></td></tr>
+<tr><td><span class="field-name">createdAt</span> <span class="req">*</span></td><td><span class="type">string (datetime)</span></td><td class="def">Timestamp when this record was created.</td><td></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/dateIdentified">dwc:dateIdentified</a></td></tr>
+<tr><td><span class="field-name">recordedBy</span></td><td><span class="type">string[]</span></td><td class="def">DIDs of co-observers who participated in this observation. The record creator is the primary observer.</td><td><span class="constraints">max: 10</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/recordedBy">dwc:recordedBy</a></td></tr>
+<tr><td><span class="field-name">basisOfRecord</span></td><td><span class="type">string</span></td><td class="def">The specific nature of the data record (Darwin Core dwc:basisOfRecord).</td><td><span class="constraints">max: 32, default: HUMAN_OBSERVATION, HUMAN_OBSERVATION | MACHINE_OBSERVATION | OBSERVATION</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/basisOfRecord">dwc:basisOfRecord</a></td></tr>
+<tr><td><span class="field-name">occurrenceStatus</span></td><td><span class="type">string</span></td><td class="def">A statement about the presence or absence of a taxon at a location (Darwin Core dwc:occurrenceStatus).</td><td><span class="constraints">max: 16, default: PRESENT, PRESENT | ABSENT</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/occurrenceStatus">dwc:occurrenceStatus</a></td></tr>
+<tr><td><span class="field-name">individualCount</span></td><td><span class="type">integer</span></td><td class="def">The number of individuals observed (Darwin Core dwc:individualCount).</td><td><span class="constraints">min: 1</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/individualCount">dwc:individualCount</a></td></tr>
+<tr><td><span class="field-name">sex</span></td><td><span class="type">string</span></td><td class="def">The sex of the organism(s) (Darwin Core dwc:sex).</td><td><span class="constraints">max: 32, MALE | FEMALE | HERMAPHRODITE</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/sex">dwc:sex</a></td></tr>
+<tr><td><span class="field-name">lifeStage</span></td><td><span class="type">string</span></td><td class="def">The age class or life stage of the organism(s) (Darwin Core dwc:lifeStage).</td><td><span class="constraints">max: 32, 9 values</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/lifeStage">dwc:lifeStage</a></td></tr>
+</tbody>
+</table>
+<h3>#location</h3>
+<p class="lex-desc">Geographic coordinates following Darwin Core standards.</p>
+<table>
+<thead><tr><th>Field</th><th>Type</th><th>Description</th><th>Constraints</th><th>DwC</th></tr></thead>
+<tbody>
+<tr><td><span class="field-name">decimalLatitude</span> <span class="req">*</span></td><td><span class="type">string</span></td><td class="def">The geographic latitude in decimal degrees (Darwin Core dwc:decimalLatitude). Valid range: -90 to 90.</td><td></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/decimalLatitude">dwc:decimalLatitude</a></td></tr>
+<tr><td><span class="field-name">decimalLongitude</span> <span class="req">*</span></td><td><span class="type">string</span></td><td class="def">The geographic longitude in decimal degrees (Darwin Core dwc:decimalLongitude). Valid range: -180 to 180.</td><td></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/decimalLongitude">dwc:decimalLongitude</a></td></tr>
+<tr><td><span class="field-name">coordinateUncertaintyInMeters</span></td><td><span class="type">integer</span></td><td class="def">The horizontal distance (in meters) from the given coordinates describing the smallest circle containing the whole of the Location (Darwin Core dwc:coordinateUncertaintyInMeters).</td><td><span class="constraints">min: 0</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/coordinateUncertaintyInMeters">dwc:coordinateUncertaintyInMeters</a></td></tr>
+<tr><td><span class="field-name">geodeticDatum</span></td><td><span class="type">string</span></td><td class="def">The ellipsoid, geodetic datum, or spatial reference system used (Darwin Core dwc:geodeticDatum). Defaults to WGS84.</td><td><span class="constraints">max: 64, default: WGS84</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/geodeticDatum">dwc:geodeticDatum</a></td></tr>
+<tr><td><span class="field-name">continent</span></td><td><span class="type">string</span></td><td class="def">The name of the continent (Darwin Core dwc:continent).</td><td><span class="constraints">max: 32, 7 values</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/continent">dwc:continent</a></td></tr>
+<tr><td><span class="field-name">country</span></td><td><span class="type">string</span></td><td class="def">The name of the country or major administrative unit (Darwin Core dwc:country).</td><td><span class="constraints">max: 128</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/country">dwc:country</a></td></tr>
+<tr><td><span class="field-name">countryCode</span></td><td><span class="type">string</span></td><td class="def">The standard code for the country (Darwin Core dwc:countryCode). ISO 3166-1-alpha-2.</td><td><span class="constraints">max: 2</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/countryCode">dwc:countryCode</a></td></tr>
+<tr><td><span class="field-name">stateProvince</span></td><td><span class="type">string</span></td><td class="def">The name of the next smaller administrative region than country (Darwin Core dwc:stateProvince).</td><td><span class="constraints">max: 128</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/stateProvince">dwc:stateProvince</a></td></tr>
+<tr><td><span class="field-name">county</span></td><td><span class="type">string</span></td><td class="def">The full, unabbreviated name of the next smaller administrative region than stateProvince (Darwin Core dwc:county).</td><td><span class="constraints">max: 128</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/county">dwc:county</a></td></tr>
+<tr><td><span class="field-name">municipality</span></td><td><span class="type">string</span></td><td class="def">The full, unabbreviated name of the next smaller administrative region than county (Darwin Core dwc:municipality).</td><td><span class="constraints">max: 128</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/municipality">dwc:municipality</a></td></tr>
+<tr><td><span class="field-name">locality</span></td><td><span class="type">string</span></td><td class="def">The specific description of the place (Darwin Core dwc:locality).</td><td><span class="constraints">max: 512</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/locality">dwc:locality</a></td></tr>
+<tr><td><span class="field-name">waterBody</span></td><td><span class="type">string</span></td><td class="def">The name of the water body in which the location occurs (Darwin Core dwc:waterBody).</td><td><span class="constraints">max: 128</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/waterBody">dwc:waterBody</a></td></tr>
+<tr><td><span class="field-name">minimumElevationInMeters</span></td><td><span class="type">string</span></td><td class="def">The lower limit of the range of elevation in meters (Darwin Core dwc:minimumElevationInMeters).</td><td></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/minimumElevationInMeters">dwc:minimumElevationInMeters</a></td></tr>
+<tr><td><span class="field-name">maximumElevationInMeters</span></td><td><span class="type">string</span></td><td class="def">The upper limit of the range of elevation in meters (Darwin Core dwc:maximumElevationInMeters).</td><td></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/maximumElevationInMeters">dwc:maximumElevationInMeters</a></td></tr>
+<tr><td><span class="field-name">minimumDepthInMeters</span></td><td><span class="type">string</span></td><td class="def">The lesser depth of a range of depth below the local surface in meters (Darwin Core dwc:minimumDepthInMeters).</td><td></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/minimumDepthInMeters">dwc:minimumDepthInMeters</a></td></tr>
+<tr><td><span class="field-name">maximumDepthInMeters</span></td><td><span class="type">string</span></td><td class="def">The greater depth of a range of depth below the local surface in meters (Darwin Core dwc:maximumDepthInMeters).</td><td></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/maximumDepthInMeters">dwc:maximumDepthInMeters</a></td></tr>
+</tbody>
+</table>
+<h3>#imageEmbed</h3>
+<p class="lex-desc">A reference to an uploaded image blob.</p>
+<table>
+<thead><tr><th>Field</th><th>Type</th><th>Description</th><th>Constraints</th><th>DwC</th></tr></thead>
+<tbody>
+<tr><td><span class="field-name">image</span> <span class="req">*</span></td><td><span class="type">blob</span></td><td class="def">The image blob reference.</td><td></td><td></td></tr>
+<tr><td><span class="field-name">alt</span> <span class="req">*</span></td><td><span class="type">string</span></td><td class="def">Alt text description of the image for accessibility.</td><td><span class="constraints">max: 1000</span></td><td></td></tr>
+<tr><td><span class="field-name">aspectRatio</span></td><td><span class="type">#aspectRatio</span></td><td class="def"></td><td></td><td></td></tr>
+</tbody>
+</table>
+<h3>#aspectRatio</h3>
+<p class="lex-desc">Width and height of an image, used for proper display before loading.</p>
+<table>
+<thead><tr><th>Field</th><th>Type</th><th>Description</th><th>Constraints</th><th>DwC</th></tr></thead>
+<tbody>
+<tr><td><span class="field-name">width</span> <span class="req">*</span></td><td><span class="type">integer</span></td><td class="def"></td><td><span class="constraints">min: 1</span></td><td></td></tr>
+<tr><td><span class="field-name">height</span> <span class="req">*</span></td><td><span class="type">integer</span></td><td class="def"></td><td><span class="constraints">min: 1</span></td><td></td></tr>
+</tbody>
+</table>
+<h2>org.rwell.test.identification</h2>
+<h3>#main <span style="color:#888;font-weight:normal">(identification)</span></h3>
+<p class="lex-desc">An identification suggestion for an existing observation. Used to propose or agree with a taxonomic identification.</p>
+<table>
+<thead><tr><th>Field</th><th>Type</th><th>Description</th><th>Constraints</th><th>DwC</th></tr></thead>
+<tbody>
+<tr><td><span class="field-name">subject</span> <span class="req">*</span></td><td><span class="type">strongRef</span></td><td class="def">A strong reference (CID + URI) to the observation being identified.</td><td></td><td></td></tr>
+<tr><td><span class="field-name">subjectIndex</span></td><td><span class="type">integer</span></td><td class="def">Index of the subject within the occurrence being identified. When multiple organisms are photographed together (e.g., butterfly on a flower), each gets a unique index starting from 0. Creating an identification with a new subjectIndex implicitly creates that subject.</td><td><span class="constraints">min: 0, max: 99, default: 0</span></td><td></td></tr>
+<tr><td><span class="field-name">taxon</span> <span class="req">*</span></td><td><span class="type">#taxon</span></td><td class="def">The taxonomic determination being proposed (Darwin Core Taxon class).</td><td></td><td></td></tr>
+<tr><td><span class="field-name">taxonId</span></td><td><span class="type">string</span></td><td class="def">[DEPRECATED: Use kingdom + scientificName for taxon resolution] External taxon identifier (e.g., gbif:2878688). Prefixed with source.</td><td><span class="constraints">max: 64</span></td><td></td></tr>
+<tr><td><span class="field-name">comment</span></td><td><span class="type">string</span></td><td class="def">Explanation or reasoning for this identification (Darwin Core dwc:identificationRemarks).</td><td><span class="constraints">max: 3000</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/identificationRemarks">dwc:identificationRemarks</a></td></tr>
+<tr><td><span class="field-name">isAgreement</span></td><td><span class="type">boolean</span></td><td class="def">If true, this identification agrees with the current community ID rather than proposing a new one.</td><td><span class="constraints">default: False</span></td><td></td></tr>
+<tr><td><span class="field-name">identificationQualifier</span></td><td><span class="type">string</span></td><td class="def">A brief phrase or standard term to qualify the identification when doubts exist (Darwin Core dwc:identificationQualifier). For example, &#x27;cf.&#x27; (compare with) or &#x27;aff.&#x27; (has affinity with).</td><td><span class="constraints">max: 16, cf. | aff.</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/identificationQualifier">dwc:identificationQualifier</a></td></tr>
+<tr><td><span class="field-name">confidence</span></td><td><span class="type">string</span></td><td class="def">The identifier&#x27;s confidence level in this identification.</td><td><span class="constraints">default: medium, low | medium | high</span></td><td></td></tr>
+<tr><td><span class="field-name">createdAt</span> <span class="req">*</span></td><td><span class="type">string (datetime)</span></td><td class="def">Timestamp when this identification was created (Darwin Core dwc:dateIdentified).</td><td></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/dateIdentified">dwc:dateIdentified</a></td></tr>
+</tbody>
+</table>
+<h3>#taxon</h3>
+<p class="lex-desc">Taxonomic information following Darwin Core Taxon class (dwc:Taxon).</p>
+<table>
+<thead><tr><th>Field</th><th>Type</th><th>Description</th><th>Constraints</th><th>DwC</th></tr></thead>
+<tbody>
+<tr><td><span class="field-name">scientificName</span> <span class="req">*</span></td><td><span class="type">string</span></td><td class="def">The full scientific name (Darwin Core dwc:scientificName).</td><td><span class="constraints">max: 256</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/scientificName">dwc:scientificName</a></td></tr>
+<tr><td><span class="field-name">scientificNameAuthorship</span></td><td><span class="type">string</span></td><td class="def">The authorship information for the scientificName (Darwin Core dwc:scientificNameAuthorship).</td><td><span class="constraints">max: 256</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/scientificNameAuthorship">dwc:scientificNameAuthorship</a></td></tr>
+<tr><td><span class="field-name">taxonRank</span></td><td><span class="type">string</span></td><td class="def">The taxonomic rank of the identification (Darwin Core dwc:taxonRank).</td><td><span class="constraints">max: 32, default: species, 10 values</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/taxonRank">dwc:taxonRank</a></td></tr>
+<tr><td><span class="field-name">vernacularName</span></td><td><span class="type">string</span></td><td class="def">Common name for the taxon in the identifier&#x27;s language (Darwin Core dwc:vernacularName).</td><td><span class="constraints">max: 256</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/vernacularName">dwc:vernacularName</a></td></tr>
+<tr><td><span class="field-name">kingdom</span></td><td><span class="type">string</span></td><td class="def">Taxonomic kingdom (Darwin Core dwc:kingdom).</td><td><span class="constraints">max: 64</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/kingdom">dwc:kingdom</a></td></tr>
+<tr><td><span class="field-name">phylum</span></td><td><span class="type">string</span></td><td class="def">Taxonomic phylum (Darwin Core dwc:phylum).</td><td><span class="constraints">max: 64</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/phylum">dwc:phylum</a></td></tr>
+<tr><td><span class="field-name">class</span></td><td><span class="type">string</span></td><td class="def">Taxonomic class (Darwin Core dwc:class).</td><td><span class="constraints">max: 64</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/class">dwc:class</a></td></tr>
+<tr><td><span class="field-name">order</span></td><td><span class="type">string</span></td><td class="def">Taxonomic order (Darwin Core dwc:order).</td><td><span class="constraints">max: 64</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/order">dwc:order</a></td></tr>
+<tr><td><span class="field-name">family</span></td><td><span class="type">string</span></td><td class="def">Taxonomic family (Darwin Core dwc:family).</td><td><span class="constraints">max: 64</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/family">dwc:family</a></td></tr>
+<tr><td><span class="field-name">genus</span></td><td><span class="type">string</span></td><td class="def">Taxonomic genus (Darwin Core dwc:genus).</td><td><span class="constraints">max: 64</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/genus">dwc:genus</a></td></tr>
+</tbody>
+</table>
+
+
+<div class="section-sep">
+<p class="section-title"><strong>Darwin Core Alignment</strong></p>
+<p class="subtitle">Cross-reference against <a class="term-link" href="https://dwc.tdwg.org/terms/">Darwin Core</a> terms</p>
 <div class="stats">
   <div class="stat"><div class="stat-value">24%</div><div class="stat-label">DwC coverage</div></div>
   <div class="stat"><div class="stat-value">40</div><div class="stat-label">Mapped</div></div>
   <div class="stat"><div class="stat-value">124</div><div class="stat-label">Missing</div></div>
-  <div class="stat"><div class="stat-value">12</div><div class="stat-label">Extensions</div></div>
 </div>
+</div>
+
 <h2>Occurrence</h2>
 <h3>Occurrence <span style="color:#888;font-weight:normal">(7/25 mapped)</span></h3>
 <table>
@@ -245,6 +355,7 @@ tr:hover { background: #fafafa; }
 <tr><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/vernacularName">vernacularName</a></td><td class="def">A common or vernacular name.</td><td><span class="field-name">vernacularName</span></td><td><span class="type">string</span></td><td><span class="badge badge-mapped">mapped</span></td></tr>
 </tbody>
 </table>
+
 
 </body>
 </html>
