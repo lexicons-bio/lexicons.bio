@@ -30,7 +30,7 @@ jobs:
       - name: Prepare site
         run: |
           mkdir -p _site
-          cp docs/lexicons.html _site/index.html
+          cp docs/*.html _site/
 
       - uses: actions/upload-pages-artifact@v3
 
