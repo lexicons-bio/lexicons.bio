@@ -9,17 +9,17 @@ Field-by-field mapping between atbio lexicons and [Darwin Core](https://dwc.tdwg
 | Lexicon Field | Darwin Core Term | Notes |
 |---------------|-----------------|-------|
 | `eventDate` | dwc:eventDate | ISO 8601 datetime |
-| `basisOfRecord` | dwc:basisOfRecord | Default: `HUMAN_OBSERVATION` |
-| `occurrenceStatus` | dwc:occurrenceStatus | Default: `PRESENT` |
+| `basisOfRecord` | dwc:basisOfRecord | Default: `human-observation` |
+| `occurrenceStatus` | dwc:occurrenceStatus | Default: `present` |
 | `individualCount` | dwc:individualCount | — |
-| `sex` | dwc:sex | GBIF vocabulary: `MALE`, `FEMALE`, `HERMAPHRODITE` |
-| `lifeStage` | dwc:lifeStage | GBIF vocabulary: `ADULT`, `JUVENILE`, `LARVA`, etc. |
+| `sex` | dwc:sex | `male`, `female`, `hermaphrodite` |
+| `lifeStage` | dwc:lifeStage | `adult`, `juvenile`, `larva`, etc. |
 | `verbatimLocality` | dwc:verbatimLocality | Free-text place description |
 | `notes` | dwc:occurrenceRemarks | — |
 | `blobs` | dwc:associatedMedia | AT Protocol blob references |
 | `license` | dcterms:license | SPDX identifiers (CC0, CC-BY, etc.) |
 | `habitat` | dwc:habitat | Free-text habitat description |
-| `establishmentMeans` | dwc:establishmentMeans | GBIF vocabulary: `NATIVE`, `INTRODUCED`, etc. |
+| `establishmentMeans` | dwc:establishmentMeans | `native`, `introduced`, etc. |
 | `behavior` | dwc:behavior | Free-text behavior description |
 | `caste` | dwc:caste | For eusocial species (e.g., `queen`, `worker`) |
 | (AT Protocol URI) | dwc:occurrenceID | `at://did:plc:.../org.rwell.test.occurrence/...` |

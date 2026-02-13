@@ -63,21 +63,21 @@
             "type": "string",
             "description": "The specific nature of the data record (Darwin Core dwc:basisOfRecord).",
             "knownValues": [
-              "HUMAN_OBSERVATION",
-              "MACHINE_OBSERVATION",
-              "OBSERVATION"
+              "human-observation",
+              "machine-observation",
+              "observation"
             ],
-            "default": "HUMAN_OBSERVATION",
+            "default": "human-observation",
             "maxLength": 32
           },
           "occurrenceStatus": {
             "type": "string",
             "description": "A statement about the presence or absence of a taxon at a location (Darwin Core dwc:occurrenceStatus).",
             "knownValues": [
-              "PRESENT",
-              "ABSENT"
+              "present",
+              "absent"
             ],
-            "default": "PRESENT",
+            "default": "present",
             "maxLength": 16
           },
           "individualCount": {
@@ -89,9 +89,9 @@
             "type": "string",
             "description": "The sex of the organism(s) (Darwin Core dwc:sex).",
             "knownValues": [
-              "MALE",
-              "FEMALE",
-              "HERMAPHRODITE"
+              "male",
+              "female",
+              "hermaphrodite"
             ],
             "maxLength": 32
           },
@@ -99,15 +99,15 @@
             "type": "string",
             "description": "The age class or life stage of the organism(s) (Darwin Core dwc:lifeStage).",
             "knownValues": [
-              "ADULT",
-              "JUVENILE",
-              "LARVA",
-              "PUPA",
-              "EGG",
-              "EMBRYO",
-              "NYMPH",
-              "SEEDLING",
-              "SUBADULT"
+              "adult",
+              "juvenile",
+              "larva",
+              "pupa",
+              "egg",
+              "embryo",
+              "nymph",
+              "seedling",
+              "subadult"
             ],
             "maxLength": 32
           },
@@ -120,12 +120,12 @@
             "type": "string",
             "description": "The means by which the organism was established at the location (Darwin Core dwc:establishmentMeans).",
             "knownValues": [
-              "NATIVE",
-              "INTRODUCED",
-              "NATIVE_REINTRODUCED",
-              "INTRODUCED_ASSISTED_COLONISATION",
-              "VAGRANT",
-              "UNCERTAIN"
+              "native",
+              "introduced",
+              "native-reintroduced",
+              "introduced-assisted-colonisation",
+              "vagrant",
+              "uncertain"
             ],
             "maxLength": 64
           },
@@ -169,7 +169,7 @@
         "continent": {
           "type": "string",
           "description": "The name of the continent (Darwin Core dwc:continent).",
-          "knownValues": ["Africa", "Antarctica", "Asia", "Europe", "North America", "Oceania", "South America"],
+          "knownValues": ["africa", "antarctica", "asia", "europe", "north-america", "oceania", "south-america"],
           "maxLength": 32
         },
         "country": {
