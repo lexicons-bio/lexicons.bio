@@ -67,6 +67,7 @@ tr:hover { background: #fafafa; }
 <tr><td><span class="field-name">lifeStage</span></td><td><span class="type">string</span></td><td class="def">The age class or life stage of the organism(s) (Darwin Core dwc:lifeStage).</td><td><span class="constraints">max: 32, 9 values</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/lifeStage">dwc:lifeStage</a></td></tr>
 <tr><td><span class="field-name">habitat</span></td><td><span class="type">string</span></td><td class="def">A category or description of the habitat in which the event occurred (Darwin Core dwc:habitat).</td><td><span class="constraints">max: 256</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/habitat">dwc:habitat</a></td></tr>
 <tr><td><span class="field-name">establishmentMeans</span></td><td><span class="type">string</span></td><td class="def">The means by which the organism was established at the location (Darwin Core dwc:establishmentMeans).</td><td><span class="constraints">max: 64, 6 values</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/establishmentMeans">dwc:establishmentMeans</a></td></tr>
+<tr><td><span class="field-name">behavior</span></td><td><span class="type">string</span></td><td class="def">The behavior shown by the organism at the time of the observation (Darwin Core dwc:behavior).</td><td><span class="constraints">max: 256</span></td><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/behavior">dwc:behavior</a></td></tr>
 </tbody>
 </table>
 <h3>#location</h3>
@@ -152,13 +153,13 @@ tr:hover { background: #fafafa; }
 <p class="subtitle">Cross-reference against <a class="term-link" href="https://dwc.tdwg.org/terms/">Darwin Core</a> terms</p>
 <div class="stats">
   <div class="stat"><div class="stat-value">26%</div><div class="stat-label">DwC coverage</div></div>
-  <div class="stat"><div class="stat-value">42</div><div class="stat-label">Mapped</div></div>
-  <div class="stat"><div class="stat-value">122</div><div class="stat-label">Missing</div></div>
+  <div class="stat"><div class="stat-value">43</div><div class="stat-label">Mapped</div></div>
+  <div class="stat"><div class="stat-value">121</div><div class="stat-label">Missing</div></div>
 </div>
 </div>
 
 <h2>Occurrence</h2>
-<h3>Occurrence <span style="color:#888;font-weight:normal">(8/25 mapped)</span></h3>
+<h3>Occurrence <span style="color:#888;font-weight:normal">(9/25 mapped)</span></h3>
 <table>
 <thead><tr><th>DwC Term</th><th class="def">Definition</th><th>Lexicon Field</th><th>Type</th><th>Status</th></tr></thead>
 <tbody>
@@ -166,7 +167,7 @@ tr:hover { background: #fafafa; }
 <tr><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/associatedOccurrences">associatedOccurrences</a></td><td class="def">A list (concatenated and separated) of identifiers of other dwc:Occurrence records and their associations to this dwc:Occurrence.</td><td></td><td></td><td><span class="badge badge-missing">missing</span></td></tr>
 <tr><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/associatedReferences">associatedReferences</a></td><td class="def">A list (concatenated and separated) of identifiers (publication, bibliographic reference, global unique identifier, URI) of literature associated with the dwc:Occurrence.</td><td></td><td></td><td><span class="badge badge-missing">missing</span></td></tr>
 <tr><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/associatedTaxa">associatedTaxa</a></td><td class="def">A list (concatenated and separated) of identifiers or names of dwc:Taxon records and the associations of this dwc:Occurrence to each of them.</td><td></td><td></td><td><span class="badge badge-missing">missing</span></td></tr>
-<tr><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/behavior">behavior</a></td><td class="def">The behavior shown by the subject at the time the dwc:Occurrence was recorded.</td><td></td><td></td><td><span class="badge badge-missing">missing</span></td></tr>
+<tr><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/behavior">behavior</a></td><td class="def">The behavior shown by the subject at the time the dwc:Occurrence was recorded.</td><td><span class="field-name">behavior</span></td><td><span class="type">string</span></td><td><span class="badge badge-mapped">mapped</span></td></tr>
 <tr><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/caste">caste</a></td><td class="def">Categorisation of individuals for eusocial species (including some mammals and arthropods).</td><td></td><td></td><td><span class="badge badge-missing">missing</span></td></tr>
 <tr><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/catalogNumber">catalogNumber</a></td><td class="def">An identifier (preferably unique) for the record within the data set or collection.</td><td></td><td></td><td><span class="badge badge-missing">missing</span></td></tr>
 <tr><td><a class="term-link" href="http://rs.tdwg.org/dwc/terms/degreeOfEstablishment">degreeOfEstablishment</a></td><td class="def">The degree to which a dwc:Organism survives, reproduces, and expands its range at the given place and time.</td><td></td><td></td><td><span class="badge badge-missing">missing</span></td></tr>

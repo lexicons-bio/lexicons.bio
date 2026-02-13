@@ -133,6 +133,11 @@
               "UNCERTAIN"
             ],
             "maxLength": 64
+          },
+          "behavior": {
+            "type": "string",
+            "description": "The behavior shown by the organism at the time of the observation (Darwin Core dwc:behavior).",
+            "maxLength": 256
           }
         }
       }
