@@ -44,6 +44,16 @@ ATPROTO_FIELDS = {
     "taxon", "location", "image", "alt", "aspectRatio", "width", "height",
 }
 
+# GBIF publishing requirements for occurrence datasets
+# Source: https://ipt.gbif.org/manual/en/ipt/latest/occurrence-data
+GBIF_REQUIRED = {
+    "occurrenceID", "basisOfRecord", "scientificName", "eventDate",
+}
+GBIF_RECOMMENDED = {
+    "taxonRank", "kingdom", "decimalLatitude", "decimalLongitude",
+    "geodeticDatum", "countryCode", "individualCount",
+}
+
 
 # --- Data loading ---
 
@@ -66,7 +76,6 @@ def load_dwc_terms(csv_path: Path) -> dict[str, dict]:
                     "definition": row["definition"],
                     "term_iri": row["term_iri"],
                     "class": extract_class(row["organized_in"]),
-                    "simple": row.get("flags", "") == "simple",
                 }
     return terms
 
@@ -194,7 +203,8 @@ tr:hover { background: #fafafa; }
 .badge-mapped { background: #dcfce7; color: #166534; }
 .badge-missing { background: #fee2e2; color: #991b1b; }
 .badge-ext { background: #e0e7ff; color: #3730a3; }
-.badge-simple { background: #fef3c7; color: #92400e; font-size: 0.65rem; }
+.badge-gbif-req { background: #fef3c7; color: #92400e; font-size: 0.65rem; }
+.badge-gbif-rec { background: #f0f0f0; color: #555; font-size: 0.65rem; }
 .req { color: #dc2626; font-weight: 600; }
 .field-name { font-family: "SF Mono", Monaco, Consolas, monospace; font-size: 0.8rem; }
 .section-sep { margin-top: 3rem; padding-top: 1.5rem; border-top: 3px solid #333; }
@@ -312,7 +322,14 @@ def render_dwc_section(
             iri = escape(term["term_iri"])
             name = escape(term["name"])
             defn = escape(term["definition"])
-            simple_tag = ' <span class="badge badge-simple">simple</span>' if term.get("simple") else ""
+
+            # GBIF requirement badge
+            if term["name"] in GBIF_REQUIRED:
+                gbif_tag = ' <span class="badge badge-gbif-req">gbif required</span>'
+            elif term["name"] in GBIF_RECOMMENDED:
+                gbif_tag = ' <span class="badge badge-gbif-rec">gbif recommended</span>'
+            else:
+                gbif_tag = ""
 
             if term["name"] in lex_by_dwc:
                 field_name, prop = lex_by_dwc[term["name"]]
@@ -326,7 +343,7 @@ def render_dwc_section(
                 type_cell = ""
                 status_cell = badge("missing")
 
-            html += f'<tr><td><a class="term-link" href="{iri}">{name}</a>{simple_tag}</td>'
+            html += f'<tr><td><a class="term-link" href="{iri}">{name}</a>{gbif_tag}</td>'
             html += f'<td class="def">{defn}</td>'
             html += f'<td>{lex_cell}</td><td>{type_cell}</td><td>{status_cell}</td></tr>\n'
 
