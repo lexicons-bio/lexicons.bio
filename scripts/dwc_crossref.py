@@ -12,16 +12,23 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 DWC_CSV = ROOT / "schemas" / "dwc" / "term_versions.csv"
-LEXICON_DIR = ROOT / "lexicons"
 
-# DwC classes relevant to this project's lexicons
+# Lexicons to check
+LEXICON_PATHS = [
+    ROOT / "lexicons" / "org" / "rwell" / "test" / "occurrence.json",
+    ROOT / "lexicons" / "org" / "rwell" / "test" / "identification.json",
+]
+
+# DwC classes that map to the two lexicon records:
+#   occurrence  -> Occurrence, Event, Location, Record-level
+#   identification -> Identification, Taxon
 RELEVANT_CLASSES = {
     "Occurrence",
     "Event",
     "Location",
     "Taxon",
     "Identification",
-    "Organism",
+    "Record-level",
 }
 
 # Manual mappings for lexicon fields whose names don't match DwC term_localName
@@ -131,10 +138,9 @@ def build_field_set(lexicon_fields: dict[str, dict[str, list[str]]]) -> set[str]
 def main():
     # Load data
     dwc_terms = load_dwc_terms(DWC_CSV)
-    lexicon_paths = find_lexicons(LEXICON_DIR)
 
     all_lexicon_fields: dict[str, dict[str, list[str]]] = {}
-    for path in lexicon_paths:
+    for path in LEXICON_PATHS:
         rel = path.relative_to(ROOT)
         all_lexicon_fields[str(rel)] = load_lexicon_fields(path)
 
