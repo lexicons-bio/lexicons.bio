@@ -33,6 +33,7 @@ export default function Layout() {
             component={Link}
             to="/"
             color="primary"
+            startIcon={<img src="/logo.svg" alt="" width={20} height={20} />}
             sx={{ textTransform: "none", fontWeight: 700, mr: 2 }}
           >
             lexicons.bio
