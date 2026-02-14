@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import { Box, Typography, Divider, Link as MuiLink, Stack, Paper, ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { Highlight, themes } from "prism-react-renderer";
+import { ColorModeContext } from "../App";
 import StatBar from "../components/StatBar";
 import FieldTable from "../components/FieldTable";
 import DwcAlignmentTable from "../components/DwcAlignmentTable";
@@ -10,6 +11,7 @@ import { dwcTerms } from "../data/dwcTerms";
 import { computeModelStats } from "../data/stats";
 
 export default function LexiconPage() {
+  const { mode } = useContext(ColorModeContext);
   const { slug } = useParams<{ slug: string }>();
   const model = MODELS.find((m) => m.slug === slug);
 
@@ -61,7 +63,7 @@ export default function LexiconPage() {
         </ToggleButtonGroup>
       </Box>
       <Highlight
-        theme={themes.github}
+        theme={mode === "dark" ? themes.vsDark : themes.github}
         code={exampleVariant === "short" ? model.shortExample : model.fullExample}
         language="json"
       >

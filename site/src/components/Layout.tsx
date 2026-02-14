@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import {
   AppBar,
   Toolbar,
@@ -7,8 +8,13 @@ import {
   Container,
   Alert,
   Typography,
+  IconButton,
 } from "@mui/material";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import SettingsBrightnessIcon from "@mui/icons-material/SettingsBrightness";
 import { Link, NavLink, Outlet } from "react-router-dom";
+import { ColorModeContext } from "../App";
 
 const navItems = [
   { to: "/", label: "Overview" },
@@ -25,6 +31,8 @@ const footerLinks = [
 ];
 
 export default function Layout() {
+  const { pref, cycle } = useContext(ColorModeContext);
+
   return (
     <>
       <AppBar position="sticky" elevation={0} color="default">
@@ -57,6 +65,16 @@ export default function Layout() {
           ))}
 
           <Box sx={{ flex: 1 }} />
+
+          <IconButton
+            size="small"
+            onClick={cycle}
+            color="inherit"
+            sx={{ mr: 1 }}
+            title={pref === "system" ? "Theme: System" : pref === "light" ? "Theme: Light" : "Theme: Dark"}
+          >
+            {pref === "light" ? <LightModeIcon fontSize="small" /> : pref === "dark" ? <DarkModeIcon fontSize="small" /> : <SettingsBrightnessIcon fontSize="small" />}
+          </IconButton>
 
           <MuiLink
             href="https://github.com/lexicons-bio/lexicons"
