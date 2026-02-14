@@ -8,7 +8,6 @@
       "key": "tid",
       "record": {
         "type": "object",
-        "required": ["eventDate"],
         "properties": {
           "eventDate": {
             "type": "string",
