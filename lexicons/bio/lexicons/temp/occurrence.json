@@ -4,11 +4,11 @@
   "defs": {
     "main": {
       "type": "record",
-      "description": "A biodiversity observation record following Darwin Core standards. Represents a single occurrence of an organism at a specific place and time.",
+      "description": "A biodiversity observation record following Darwin Core standards. Represents a single occurrence of an organism.",
       "key": "tid",
       "record": {
         "type": "object",
-        "required": ["eventDate", "location"],
+        "required": ["eventDate"],
         "properties": {
           "eventDate": {
             "type": "string",
