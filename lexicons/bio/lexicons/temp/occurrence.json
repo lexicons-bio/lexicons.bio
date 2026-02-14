@@ -9,10 +9,10 @@
       "record": {
         "type": "object",
         "properties": {
-          "eventDate": {
-            "type": "string",
-            "format": "datetime",
-            "description": "The date-time when the observation occurred, in ISO 8601 format (Darwin Core dwc:eventDate)."
+          "event": {
+            "type": "ref",
+            "ref": "#event",
+            "description": "Event information for the observation (Darwin Core dwc:Event class)."
           },
           "location": {
             "type": "ref",
@@ -45,6 +45,17 @@
             ],
             "maxLength": 32
           }
+        }
+      }
+    },
+    "event": {
+      "type": "object",
+      "description": "Event information following Darwin Core Event class (dwc:Event).",
+      "properties": {
+        "eventDate": {
+          "type": "string",
+          "format": "datetime",
+          "description": "The date-time when the observation occurred, in ISO 8601 format (Darwin Core dwc:eventDate)."
         }
       }
     },

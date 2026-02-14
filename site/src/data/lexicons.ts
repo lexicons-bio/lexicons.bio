@@ -61,7 +61,9 @@ export const MODELS: ModelConfig[] = [
     shortExample: JSON.stringify(
       {
         $type: "bio.lexicons.temp.occurrence",
-        eventDate: "2024-06-12T08:45:00Z",
+        event: {
+          eventDate: "2024-06-12T08:45:00Z",
+        },
         location: {
           decimalLatitude: "37.8716",
           decimalLongitude: "-122.2727",
@@ -73,7 +75,9 @@ export const MODELS: ModelConfig[] = [
     fullExample: JSON.stringify(
       {
         $type: "bio.lexicons.temp.occurrence",
-        eventDate: "2024-06-12T08:45:00Z",
+        event: {
+          eventDate: "2024-06-12T08:45:00Z",
+        },
         occurrenceRemarks: "Three individuals foraging on fallen acorns",
         license: "CC-BY-4.0",
         location: {
@@ -155,6 +159,7 @@ export const FIELD_TO_DWC: Record<string, string> = {};
 export const ATPROTO_FIELDS = new Set([
   "subject",
   "taxon",
+  "event",
   "location",
   "image",
   "alt",
