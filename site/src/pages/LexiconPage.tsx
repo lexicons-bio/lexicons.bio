@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import { Box, Typography, Divider, Link as MuiLink, Stack, Paper, ToggleButtonGroup, ToggleButton } from "@mui/material";
+import { Highlight, themes } from "prism-react-renderer";
 import StatBar from "../components/StatBar";
 import FieldTable from "../components/FieldTable";
 import DwcAlignmentTable from "../components/DwcAlignmentTable";
@@ -59,21 +60,35 @@ export default function LexiconPage() {
           <ToggleButton value="full">Full</ToggleButton>
         </ToggleButtonGroup>
       </Box>
-      <Paper
-        variant="outlined"
-        sx={{
-          p: 2,
-          mb: 4,
-          overflow: "auto",
-          fontFamily: "monospace",
-          fontSize: "0.8rem",
-          lineHeight: 1.6,
-          whiteSpace: "pre",
-          color: "text.secondary",
-        }}
+      <Highlight
+        theme={themes.github}
+        code={exampleVariant === "short" ? model.shortExample : model.fullExample}
+        language="json"
       >
-        {exampleVariant === "short" ? model.shortExample : model.fullExample}
-      </Paper>
+        {({ style, tokens, getLineProps, getTokenProps }) => (
+          <Paper
+            component="pre"
+            variant="outlined"
+            sx={{
+              ...style,
+              p: 2,
+              mt: 0,
+              mb: 4,
+              overflow: "auto",
+              fontSize: "0.8rem",
+              lineHeight: 1.6,
+            }}
+          >
+            {tokens.map((line, i) => (
+              <div key={i} {...getLineProps({ line })}>
+                {line.map((token, key) => (
+                  <span key={key} {...getTokenProps({ token })} />
+                ))}
+              </div>
+            ))}
+          </Paper>
+        )}
+      </Highlight>
 
       <Typography variant="h5" gutterBottom>
         Lexicon Reference
