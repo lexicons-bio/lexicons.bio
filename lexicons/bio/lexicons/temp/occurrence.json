@@ -72,7 +72,7 @@
     "imageEmbed": {
       "type": "object",
       "description": "A reference to an uploaded image blob.",
-      "required": ["image", "alt"],
+      "required": ["image"],
       "properties": {
         "image": {
           "type": "blob",
