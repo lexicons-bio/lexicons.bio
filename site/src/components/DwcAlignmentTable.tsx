@@ -57,7 +57,7 @@ export default function DwcAlignmentTable({ classes, dwcTerms, lexProps }: Props
         const mappedCount = clsTerms.filter((t) => t.name in lexByDwc).length;
 
         return (
-          <Accordion key={cls} variant="outlined" disableGutters defaultExpanded={mappedCount > 0}>
+          <Accordion key={cls} variant="outlined" disableGutters>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
               <Typography variant="subtitle1" fontWeight={600}>
                 {cls}

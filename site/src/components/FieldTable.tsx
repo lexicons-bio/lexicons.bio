@@ -30,7 +30,7 @@ interface Props {
   defaultExpanded?: boolean;
 }
 
-export default function FieldTable({ defName, defBody, lexiconId, dwcTerms, defaultExpanded = true }: Props) {
+export default function FieldTable({ defName, defBody, lexiconId, dwcTerms, defaultExpanded = false }: Props) {
   const { properties, required } = getDefProperties(defBody);
   if (Object.keys(properties).length === 0) return null;
 
