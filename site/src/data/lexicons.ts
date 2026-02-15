@@ -61,13 +61,9 @@ export const MODELS: ModelConfig[] = [
     shortExample: JSON.stringify(
       {
         $type: "bio.lexicons.temp.occurrence",
-        event: {
-          eventDate: "2024-06-12T08:45:00Z",
-        },
-        location: {
-          decimalLatitude: "37.8716",
-          decimalLongitude: "-122.2727",
-        },
+        eventDate: "2024-06-12T08:45:00Z",
+        decimalLatitude: "37.8716",
+        decimalLongitude: "-122.2727",
       },
       null,
       2
@@ -75,16 +71,12 @@ export const MODELS: ModelConfig[] = [
     fullExample: JSON.stringify(
       {
         $type: "bio.lexicons.temp.occurrence",
-        event: {
-          eventDate: "2024-06-12T08:45:00Z",
-        },
+        eventDate: "2024-06-12T08:45:00Z",
         occurrenceRemarks: "Three individuals foraging on fallen acorns",
         license: "CC-BY-4.0",
-        location: {
-          decimalLatitude: "37.8716",
-          decimalLongitude: "-122.2727",
-          coordinateUncertaintyInMeters: 15,
-        },
+        decimalLatitude: "37.8716",
+        decimalLongitude: "-122.2727",
+        coordinateUncertaintyInMeters: 15,
         associatedMedia: [
           {
             image: {
@@ -115,11 +107,9 @@ export const MODELS: ModelConfig[] = [
           uri: "at://did:plc:abc123.../bio.lexicons.temp.occurrence/3k...",
           cid: "bafyrei...",
         },
-        taxon: {
-          scientificName: "Aphelocoma californica",
-          taxonRank: "species",
-          vernacularName: "California Scrub-Jay",
-        },
+        scientificName: "Aphelocoma californica",
+        taxonRank: "species",
+        vernacularName: "California Scrub-Jay",
       },
       null,
       2
@@ -131,18 +121,16 @@ export const MODELS: ModelConfig[] = [
           uri: "at://did:plc:abc123.../bio.lexicons.temp.occurrence/3k...",
           cid: "bafyrei...",
         },
-        taxon: {
-          scientificName: "Aphelocoma californica",
-          scientificNameAuthorship: "(Vigors, 1839)",
-          taxonRank: "species",
-          vernacularName: "California Scrub-Jay",
-          kingdom: "Animalia",
-          phylum: "Chordata",
-          class: "Aves",
-          order: "Passeriformes",
-          family: "Corvidae",
-          genus: "Aphelocoma",
-        },
+        scientificName: "Aphelocoma californica",
+        scientificNameAuthorship: "(Vigors, 1839)",
+        taxonRank: "species",
+        vernacularName: "California Scrub-Jay",
+        kingdom: "Animalia",
+        phylum: "Chordata",
+        class: "Aves",
+        order: "Passeriformes",
+        family: "Corvidae",
+        genus: "Aphelocoma",
         identificationRemarks:
           "Blue head and wings, white eyebrow, gray-brown back — classic California Scrub-Jay",
       },
@@ -158,9 +146,6 @@ export const FIELD_TO_DWC: Record<string, string> = {};
 /** Fields that are AT Protocol infrastructure (no DwC mapping) */
 export const ATPROTO_FIELDS = new Set([
   "subject",
-  "taxon",
-  "event",
-  "location",
   "image",
   "alt",
   "aspectRatio",

@@ -8,9 +8,10 @@ The lexicons follow a **star schema** with the occurrence record at the center:
 ┌─────────────────┐    ┌─────────────┐
 │  identification  │──▶│  occurrence  │
 │  subject: ref    │    │  (central)  │
-│  taxon: #taxon   │    │  #location  │
-└─────────────────┘    │  #imageEmbed│
-                        └─────────────┘
+│  scientificName  │    │  eventDate  │
+│  taxonRank       │    │  lat/lng    │
+│  ...             │    │  media      │
+└─────────────────┘    └─────────────┘
 ```
 
 Every sidecar record references an occurrence via `com.atproto.repo.strongRef` — a pair of URI + CID that creates an immutable, content-addressed link.
@@ -31,9 +32,9 @@ This enables:
 - Community-driven consensus building, similar to iNaturalist
 - Full identification history preserved in the decentralized network
 
-### Embedded `#taxon` Object
+### Flat Record Structure
 
-The `#taxon` object is defined within the identification lexicon and contains the full Darwin Core Taxon class hierarchy (kingdom through genus, plus scientific name and authorship). This follows the [GBIF Identification History extension](https://rs.gbif.org/extension/dwc/identification.xml) pattern where each identification carries its own snapshot of the taxon.
+All Darwin Core fields are top-level properties on their record, not nested inside sub-objects. This follows Darwin Core's own flat structure and makes records simple to produce and consume. The identification record contains the full Darwin Core Taxon class hierarchy (kingdom through genus, plus scientific name and authorship) as flat fields, following the [GBIF Identification History extension](https://rs.gbif.org/extension/dwc/identification.xml) pattern where each identification carries its own snapshot of the taxon.
 
 ### `knownValues` Over `enum`
 

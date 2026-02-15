@@ -10,53 +10,36 @@ Additional Darwin Core fields can be added to the schemas as community demand de
 
 | Lexicon Field | Darwin Core Term | Notes |
 |---------------|-----------------|-------|
+| `eventDate` | dwc:eventDate | ISO 8601 datetime |
+| `decimalLatitude` | dwc:decimalLatitude | Stored as string for precision |
+| `decimalLongitude` | dwc:decimalLongitude | Stored as string for precision |
+| `coordinateUncertaintyInMeters` | dwc:coordinateUncertaintyInMeters | — |
 | `occurrenceRemarks` | dwc:occurrenceRemarks | — |
 | `associatedMedia` | dwc:associatedMedia | AT Protocol blob references |
 | `license` | dcterms:license | SPDX identifiers (CC0, CC-BY, etc.) |
 | (AT Protocol URI) | dwc:occurrenceID | `at://did:plc:.../bio.lexicons.temp.occurrence/...` |
 | (repo owner DID) | dwc:recordedBy | Derived from AT Protocol identity |
 
-### Event Fields
-
-| Lexicon Field | Darwin Core Term | Notes |
-|---------------|-----------------|-------|
-| `event.eventDate` | dwc:eventDate | ISO 8601 datetime |
-
-### Location Fields
-
-| Lexicon Field | Darwin Core Term | Notes |
-|---------------|-----------------|-------|
-| `location.decimalLatitude` | dwc:decimalLatitude | Stored as string for precision |
-| `location.decimalLongitude` | dwc:decimalLongitude | Stored as string for precision |
-| `location.coordinateUncertaintyInMeters` | dwc:coordinateUncertaintyInMeters | — |
-
 ## Identification
 
-`bio.lexicons.temp.identification` maps to [dwc:Identification](https://dwc.tdwg.org/list/#identification) with an embedded [dwc:Taxon](https://dwc.tdwg.org/list/#taxon).
-
-### Identification Fields
+`bio.lexicons.temp.identification` maps to [dwc:Identification](https://dwc.tdwg.org/list/#identification) + [dwc:Taxon](https://dwc.tdwg.org/list/#taxon).
 
 | Lexicon Field | Darwin Core Term | Notes |
 |---------------|-----------------|-------|
+| `scientificName` | dwc:scientificName | Required |
+| `scientificNameAuthorship` | dwc:scientificNameAuthorship | — |
+| `taxonRank` | dwc:taxonRank | — |
+| `vernacularName` | dwc:vernacularName | — |
+| `kingdom` | dwc:kingdom | — |
+| `phylum` | dwc:phylum | — |
+| `class` | dwc:class | — |
+| `order` | dwc:order | — |
+| `family` | dwc:family | — |
+| `genus` | dwc:genus | — |
 | `identificationRemarks` | dwc:identificationRemarks | — |
 | (repo commit timestamp) | dwc:dateIdentified | Derived from AT Protocol repo |
 | (AT Protocol URI) | dwc:identificationID | — |
 | (repo owner DID) | dwc:identifiedBy | — |
-
-### Taxon Fields
-
-| Lexicon Field | Darwin Core Term | Notes |
-|---------------|-----------------|-------|
-| `taxon.scientificName` | dwc:scientificName | Required |
-| `taxon.scientificNameAuthorship` | dwc:scientificNameAuthorship | — |
-| `taxon.taxonRank` | dwc:taxonRank | — |
-| `taxon.vernacularName` | dwc:vernacularName | — |
-| `taxon.kingdom` | dwc:kingdom | — |
-| `taxon.phylum` | dwc:phylum | — |
-| `taxon.class` | dwc:class | — |
-| `taxon.order` | dwc:order | — |
-| `taxon.family` | dwc:family | — |
-| `taxon.genus` | dwc:genus | — |
 
 ## Not Yet Implemented
 
