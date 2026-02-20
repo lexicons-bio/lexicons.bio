@@ -72,8 +72,6 @@ export const MODELS: ModelConfig[] = [
       {
         $type: "bio.lexicons.temp.occurrence",
         eventDate: "2024-06-12T08:45:00Z",
-        occurrenceRemarks: "Three individuals foraging on fallen acorns",
-        license: "CC-BY-4.0",
         decimalLatitude: "37.8716",
         decimalLongitude: "-122.2727",
         coordinateUncertaintyInMeters: 15,
@@ -87,6 +85,7 @@ export const MODELS: ModelConfig[] = [
             },
             alt: "California Scrub-Jay perched on oak branch",
             aspectRatio: { width: 4032, height: 3024 },
+            license: "CC-BY-4.0",
           },
         ],
       },

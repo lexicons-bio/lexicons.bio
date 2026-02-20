@@ -35,23 +35,6 @@
               "ref": "#associatedMedia"
             },
             "maxLength": 10
-          },
-          "occurrenceRemarks": {
-            "type": "string",
-            "description": "Additional notes or comments about the observation (Darwin Core dwc:occurrenceRemarks).",
-            "maxLength": 3000
-          },
-          "license": {
-            "type": "string",
-            "description": "SPDX license identifier for this observation (maps to Dublin Core dcterms:license).",
-            "knownValues": [
-              "CC0-1.0",
-              "CC-BY-4.0",
-              "CC-BY-NC-4.0",
-              "CC-BY-SA-4.0",
-              "CC-BY-NC-SA-4.0"
-            ],
-            "maxLength": 32
           }
         }
       }
@@ -75,6 +58,18 @@
         "aspectRatio": {
           "type": "ref",
           "ref": "#aspectRatio"
+        },
+        "license": {
+          "type": "string",
+          "description": "SPDX license identifier for this media (maps to Dublin Core dcterms:license).",
+          "knownValues": [
+            "CC0-1.0",
+            "CC-BY-4.0",
+            "CC-BY-NC-4.0",
+            "CC-BY-SA-4.0",
+            "CC-BY-NC-SA-4.0"
+          ],
+          "maxLength": 32
         }
       }
     },
