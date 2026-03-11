@@ -5,16 +5,16 @@
 The lexicons follow a **star schema** with the occurrence record at the center:
 
 ```
-┌─────────────────┐    ┌─────────────┐
-│  identification  │──▶│  occurrence  │
-│  subject: ref    │    │  (central)  │
-│  scientificName  │    │  eventDate  │
-│  taxonRank       │    │  lat/lng    │
-│  ...             │    │  media      │
-└─────────────────┘    └─────────────┘
+┌─────────────────┐    ┌─────────────┐    ┌─────────────┐
+│  identification  │──▶│  occurrence  │──▶│    media     │
+│  subject: ref    │    │  (central)  │    │  image      │
+│  scientificName  │    │  eventDate  │    │  alt        │
+│  taxonRank       │    │  lat/lng    │    │  license    │
+│  ...             │    │  media refs │    │  ...        │
+└─────────────────┘    └─────────────┘    └─────────────┘
 ```
 
-Every sidecar record references an occurrence via `com.atproto.repo.strongRef` — a pair of URI + CID that creates an immutable, content-addressed link.
+Records reference each other via `com.atproto.repo.strongRef` — a pair of URI + CID that creates an immutable, content-addressed link. Identifications reference occurrences, and occurrences reference media.
 
 ## Key Design Decisions
 

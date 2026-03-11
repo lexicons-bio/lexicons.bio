@@ -74,7 +74,7 @@ export default function Overview() {
       <Typography variant="body2" color="textSecondary" paragraph>
         Records use AT Protocol's <code>strongRef</code> (URI + CID) to create
         immutable links. The occurrence record sits at the center, with
-        identifications referencing it.
+        identifications referencing it and media stored as separate records.
       </Typography>
 
       <ArchitectureDiagram />

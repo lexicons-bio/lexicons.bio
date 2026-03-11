@@ -20,6 +20,7 @@ const navItems = [
   { to: "/", label: "Overview" },
   { to: "/occurrence", label: "Occurrence" },
   { to: "/identification", label: "Identification" },
+  { to: "/media", label: "Media" },
 ];
 
 const footerLinks = [

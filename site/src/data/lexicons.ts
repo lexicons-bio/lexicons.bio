@@ -1,5 +1,6 @@
 import occurrenceJson from "../../../lexicons/bio/lexicons/temp/occurrence.json";
 import identificationJson from "../../../lexicons/bio/lexicons/temp/identification.json";
+import mediaJson from "../../../lexicons/bio/lexicons/temp/media.json";
 
 export interface LexiconDef {
   type: string;
@@ -77,17 +78,49 @@ export const MODELS: ModelConfig[] = [
         coordinateUncertaintyInMeters: 15,
         associatedMedia: [
           {
-            image: {
-              $type: "blob",
-              ref: { $link: "bafyrei..." },
-              mimeType: "image/jpeg",
-              size: 204800,
-            },
-            alt: "California Scrub-Jay perched on oak branch",
-            aspectRatio: { width: 4032, height: 3024 },
-            license: "CC-BY-4.0",
+            uri: "at://did:plc:abc123.../bio.lexicons.temp.media/3k...",
+            cid: "bafyrei...",
           },
         ],
+      },
+      null,
+      2
+    ),
+  },
+  {
+    name: "Media",
+    slug: "media",
+    lexicon: mediaJson as unknown as Lexicon,
+    classes: [],
+    description:
+      "An image associated with an observation, with alt text and license.",
+    shortExample: JSON.stringify(
+      {
+        $type: "bio.lexicons.temp.media",
+        image: {
+          $type: "blob",
+          ref: { $link: "bafyrei..." },
+          mimeType: "image/jpeg",
+          size: 204800,
+        },
+        alt: "California Scrub-Jay perched on oak branch",
+        license: "CC-BY-4.0",
+      },
+      null,
+      2
+    ),
+    fullExample: JSON.stringify(
+      {
+        $type: "bio.lexicons.temp.media",
+        image: {
+          $type: "blob",
+          ref: { $link: "bafyrei..." },
+          mimeType: "image/jpeg",
+          size: 204800,
+        },
+        alt: "California Scrub-Jay perched on oak branch",
+        aspectRatio: { width: 4032, height: 3024 },
+        license: "CC-BY-4.0",
       },
       null,
       2
