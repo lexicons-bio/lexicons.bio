@@ -3,12 +3,10 @@ import { useParams, Navigate } from "react-router-dom";
 import { Box, Typography, Divider, Link as MuiLink, Stack, Paper, ToggleButtonGroup, ToggleButton } from "@mui/material";
 import { Highlight, themes } from "prism-react-renderer";
 import { ColorModeContext } from "../App";
-import StatBar from "../components/StatBar";
 import FieldTable from "../components/FieldTable";
 import DwcAlignmentTable from "../components/DwcAlignmentTable";
-import { MODELS, ATPROTO_FIELDS, getFlatProperties } from "../data/lexicons";
+import { MODELS, getFlatProperties } from "../data/lexicons";
 import { dwcTerms } from "../data/dwcTerms";
-import { computeModelStats } from "../data/stats";
 
 export default function LexiconPage() {
   const { mode } = useContext(ColorModeContext);
@@ -18,11 +16,7 @@ export default function LexiconPage() {
   if (!model) return <Navigate to="/" replace />;
 
   const lexProps = getFlatProperties(model.lexicon);
-  const stats = computeModelStats(dwcTerms, lexProps, model.classes);
   const lexId = model.lexicon.id;
-  const fieldCount = Object.keys(lexProps).filter(
-    (f) => !ATPROTO_FIELDS.has(f)
-  ).length;
 
   const defs = model.lexicon.defs;
   const [exampleVariant, setExampleVariant] = useState<"short" | "full">("short");
@@ -40,15 +34,6 @@ export default function LexiconPage() {
           {model.description}
         </Typography>
       </Box>
-
-      <StatBar
-        stats={[
-          { value: fieldCount, label: "Fields" },
-          { value: `${stats.pct.toFixed(0)}%`, label: "DwC Coverage" },
-          { value: stats.mapped, label: "Mapped" },
-          { value: stats.missing, label: "Missing" },
-        ]}
-      />
 
       <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 1 }}>
         <Typography variant="h5">Example</Typography>
