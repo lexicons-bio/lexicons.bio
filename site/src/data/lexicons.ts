@@ -187,6 +187,7 @@ export const GBIF_REQUIRED = new Set([
 
 export const GBIF_RECOMMENDED = new Set([
   "taxonRank",
+  "kingdom",
   "decimalLatitude",
   "decimalLongitude",
 ]);

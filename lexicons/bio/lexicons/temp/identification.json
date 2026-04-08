@@ -27,6 +27,11 @@
             "default": "species",
             "maxLength": 32
           },
+          "kingdom": {
+            "type": "string",
+            "description": "Taxonomic kingdom for disambiguating homonyms (Darwin Core dwc:kingdom).",
+            "maxLength": 64
+          },
           "vernacularName": {
             "type": "string",
             "description": "Common name for the taxon in the identifier's language (Darwin Core dwc:vernacularName).",
