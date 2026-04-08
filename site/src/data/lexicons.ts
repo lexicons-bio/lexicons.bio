@@ -104,7 +104,7 @@ export const MODELS: ModelConfig[] = [
           size: 204800,
         },
         alt: "California Scrub-Jay perched on oak branch",
-        license: "CC-BY-4.0",
+        license: "https://creativecommons.org/licenses/by/4.0/",
       },
       null,
       2
@@ -120,7 +120,7 @@ export const MODELS: ModelConfig[] = [
         },
         alt: "California Scrub-Jay perched on oak branch",
         aspectRatio: { width: 4032, height: 3024 },
-        license: "CC-BY-4.0",
+        license: "https://creativecommons.org/licenses/by/4.0/",
       },
       null,
       2
