@@ -153,16 +153,9 @@ export const MODELS: ModelConfig[] = [
           uri: "at://did:plc:abc123.../bio.lexicons.temp.occurrence/3k...",
           cid: "bafyrei...",
         },
-        scientificName: "Aphelocoma californica",
-        scientificNameAuthorship: "(Vigors, 1839)",
+        scientificName: "Aphelocoma californica (Vigors, 1839)",
         taxonRank: "species",
         vernacularName: "California Scrub-Jay",
-        kingdom: "Animalia",
-        phylum: "Chordata",
-        class: "Aves",
-        order: "Passeriformes",
-        family: "Corvidae",
-        genus: "Aphelocoma",
         identificationRemarks:
           "Blue head and wings, white eyebrow, gray-brown back — classic California Scrub-Jay",
       },
@@ -194,7 +187,6 @@ export const GBIF_REQUIRED = new Set([
 
 export const GBIF_RECOMMENDED = new Set([
   "taxonRank",
-  "kingdom",
   "decimalLatitude",
   "decimalLongitude",
 ]);
