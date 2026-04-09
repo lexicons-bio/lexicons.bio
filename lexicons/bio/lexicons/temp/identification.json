@@ -32,11 +32,6 @@
             "description": "Taxonomic kingdom for disambiguating homonyms (Darwin Core dwc:kingdom).",
             "maxLength": 64
           },
-          "vernacularName": {
-            "type": "string",
-            "description": "Common name for the taxon in the identifier's language (Darwin Core dwc:vernacularName).",
-            "maxLength": 256
-          },
           "identificationRemarks": {
             "type": "string",
             "description": "Explanation or reasoning for this identification (Darwin Core dwc:identificationRemarks).",

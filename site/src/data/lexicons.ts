@@ -141,7 +141,6 @@ export const MODELS: ModelConfig[] = [
         },
         scientificName: "Aphelocoma californica",
         taxonRank: "species",
-        vernacularName: "California Scrub-Jay",
       },
       null,
       2
@@ -155,7 +154,6 @@ export const MODELS: ModelConfig[] = [
         },
         scientificName: "Aphelocoma californica (Vigors, 1839)",
         taxonRank: "species",
-        vernacularName: "California Scrub-Jay",
         identificationRemarks:
           "Blue head and wings, white eyebrow, gray-brown back — classic California Scrub-Jay",
       },
