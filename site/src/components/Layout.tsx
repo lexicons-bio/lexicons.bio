@@ -26,7 +26,7 @@ const navItems = [
 const footerLinks = [
   { href: "https://observ.ing", label: "Observ.ing" },
   { href: "https://atproto.com/", label: "AT Protocol" },
-  { href: "https://dwc.tdwg.org/", label: "Darwin Core" },
+  { href: "https://github.com/gbif/dwc-dp", label: "DwC-DP" },
   { href: "https://www.gbif.org/", label: "GBIF" },
   { href: "https://github.com/lexicons-bio/lexicons", label: "GitHub" },
 ];

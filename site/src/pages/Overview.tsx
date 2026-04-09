@@ -13,10 +13,10 @@ export default function Overview() {
         </Typography>
         <Typography variant="body2" color="textSecondary">
           AT Protocol lexicons for decentralized biodiversity observation data, aligned with{" "}
-          <MuiLink href="https://dwc.tdwg.org/" target="_blank" rel="noopener">
-            Darwin Core
+          <MuiLink href="https://github.com/gbif/dwc-dp" target="_blank" rel="noopener">
+            DwC-DP
           </MuiLink>{" "}
-          and{" "}
+          (Darwin Core Data Package) and{" "}
           <MuiLink href="https://www.gbif.org/" target="_blank" rel="noopener">
             GBIF
           </MuiLink>{" "}
