@@ -7,7 +7,7 @@ The lexicons follow a **star schema** with the occurrence record at the center:
 ```
 ┌─────────────────┐    ┌─────────────┐    ┌─────────────┐
 │  identification  │──▶│  occurrence  │──▶│    media     │
-│  subject: ref    │    │  (central)  │    │  image      │
+│  occurrence: ref │    │  (central)  │    │  image      │
 │  scientificName  │    │  eventDate  │    │  alt        │
 │  taxonRank       │    │  lat/lng    │    │  license    │
 │  ...             │    │  media refs │    │  ...        │

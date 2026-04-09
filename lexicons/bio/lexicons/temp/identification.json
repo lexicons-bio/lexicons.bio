@@ -8,12 +8,12 @@
       "key": "tid",
       "record": {
         "type": "object",
-        "required": ["subject", "scientificName"],
+        "required": ["occurrence", "scientificName"],
         "properties": {
-          "subject": {
+          "occurrence": {
             "type": "ref",
             "ref": "com.atproto.repo.strongRef",
-            "description": "A strong reference (CID + URI) to the observation being identified."
+            "description": "A strong reference (CID + URI) to the occurrence being identified."
           },
           "scientificName": {
             "type": "string",

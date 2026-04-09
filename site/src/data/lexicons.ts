@@ -135,7 +135,7 @@ export const MODELS: ModelConfig[] = [
     shortExample: JSON.stringify(
       {
         $type: "bio.lexicons.temp.identification",
-        subject: {
+        occurrence: {
           uri: "at://did:plc:abc123.../bio.lexicons.temp.occurrence/3k...",
           cid: "bafyrei...",
         },
@@ -148,7 +148,7 @@ export const MODELS: ModelConfig[] = [
     fullExample: JSON.stringify(
       {
         $type: "bio.lexicons.temp.identification",
-        subject: {
+        occurrence: {
           uri: "at://did:plc:abc123.../bio.lexicons.temp.occurrence/3k...",
           cid: "bafyrei...",
         },
@@ -168,7 +168,7 @@ export const FIELD_TO_DWC: Record<string, string> = {};
 
 /** Fields that are AT Protocol infrastructure (no DwC mapping) */
 export const ATPROTO_FIELDS = new Set([
-  "subject",
+  "occurrence",
   "image",
   "alt",
   "aspectRatio",
