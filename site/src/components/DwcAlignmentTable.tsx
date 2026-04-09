@@ -50,7 +50,7 @@ export default function DwcAlignmentTable({ classes, dwcTerms, lexProps }: Props
     <>
       {classes.map((cls) => {
         const clsTerms = Object.values(dwcTerms)
-          .filter((t) => t.class === cls)
+          .filter((t) => t.tables.includes(cls))
           .sort((a, b) => a.name.localeCompare(b.name));
         if (clsTerms.length === 0) return null;
 
@@ -71,7 +71,7 @@ export default function DwcAlignmentTable({ classes, dwcTerms, lexProps }: Props
                 <Table size="small">
                   <TableHead>
                     <TableRow>
-                      <TableCell>DwC Term</TableCell>
+                      <TableCell>DwC-DP Term</TableCell>
                       <TableCell>Definition</TableCell>
                       <TableCell>Lexicon Field</TableCell>
                       <TableCell>Type</TableCell>

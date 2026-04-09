@@ -96,14 +96,14 @@ export default function LexiconPage() {
       <Divider sx={{ my: 4 }} />
 
       <Typography variant="h5" gutterBottom>
-        Darwin Core Alignment
+        DwC-DP Alignment
       </Typography>
       <Typography variant="body2" color="textSecondary" gutterBottom>
         Cross-reference against{" "}
-        <MuiLink href="https://dwc.tdwg.org/terms/" target="_blank" rel="noopener">
-          Darwin Core
+        <MuiLink href="https://github.com/gbif/dwc-dp" target="_blank" rel="noopener">
+          DwC-DP
         </MuiLink>{" "}
-        terms. Green = mapped, red = not yet implemented.
+        table schemas. Green = mapped, red = not yet implemented.
       </Typography>
 
       <Stack spacing={1}>

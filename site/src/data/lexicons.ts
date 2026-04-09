@@ -56,7 +56,7 @@ export const MODELS: ModelConfig[] = [
     name: "Occurrence",
     slug: "occurrence",
     lexicon: occurrenceJson as unknown as Lexicon,
-    classes: ["Occurrence", "Event", "Location", "Record-level"],
+    classes: ["Event", "Occurrence"],
     description:
       "A biodiversity observation — an organism at a place and time.",
     shortExample: JSON.stringify(
@@ -91,7 +91,7 @@ export const MODELS: ModelConfig[] = [
     name: "Media",
     slug: "media",
     lexicon: mediaJson as unknown as Lexicon,
-    classes: [],
+    classes: ["Media"],
     description:
       "An image associated with an observation, with alt text and license.",
     shortExample: JSON.stringify(
@@ -130,7 +130,7 @@ export const MODELS: ModelConfig[] = [
     name: "Identification",
     slug: "identification",
     lexicon: identificationJson as unknown as Lexicon,
-    classes: ["Identification", "Taxon"],
+    classes: ["Identification"],
     description: "A taxonomic determination for an observation.",
     shortExample: JSON.stringify(
       {

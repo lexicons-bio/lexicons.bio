@@ -68,7 +68,7 @@ export default function FieldTable({ defName, defBody, lexiconId, dwcTerms, defa
                 <TableCell>Type</TableCell>
                 <TableCell>Description</TableCell>
                 <TableCell>Constraints</TableCell>
-                <TableCell>DwC</TableCell>
+                <TableCell>DwC-DP</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
