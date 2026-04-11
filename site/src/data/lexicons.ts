@@ -41,6 +41,28 @@ export interface Lexicon {
   defs: Record<string, LexiconDef>;
 }
 
+/**
+ * Runtime-validate an imported JSON module against the Lexicon shape.
+ * Throws if the JSON is missing required fields. This replaces unsafe
+ * `as unknown as Lexicon` double casts on static JSON imports.
+ */
+function parseLexicon(value: unknown): Lexicon {
+  if (typeof value !== "object" || value === null) {
+    throw new Error("Lexicon JSON is not an object");
+  }
+  const v = value as Record<string, unknown>;
+  if (typeof v.lexicon !== "number") {
+    throw new Error("Lexicon JSON missing numeric `lexicon` field");
+  }
+  if (typeof v.id !== "string") {
+    throw new Error("Lexicon JSON missing string `id` field");
+  }
+  if (typeof v.defs !== "object" || v.defs === null) {
+    throw new Error(`Lexicon JSON ${v.id} missing object \`defs\` field`);
+  }
+  return v as unknown as Lexicon;
+}
+
 export interface ModelConfig {
   name: string;
   slug: string;
@@ -55,7 +77,7 @@ export const MODELS: ModelConfig[] = [
   {
     name: "Occurrence",
     slug: "occurrence",
-    lexicon: occurrenceJson as unknown as Lexicon,
+    lexicon: parseLexicon(occurrenceJson),
     classes: ["Event", "Occurrence"],
     description:
       "A biodiversity observation — an organism at a place and time.",
@@ -90,7 +112,7 @@ export const MODELS: ModelConfig[] = [
   {
     name: "Media",
     slug: "media",
-    lexicon: mediaJson as unknown as Lexicon,
+    lexicon: parseLexicon(mediaJson),
     classes: ["Media"],
     description:
       "An image associated with an observation, with alt text and license.",
@@ -129,7 +151,7 @@ export const MODELS: ModelConfig[] = [
   {
     name: "Identification",
     slug: "identification",
-    lexicon: identificationJson as unknown as Lexicon,
+    lexicon: parseLexicon(identificationJson),
     classes: ["Identification"],
     description: "A taxonomic determination for an observation.",
     shortExample: JSON.stringify(
