@@ -1,115 +1,91 @@
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-  Link as MuiLink,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Box } from "@mui/material";
+import type { LexiconProperty } from "../data/lexicons";
+import { typeLabel, FIELD_TO_DWC, ATPROTO_FIELDS } from "../data/lexicons";
 import type { DwcTerm } from "../data/dwcTerms";
-import type { LexiconDef } from "../data/lexicons";
-import {
-  getDefProperties,
-  typeLabel,
-  constraintsLabel,
-  FIELD_TO_DWC,
-  ATPROTO_FIELDS,
-} from "../data/lexicons";
+import { palette, fonts } from "../theme";
+
+type FlatField = LexiconProperty & { required: boolean; def: string };
 
 interface Props {
-  defName: string;
-  defBody: LexiconDef;
-  lexiconId: string;
+  fields: Record<string, FlatField>;
   dwcTerms: Record<string, DwcTerm>;
-  defaultExpanded?: boolean;
 }
 
-export default function FieldTable({ defName, defBody, lexiconId, dwcTerms, defaultExpanded = false }: Props) {
-  const { properties, required } = getDefProperties(defBody);
-  if (Object.keys(properties).length === 0) return null;
-
-  const desc = defBody.description ?? defBody.record?.description ?? "";
-  const label = defName === "main" ? lexiconId.split(".").pop()! : defName;
-  const fieldCount = Object.keys(properties).length;
-
+export default function FieldTable({ fields, dwcTerms }: Props) {
+  const entries = Object.entries(fields);
   return (
-    <Accordion defaultExpanded={defaultExpanded} variant="outlined" disableGutters>
-      <AccordionSummary expandIcon={<ExpandMoreIcon />} id={defName}>
-        <Typography variant="subtitle1" fontWeight={600} sx={{ fontFamily: "monospace" }}>
-          #{defName}
-          {defName === "main" && (
-            <Typography component="span" color="textSecondary" sx={{ ml: 1 }}>
-              ({label})
-            </Typography>
-          )}
-        </Typography>
-        <Typography variant="caption" color="textSecondary" sx={{ ml: 2, alignSelf: "center" }}>
-          {fieldCount} fields
-        </Typography>
-      </AccordionSummary>
-      <AccordionDetails sx={{ p: 0 }}>
-        {desc && (
-          <Typography variant="body2" color="textSecondary" sx={{ px: 2, pb: 1 }}>
-            {desc}
-          </Typography>
-        )}
-
-        <TableContainer>
-          <Table size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell>Field</TableCell>
-                <TableCell>Type</TableCell>
-                <TableCell>Description</TableCell>
-                <TableCell>Constraints</TableCell>
-                <TableCell>DwC-DP</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {Object.entries(properties).map(([fieldName, prop]) => {
-                const dwcName = FIELD_TO_DWC[fieldName] ?? fieldName;
-                const dwcTerm = !ATPROTO_FIELDS.has(fieldName) ? dwcTerms[dwcName] : undefined;
-                const constraints = constraintsLabel(prop);
-
-                return (
-                  <TableRow key={fieldName}>
-                    <TableCell>
-                      <code>{fieldName}</code>
-                      {required.has(fieldName) && (
-                        <Typography component="span" color="error" fontWeight={600} sx={{ ml: 0.5 }}>*</Typography>
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      <code style={{ color: "#7c3aed" }}>{typeLabel(prop)}</code>
-                    </TableCell>
-                    <TableCell sx={{ color: "text.secondary" }}>
-                      {prop.description ?? ""}
-                    </TableCell>
-                    <TableCell>
-                      {constraints && (
-                        <Typography variant="caption" color="textSecondary">{constraints}</Typography>
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      {dwcTerm && (
-                        <MuiLink href={dwcTerm.term_iri} target="_blank" rel="noopener" variant="caption">
-                          dwc:{dwcTerm.name}
-                        </MuiLink>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </AccordionDetails>
-    </Accordion>
+    <Box
+      component="table"
+      sx={{
+        width: "100%",
+        borderCollapse: "collapse",
+        mb: "36px",
+        fontSize: "13px",
+      }}
+    >
+      <tbody>
+        {entries.map(([name, prop], i) => {
+          const dwcName = FIELD_TO_DWC[name] ?? name;
+          const dwcTerm = !ATPROTO_FIELDS.has(name) ? dwcTerms[dwcName] : undefined;
+          return (
+            <Box
+              key={name}
+              component="tr"
+              sx={{
+                borderTop: i === 0 ? `1px solid ${palette.rule}` : "none",
+                borderBottom: `1px solid ${palette.ruleSoft}`,
+              }}
+            >
+              <Box
+                component="td"
+                sx={{
+                  fontFamily: fonts.mono,
+                  fontSize: "12.5px",
+                  p: "10px 12px 10px 0",
+                  color: palette.forest,
+                  verticalAlign: "top",
+                  width: 200,
+                }}
+              >
+                {name}
+                {prop.required && (
+                  <Box component="span" sx={{ color: palette.warn, ml: "4px" }}>*</Box>
+                )}
+              </Box>
+              <Box
+                component="td"
+                sx={{ p: "10px 12px", color: palette.inkSoft, verticalAlign: "top" }}
+              >
+                {prop.description ?? ""}
+                <Box
+                  sx={{
+                    fontFamily: fonts.mono,
+                    fontSize: "10.5px",
+                    color: palette.inkFaint,
+                    mt: "3px",
+                  }}
+                >
+                  {typeLabel(prop)}
+                  {dwcTerm && (
+                    <>
+                      {" · "}
+                      <Box
+                        component="a"
+                        href={dwcTerm.term_iri}
+                        target="_blank"
+                        rel="noopener"
+                        sx={{ color: palette.inkFaint, textDecoration: "none" }}
+                      >
+                        dwc:{dwcTerm.name}
+                      </Box>
+                    </>
+                  )}
+                </Box>
+              </Box>
+            </Box>
+          );
+        })}
+      </tbody>
+    </Box>
   );
 }
