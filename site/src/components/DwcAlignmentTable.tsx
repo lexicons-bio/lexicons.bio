@@ -1,27 +1,8 @@
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-  Link as MuiLink,
-} from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import StatusBadge from "./StatusBadge";
+import { Box } from "@mui/material";
 import type { DwcTerm } from "../data/dwcTerms";
 import type { LexiconProperty } from "../data/lexicons";
-import {
-  FIELD_TO_DWC,
-  ATPROTO_FIELDS,
-  GBIF_REQUIRED,
-  GBIF_RECOMMENDED,
-  typeLabel,
-} from "../data/lexicons";
+import { FIELD_TO_DWC, ATPROTO_FIELDS } from "../data/lexicons";
+import { palette, fonts } from "../theme";
 
 interface Props {
   classes: string[];
@@ -29,154 +10,103 @@ interface Props {
   lexProps: Record<string, LexiconProperty & { required?: boolean }>;
 }
 
-export default function DwcAlignmentTable({ classes, dwcTerms, lexProps }: Props) {
-  const lexByDwc: Record<string, { fieldName: string; prop: LexiconProperty & { required?: boolean } }> = {};
-  const mappedLexFields = new Set<string>();
+interface Row {
+  term: string;
+  cls: string;
+  mapped: boolean;
+  iri?: string;
+}
 
-  for (const [fieldName, prop] of Object.entries(lexProps)) {
+export default function DwcAlignmentTable({ classes, dwcTerms, lexProps }: Props) {
+  const lexByDwc = new Map<string, string>();
+  for (const fieldName of Object.keys(lexProps)) {
     if (ATPROTO_FIELDS.has(fieldName)) continue;
     const dwcName = FIELD_TO_DWC[fieldName] ?? fieldName;
-    if (dwcName in dwcTerms) {
-      lexByDwc[dwcName] = { fieldName, prop };
-      mappedLexFields.add(fieldName);
+    if (dwcName in dwcTerms) lexByDwc.set(dwcName, fieldName);
+  }
+
+  const rows: Row[] = [];
+  const seen = new Set<string>();
+  for (const cls of classes) {
+    const clsTerms = Object.values(dwcTerms)
+      .filter((t) => t.tables.includes(cls))
+      .sort((a, b) => a.name.localeCompare(b.name));
+    for (const t of clsTerms) {
+      if (seen.has(t.name)) continue;
+      seen.add(t.name);
+      rows.push({
+        term: t.name,
+        cls,
+        mapped: lexByDwc.has(t.name),
+        iri: t.term_iri,
+      });
     }
   }
 
-  const extFields = Object.entries(lexProps).filter(
-    ([name]) => !mappedLexFields.has(name) && !ATPROTO_FIELDS.has(name)
-  );
-
   return (
-    <>
-      {classes.map((cls) => {
-        const clsTerms = Object.values(dwcTerms)
-          .filter((t) => t.tables.includes(cls))
-          .sort((a, b) => a.name.localeCompare(b.name));
-        if (clsTerms.length === 0) return null;
-
-        const mappedCount = clsTerms.filter((t) => t.name in lexByDwc).length;
-
-        return (
-          <Accordion key={cls} variant="outlined" disableGutters>
-            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-              <Typography variant="subtitle1" fontWeight={600}>
-                {cls}
-              </Typography>
-              <Typography variant="caption" color="textSecondary" sx={{ ml: 2, alignSelf: "center" }}>
-                {mappedCount}/{clsTerms.length} mapped
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails sx={{ p: 0 }}>
-              <TableContainer>
-                <Table size="small">
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>DwC-DP Term</TableCell>
-                      <TableCell>Definition</TableCell>
-                      <TableCell>Lexicon Field</TableCell>
-                      <TableCell>Type</TableCell>
-                      <TableCell>Status</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {clsTerms.map((term) => {
-                      const match = lexByDwc[term.name];
-                      return (
-                        <TableRow key={term.name}>
-                          <TableCell>
-                            <MuiLink href={term.term_iri} target="_blank" rel="noopener" variant="caption">
-                              {term.name}
-                            </MuiLink>
-                            {GBIF_REQUIRED.has(term.name) && (
-                              <> <StatusBadge status="gbif-req" /></>
-                            )}
-                            {GBIF_RECOMMENDED.has(term.name) && (
-                              <> <StatusBadge status="gbif-rec" /></>
-                            )}
-                          </TableCell>
-                          <TableCell sx={{ color: "text.secondary" }}>
-                            {term.definition}
-                          </TableCell>
-                          <TableCell>
-                            {match && (
-                              <>
-                                <code>{match.fieldName}</code>
-                                {match.prop.required && (
-                                  <Typography component="span" color="error" fontWeight={600} sx={{ ml: 0.5 }}>*</Typography>
-                                )}
-                              </>
-                            )}
-                          </TableCell>
-                          <TableCell>
-                            {match && (
-                              <code style={{ color: "#7c3aed" }}>{typeLabel(match.prop)}</code>
-                            )}
-                          </TableCell>
-                          <TableCell>
-                            <StatusBadge status={match ? "mapped" : "missing"} />
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </AccordionDetails>
-          </Accordion>
-        );
-      })}
-
-      {extFields.length > 0 && (
-        <Accordion variant="outlined" disableGutters>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="subtitle1" fontWeight={600}>
-              Lexicon-only
-            </Typography>
-            <Typography variant="caption" color="textSecondary" sx={{ ml: 2, alignSelf: "center" }}>
-              {extFields.length} fields
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails sx={{ p: 0 }}>
-            <TableContainer>
-              <Table size="small">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>DwC Term</TableCell>
-                    <TableCell>Description</TableCell>
-                    <TableCell>Lexicon Field</TableCell>
-                    <TableCell>Type</TableCell>
-                    <TableCell>Status</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {extFields
-                    .sort(([a], [b]) => a.localeCompare(b))
-                    .map(([fieldName, prop]) => (
-                      <TableRow key={fieldName}>
-                        <TableCell />
-                        <TableCell sx={{ color: "text.secondary" }}>
-                          {prop.description ?? ""}
-                        </TableCell>
-                        <TableCell>
-                          <code>{fieldName}</code>
-                          {prop.required && (
-                            <Typography component="span" color="error" fontWeight={600} sx={{ ml: 0.5 }}>*</Typography>
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          <code style={{ color: "#7c3aed" }}>{typeLabel(prop)}</code>
-                        </TableCell>
-                        <TableCell>
-                          <StatusBadge status="extension" />
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </AccordionDetails>
-        </Accordion>
-      )}
-    </>
+    <Box
+      component="table"
+      sx={{ width: "100%", borderCollapse: "collapse", fontSize: "12.5px" }}
+    >
+      <tbody>
+        {rows.map((r, i) => (
+          <Box
+            key={r.term}
+            component="tr"
+            sx={{
+              borderTop: i === 0 ? `1px solid ${palette.rule}` : "none",
+              borderBottom: `1px solid ${palette.ruleSoft}`,
+            }}
+          >
+            <Box
+              component="td"
+              sx={{
+                fontFamily: fonts.mono,
+                fontSize: "12px",
+                p: "6px 10px 6px 0",
+                color: r.mapped ? palette.ink : palette.warn,
+              }}
+            >
+              {r.iri ? (
+                <Box
+                  component="a"
+                  href={r.iri}
+                  target="_blank"
+                  rel="noopener"
+                  sx={{ color: "inherit", textDecoration: "none" }}
+                >
+                  {r.term}
+                </Box>
+              ) : (
+                r.term
+              )}
+            </Box>
+            <Box
+              component="td"
+              sx={{
+                fontFamily: fonts.mono,
+                fontSize: "11px",
+                color: palette.inkFaint,
+                p: "6px 10px",
+              }}
+            >
+              {r.cls}
+            </Box>
+            <Box
+              component="td"
+              sx={{
+                fontFamily: fonts.mono,
+                fontSize: "11px",
+                p: "6px 0 6px 10px",
+                color: r.mapped ? palette.moss : palette.warn,
+                textAlign: "right",
+              }}
+            >
+              {r.mapped ? "mapped" : "—"}
+            </Box>
+          </Box>
+        ))}
+      </tbody>
+    </Box>
   );
 }

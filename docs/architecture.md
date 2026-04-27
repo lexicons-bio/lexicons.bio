@@ -2,19 +2,7 @@
 
 ## Record Relationships
 
-The lexicons follow a **star schema** with the occurrence record at the center:
-
-```
-┌─────────────────┐    ┌─────────────┐    ┌─────────────┐
-│  identification  │──▶│  occurrence  │──▶│    media     │
-│  occurrence: ref │    │  (central)  │    │  image      │
-│  scientificName  │    │  eventDate  │    │  alt        │
-│  taxonRank       │    │  lat/lng    │    │  license    │
-│  ...             │    │  media refs │    │  ...        │
-└─────────────────┘    └─────────────┘    └─────────────┘
-```
-
-Records reference each other via `com.atproto.repo.strongRef` — a pair of URI + CID that creates an immutable, content-addressed link. Identifications reference occurrences, and occurrences reference media.
+The lexicons follow a star schema with the occurrence record at the center. Records reference each other via `com.atproto.repo.strongRef` — a pair of URI + CID that creates an immutable, content-addressed link. Identifications reference occurrences, and occurrences reference media.
 
 ## Key Design Decisions
 

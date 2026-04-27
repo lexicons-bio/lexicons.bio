@@ -1,118 +1,103 @@
-import { useContext, useState } from "react";
 import { useParams, Navigate } from "react-router-dom";
-import { Box, Typography, Divider, Link as MuiLink, Stack, Paper, ToggleButtonGroup, ToggleButton } from "@mui/material";
-import { Highlight, themes } from "prism-react-renderer";
-import { ColorModeContext } from "../App";
+import { Box } from "@mui/material";
 import FieldTable from "../components/FieldTable";
 import DwcAlignmentTable from "../components/DwcAlignmentTable";
 import { MODELS, getFlatProperties } from "../data/lexicons";
 import { dwcTerms } from "../data/dwcTerms";
+import { palette, fonts } from "../theme";
 
 export default function LexiconPage() {
-  const { mode } = useContext(ColorModeContext);
   const { slug } = useParams<{ slug: string }>();
   const model = MODELS.find((m) => m.slug === slug);
-
   if (!model) return <Navigate to="/" replace />;
 
   const lexProps = getFlatProperties(model.lexicon);
   const lexId = model.lexicon.id;
-
-  const defs = model.lexicon.defs;
-  const [exampleVariant, setExampleVariant] = useState<"short" | "full">("short");
+  const lastDot = lexId.lastIndexOf(".");
+  const nsidPrefix = lexId.slice(0, lastDot + 1);
+  const nsidName = lexId.slice(lastDot + 1);
 
   return (
     <>
-      <Box sx={{ mb: 3 }}>
-        <Typography variant="overline" color="secondary">
-          {lexId}
-        </Typography>
-        <Typography variant="h4" gutterBottom>
-          {model.name}
-        </Typography>
-        <Typography variant="body2" color="textSecondary">
-          {model.description}
-        </Typography>
-      </Box>
-
-      <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 1 }}>
-        <Typography variant="h5">Example</Typography>
-        <ToggleButtonGroup
-          value={exampleVariant}
-          exclusive
-          size="small"
-          onChange={(_, v) => { if (v) setExampleVariant(v); }}
-        >
-          <ToggleButton value="short">Short</ToggleButton>
-          <ToggleButton value="full">Full</ToggleButton>
-        </ToggleButtonGroup>
-      </Box>
-      <Highlight
-        theme={mode === "dark" ? themes.vsDark : themes.github}
-        code={exampleVariant === "short" ? model.shortExample : model.fullExample}
-        language="json"
+      <Box
+        component="h2"
+        sx={{
+          fontFamily: fonts.serif,
+          fontSize: "24px",
+          fontWeight: 600,
+          letterSpacing: "-0.005em",
+          m: "0 0 6px",
+          color: palette.ink,
+          borderTop: `1px solid ${palette.rule}`,
+          pt: "32px",
+          mt: 0,
+        }}
       >
-        {({ style, tokens, getLineProps, getTokenProps }) => (
-          <Paper
-            component="pre"
-            variant="outlined"
-            sx={{
-              ...style,
-              p: 2,
-              mt: 0,
-              mb: 4,
-              overflow: "auto",
-              fontSize: "0.8rem",
-              lineHeight: 1.6,
-            }}
-          >
-            {tokens.map((line, i) => (
-              <div key={i} {...getLineProps({ line })}>
-                {line.map((token, key) => (
-                  <span key={key} {...getTokenProps({ token })} />
-                ))}
-              </div>
-            ))}
-          </Paper>
-        )}
-      </Highlight>
+        <Box
+          component="span"
+          sx={{
+            fontFamily: fonts.mono,
+            fontSize: "14px",
+            color: palette.inkFaint,
+            fontWeight: 400,
+          }}
+        >
+          {nsidPrefix}
+        </Box>
+        <Box component="span" sx={{ fontFamily: fonts.mono }}>
+          {nsidName}
+        </Box>
+      </Box>
 
-      <Typography variant="h5" gutterBottom>
-        Lexicon Reference
-      </Typography>
+      <Box
+        component="p"
+        sx={{
+          color: palette.inkSoft,
+          fontSize: "14.5px",
+          m: "0 0 24px",
+          maxWidth: 660,
+        }}
+      >
+        {model.description}
+      </Box>
 
-      <Stack spacing={1} sx={{ mb: 4 }}>
-        {Object.entries(defs).map(([defName, defBody]) => (
-          <FieldTable
-            key={defName}
-            defName={defName}
-            defBody={defBody}
-            lexiconId={lexId}
-            dwcTerms={dwcTerms}
-          />
-        ))}
-      </Stack>
+      <FieldTable fields={lexProps} dwcTerms={dwcTerms} />
 
-      <Divider sx={{ my: 4 }} />
+      <Box
+        component="pre"
+        sx={{
+          fontFamily: fonts.mono,
+          fontSize: "11.5px",
+          background: palette.bgPanel,
+          p: "14px",
+          m: "0 0 36px",
+          overflow: "auto",
+          color: palette.ink,
+          lineHeight: 1.65,
+          border: "none",
+        }}
+      >
+        {model.fullExample}
+      </Box>
 
-      <Typography variant="h5" gutterBottom>
-        DwC-DP Alignment
-      </Typography>
-      <Typography variant="body2" color="textSecondary" gutterBottom>
-        Cross-reference against{" "}
-        <MuiLink href="https://github.com/gbif/dwc-dp" target="_blank" rel="noopener">
-          DwC-DP
-        </MuiLink>{" "}
-        table schemas. Green = mapped, red = not yet implemented.
-      </Typography>
+      <Box
+        component="h3"
+        sx={{
+          fontFamily: fonts.serif,
+          fontSize: "16px",
+          fontWeight: 600,
+          m: "0 0 8px",
+          color: palette.inkSoft,
+        }}
+      >
+        DwC-DP alignment
+      </Box>
 
-      <Stack spacing={1}>
-        <DwcAlignmentTable
-          classes={model.classes}
-          dwcTerms={dwcTerms}
-          lexProps={lexProps}
-        />
-      </Stack>
+      <DwcAlignmentTable
+        classes={model.classes}
+        dwcTerms={dwcTerms}
+        lexProps={lexProps}
+      />
     </>
   );
 }

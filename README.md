@@ -2,28 +2,15 @@
 
 AT Protocol lexicons for decentralized biodiversity observation data, aligned with [Darwin Core](https://dwc.tdwg.org/) and [GBIF](https://www.gbif.org/) standards.
 
-**[lexicons.bio](https://lexicons.bio)** — Full documentation, field references, and Darwin Core alignment tables.
-
-These lexicons define the record types used by [Observ.ing](https://observ.ing), a decentralized biodiversity observation platform built on the [AT Protocol](https://atproto.com/).
-
-## Lexicons
-
-| NSID | Description |
-|------|-------------|
-| `bio.lexicons.temp.v0-1.occurrence` | A biodiversity observation — organism at a place and time |
-| `bio.lexicons.temp.v0-1.identification` | A taxonomic determination for an observation |
-| `bio.lexicons.temp.v0-1.media` | An image associated with an observation, with alt text and license |
+See **[lexicons.bio](https://lexicons.bio)** for the full reference.
 
 ## Development
 
 ```bash
 cd site
 npm install
-npm run dev      # Start dev server
-npm run build    # Build for production
+npm run dev
 ```
-
-The site is built with Vite + React + MUI and lives in `site/`. Lexicon JSON files live in `lexicons/` and Darwin Core terms are sourced from `schemas/dwc/term_versions.csv`.
 
 ## License
 
