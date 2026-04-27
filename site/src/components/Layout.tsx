@@ -32,11 +32,13 @@ export default function Layout() {
         sx={{
           maxWidth: 760,
           mx: "auto",
-          px: 4,
+          px: { xs: 2, sm: 3, md: 4 },
           pt: "30px",
           display: "flex",
           alignItems: "baseline",
-          gap: "20px",
+          flexWrap: "wrap",
+          rowGap: "10px",
+          columnGap: { xs: "14px", sm: "20px" },
           fontSize: "13.5px",
           color: palette.inkSoft,
         }}
@@ -103,11 +105,16 @@ export default function Layout() {
           </NavLink>
         ))}
 
-        <Box sx={{ flex: 1 }} />
+        <Box sx={{ flex: 1, display: { xs: "none", sm: "block" } }} />
 
         <Box
           component="span"
-          sx={{ fontFamily: fonts.mono, fontSize: "11px", color: palette.inkFaint }}
+          sx={{
+            fontFamily: fonts.mono,
+            fontSize: "11px",
+            color: palette.inkFaint,
+            ml: { xs: "auto", sm: 0 },
+          }}
         >
           v0.1-draft
         </Box>
@@ -124,7 +131,13 @@ export default function Layout() {
 
       <Box
         component="main"
-        sx={{ maxWidth: 760, mx: "auto", px: 4, pt: "48px", pb: "56px" }}
+        sx={{
+          maxWidth: 760,
+          mx: "auto",
+          px: { xs: 2, sm: 3, md: 4 },
+          pt: { xs: "32px", sm: "48px" },
+          pb: "56px",
+        }}
       >
         <Outlet />
       </Box>
@@ -134,7 +147,7 @@ export default function Layout() {
         sx={{
           maxWidth: 760,
           mx: "auto",
-          px: 4,
+          px: { xs: 2, sm: 3, md: 4 },
           pt: 3,
           pb: 6,
           borderTop: `1px solid ${palette.rule}`,
@@ -143,7 +156,8 @@ export default function Layout() {
           color: palette.inkFaint,
           display: "flex",
           flexWrap: "wrap",
-          gap: 3,
+          rowGap: 1.5,
+          columnGap: { xs: 2, sm: 3 },
           alignItems: "baseline",
         }}
       >

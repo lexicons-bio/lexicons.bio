@@ -29,55 +29,40 @@ export default function Overview() {
       </Box>
 
       <Box
-        component="table"
         sx={{
-          width: "100%",
-          borderCollapse: "collapse",
           mb: "36px",
           fontSize: "13.5px",
         }}
       >
-        <tbody>
-          {MODELS.map((m) => (
+        {MODELS.map((m) => (
+          <Box
+            key={m.slug}
+            sx={{
+              borderBottom: `1px solid ${palette.ruleSoft}`,
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              alignItems: { sm: "flex-start" },
+              gap: { xs: "4px", sm: "14px" },
+              py: "12px",
+            }}
+          >
             <Box
-              key={m.slug}
-              component="tr"
-              sx={{ borderBottom: `1px solid ${palette.ruleSoft}` }}
+              component={Link}
+              to={`/${m.slug}`}
+              sx={{
+                fontFamily: fonts.mono,
+                fontSize: "12.5px",
+                color: palette.link,
+                textDecoration: "none",
+                flex: { sm: "0 0 260px" },
+                overflowWrap: "anywhere",
+              }}
             >
-              <Box
-                component="td"
-                sx={{
-                  p: "12px 14px 12px 0",
-                  verticalAlign: "top",
-                  width: 260,
-                }}
-              >
-                <Box
-                  component={Link}
-                  to={`/${m.slug}`}
-                  sx={{
-                    fontFamily: fonts.mono,
-                    fontSize: "12.5px",
-                    color: palette.link,
-                    textDecoration: "none",
-                  }}
-                >
-                  {m.lexicon.id}
-                </Box>
-              </Box>
-              <Box
-                component="td"
-                sx={{
-                  p: "12px 14px",
-                  color: palette.inkSoft,
-                  verticalAlign: "top",
-                }}
-              >
-                {m.description}
-              </Box>
+              {m.lexicon.id}
             </Box>
-          ))}
-        </tbody>
+            <Box sx={{ color: palette.inkSoft, flex: 1 }}>{m.description}</Box>
+          </Box>
+        ))}
       </Box>
 
       <SchemaGraph />
