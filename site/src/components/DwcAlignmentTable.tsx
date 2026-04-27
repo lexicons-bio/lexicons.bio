@@ -44,69 +44,66 @@ export default function DwcAlignmentTable({ classes, dwcTerms, lexProps }: Props
   }
 
   return (
-    <Box
-      component="table"
-      sx={{ width: "100%", borderCollapse: "collapse", fontSize: "12.5px" }}
-    >
-      <tbody>
-        {rows.map((r, i) => (
+    <Box sx={{ fontSize: "12.5px", borderTop: `1px solid ${palette.rule}` }}>
+      {rows.map((r) => (
+        <Box
+          key={r.term}
+          sx={{
+            borderBottom: `1px solid ${palette.ruleSoft}`,
+            display: "flex",
+            alignItems: "baseline",
+            gap: { xs: "8px", sm: "10px" },
+            py: "6px",
+          }}
+        >
           <Box
-            key={r.term}
-            component="tr"
             sx={{
-              borderTop: i === 0 ? `1px solid ${palette.rule}` : "none",
-              borderBottom: `1px solid ${palette.ruleSoft}`,
+              fontFamily: fonts.mono,
+              fontSize: "12px",
+              color: r.mapped ? palette.ink : palette.warn,
+              flex: 1,
+              minWidth: 0,
+              overflowWrap: "anywhere",
             }}
           >
-            <Box
-              component="td"
-              sx={{
-                fontFamily: fonts.mono,
-                fontSize: "12px",
-                p: "6px 10px 6px 0",
-                color: r.mapped ? palette.ink : palette.warn,
-              }}
-            >
-              {r.iri ? (
-                <Box
-                  component="a"
-                  href={r.iri}
-                  target="_blank"
-                  rel="noopener"
-                  sx={{ color: "inherit", textDecoration: "none" }}
-                >
-                  {r.term}
-                </Box>
-              ) : (
-                r.term
-              )}
-            </Box>
-            <Box
-              component="td"
-              sx={{
-                fontFamily: fonts.mono,
-                fontSize: "11px",
-                color: palette.inkFaint,
-                p: "6px 10px",
-              }}
-            >
-              {r.cls}
-            </Box>
-            <Box
-              component="td"
-              sx={{
-                fontFamily: fonts.mono,
-                fontSize: "11px",
-                p: "6px 0 6px 10px",
-                color: r.mapped ? palette.moss : palette.warn,
-                textAlign: "right",
-              }}
-            >
-              {r.mapped ? "mapped" : "—"}
-            </Box>
+            {r.iri ? (
+              <Box
+                component="a"
+                href={r.iri}
+                target="_blank"
+                rel="noopener"
+                sx={{ color: "inherit", textDecoration: "none" }}
+              >
+                {r.term}
+              </Box>
+            ) : (
+              r.term
+            )}
           </Box>
-        ))}
-      </tbody>
+          <Box
+            sx={{
+              fontFamily: fonts.mono,
+              fontSize: "11px",
+              color: palette.inkFaint,
+              display: { xs: "none", sm: "block" },
+              flex: "0 0 auto",
+            }}
+          >
+            {r.cls}
+          </Box>
+          <Box
+            sx={{
+              fontFamily: fonts.mono,
+              fontSize: "11px",
+              color: r.mapped ? palette.moss : palette.warn,
+              textAlign: "right",
+              flex: "0 0 auto",
+            }}
+          >
+            {r.mapped ? "mapped" : "—"}
+          </Box>
+        </Box>
+      ))}
     </Box>
   );
 }

@@ -23,7 +23,7 @@ export default function LexiconPage() {
         component="h2"
         sx={{
           fontFamily: fonts.serif,
-          fontSize: "24px",
+          fontSize: { xs: "20px", sm: "24px" },
           fontWeight: 600,
           letterSpacing: "-0.005em",
           m: "0 0 6px",
@@ -31,6 +31,7 @@ export default function LexiconPage() {
           borderTop: `1px solid ${palette.rule}`,
           pt: "32px",
           mt: 0,
+          overflowWrap: "anywhere",
         }}
       >
         <Box

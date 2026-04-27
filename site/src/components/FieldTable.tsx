@@ -15,77 +15,72 @@ export default function FieldTable({ fields, dwcTerms }: Props) {
   const entries = Object.entries(fields);
   return (
     <Box
-      component="table"
       sx={{
-        width: "100%",
-        borderCollapse: "collapse",
         mb: "36px",
         fontSize: "13px",
+        borderTop: `1px solid ${palette.rule}`,
       }}
     >
-      <tbody>
-        {entries.map(([name, prop], i) => {
-          const dwcName = FIELD_TO_DWC[name] ?? name;
-          const dwcTerm = !ATPROTO_FIELDS.has(name) ? dwcTerms[dwcName] : undefined;
-          return (
+      {entries.map(([name, prop]) => {
+        const dwcName = FIELD_TO_DWC[name] ?? name;
+        const dwcTerm = !ATPROTO_FIELDS.has(name) ? dwcTerms[dwcName] : undefined;
+        return (
+          <Box
+            key={name}
+            sx={{
+              borderBottom: `1px solid ${palette.ruleSoft}`,
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              alignItems: { sm: "flex-start" },
+              gap: { xs: "2px", sm: "12px" },
+              py: "10px",
+            }}
+          >
             <Box
-              key={name}
-              component="tr"
               sx={{
-                borderTop: i === 0 ? `1px solid ${palette.rule}` : "none",
-                borderBottom: `1px solid ${palette.ruleSoft}`,
+                fontFamily: fonts.mono,
+                fontSize: "12.5px",
+                color: palette.forest,
+                flex: { sm: "0 0 200px" },
+                overflowWrap: "anywhere",
               }}
             >
+              {name}
+              {prop.required && (
+                <Box component="span" sx={{ color: palette.warn, ml: "4px" }}>*</Box>
+              )}
+            </Box>
+            <Box sx={{ color: palette.inkSoft, flex: 1, minWidth: 0 }}>
+              {prop.description ?? ""}
               <Box
-                component="td"
                 sx={{
                   fontFamily: fonts.mono,
-                  fontSize: "12.5px",
-                  p: "10px 12px 10px 0",
-                  color: palette.forest,
-                  verticalAlign: "top",
-                  width: 200,
+                  fontSize: "10.5px",
+                  color: palette.inkFaint,
+                  mt: "3px",
+                  wordBreak: "break-word",
                 }}
               >
-                {name}
-                {prop.required && (
-                  <Box component="span" sx={{ color: palette.warn, ml: "4px" }}>*</Box>
+                {typeLabel(prop)}
+                {dwcTerm && (
+                  <>
+                    {" · "}
+                    <Box
+                      component="a"
+                      href={dwcTerm.term_iri}
+                      target="_blank"
+                      rel="noopener"
+                      sx={{ color: palette.inkFaint, textDecoration: "none" }}
+                    >
+                      dwc:{dwcTerm.name}
+                    </Box>
+                  </>
                 )}
               </Box>
-              <Box
-                component="td"
-                sx={{ p: "10px 12px", color: palette.inkSoft, verticalAlign: "top" }}
-              >
-                {prop.description ?? ""}
-                <Box
-                  sx={{
-                    fontFamily: fonts.mono,
-                    fontSize: "10.5px",
-                    color: palette.inkFaint,
-                    mt: "3px",
-                  }}
-                >
-                  {typeLabel(prop)}
-                  {dwcTerm && (
-                    <>
-                      {" · "}
-                      <Box
-                        component="a"
-                        href={dwcTerm.term_iri}
-                        target="_blank"
-                        rel="noopener"
-                        sx={{ color: palette.inkFaint, textDecoration: "none" }}
-                      >
-                        dwc:{dwcTerm.name}
-                      </Box>
-                    </>
-                  )}
-                </Box>
-              </Box>
             </Box>
-          );
-        })}
-      </tbody>
+          </Box>
+        );
+      })}
     </Box>
   );
 }
