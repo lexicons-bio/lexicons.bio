@@ -12,6 +12,7 @@ These lexicons define the record types used by [Observ.ing](https://observ.ing),
 |------|-------------|
 | `bio.lexicons.temp.v0-1.occurrence` | A biodiversity observation — organism at a place and time |
 | `bio.lexicons.temp.v0-1.identification` | A taxonomic determination for an observation |
+| `bio.lexicons.temp.v0-1.media` | An image associated with an observation, with alt text and license |
 
 ## Development
 
