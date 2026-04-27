@@ -1,6 +1,6 @@
-import occurrenceJson from "../../../lexicons/bio/lexicons/temp/occurrence.json";
-import identificationJson from "../../../lexicons/bio/lexicons/temp/identification.json";
-import mediaJson from "../../../lexicons/bio/lexicons/temp/media.json";
+import occurrenceJson from "../../../lexicons/bio/lexicons/temp/v0-1/occurrence.json";
+import identificationJson from "../../../lexicons/bio/lexicons/temp/v0-1/identification.json";
+import mediaJson from "../../../lexicons/bio/lexicons/temp/v0-1/media.json";
 
 export interface LexiconDef {
   type: string;
@@ -61,7 +61,7 @@ export const MODELS: ModelConfig[] = [
       "A biodiversity observation — an organism at a place and time.",
     shortExample: JSON.stringify(
       {
-        $type: "bio.lexicons.temp.occurrence",
+        $type: "bio.lexicons.temp.v0-1.occurrence",
         eventDate: "2024-06-12T08:45:00Z",
         decimalLatitude: "37.8716",
         decimalLongitude: "-122.2727",
@@ -71,14 +71,14 @@ export const MODELS: ModelConfig[] = [
     ),
     fullExample: JSON.stringify(
       {
-        $type: "bio.lexicons.temp.occurrence",
+        $type: "bio.lexicons.temp.v0-1.occurrence",
         eventDate: "2024-06-12T08:45:00Z",
         decimalLatitude: "37.8716",
         decimalLongitude: "-122.2727",
         coordinateUncertaintyInMeters: 15,
         associatedMedia: [
           {
-            uri: "at://did:plc:abc123.../bio.lexicons.temp.media/3k...",
+            uri: "at://did:plc:abc123.../bio.lexicons.temp.v0-1.media/3k...",
             cid: "bafyrei...",
           },
         ],
@@ -96,7 +96,7 @@ export const MODELS: ModelConfig[] = [
       "An image associated with an observation, with alt text and license.",
     shortExample: JSON.stringify(
       {
-        $type: "bio.lexicons.temp.media",
+        $type: "bio.lexicons.temp.v0-1.media",
         image: {
           $type: "blob",
           ref: { $link: "bafyrei..." },
@@ -111,7 +111,7 @@ export const MODELS: ModelConfig[] = [
     ),
     fullExample: JSON.stringify(
       {
-        $type: "bio.lexicons.temp.media",
+        $type: "bio.lexicons.temp.v0-1.media",
         image: {
           $type: "blob",
           ref: { $link: "bafyrei..." },
@@ -134,9 +134,9 @@ export const MODELS: ModelConfig[] = [
     description: "A taxonomic determination for an observation.",
     shortExample: JSON.stringify(
       {
-        $type: "bio.lexicons.temp.identification",
+        $type: "bio.lexicons.temp.v0-1.identification",
         occurrence: {
-          uri: "at://did:plc:abc123.../bio.lexicons.temp.occurrence/3k...",
+          uri: "at://did:plc:abc123.../bio.lexicons.temp.v0-1.occurrence/3k...",
           cid: "bafyrei...",
         },
         scientificName: "Aphelocoma californica",
@@ -147,9 +147,9 @@ export const MODELS: ModelConfig[] = [
     ),
     fullExample: JSON.stringify(
       {
-        $type: "bio.lexicons.temp.identification",
+        $type: "bio.lexicons.temp.v0-1.identification",
         occurrence: {
-          uri: "at://did:plc:abc123.../bio.lexicons.temp.occurrence/3k...",
+          uri: "at://did:plc:abc123.../bio.lexicons.temp.v0-1.occurrence/3k...",
           cid: "bafyrei...",
         },
         scientificName: "Aphelocoma californica (Vigors, 1839)",

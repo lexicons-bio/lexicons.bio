@@ -10,8 +10,8 @@ These lexicons define the record types used by [Observ.ing](https://observ.ing),
 
 | NSID | Description |
 |------|-------------|
-| `bio.lexicons.temp.occurrence` | A biodiversity observation — organism at a place and time |
-| `bio.lexicons.temp.identification` | A taxonomic determination for an observation |
+| `bio.lexicons.temp.v0-1.occurrence` | A biodiversity observation — organism at a place and time |
+| `bio.lexicons.temp.v0-1.identification` | A taxonomic determination for an observation |
 
 ## Development
 
