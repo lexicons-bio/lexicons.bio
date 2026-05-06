@@ -76,6 +76,8 @@ export const MODELS: ModelConfig[] = [
         decimalLatitude: "37.8716",
         decimalLongitude: "-122.2727",
         coordinateUncertaintyInMeters: 15,
+        taxonID: "https://www.gbif.org/species/2880791",
+        identificationID: "at://did:plc:abc123.../bio.lexicons.temp.v0-1.identification/3k...",
         associatedMedia: [
           {
             uri: "at://did:plc:abc123.../bio.lexicons.temp.v0-1.media/3k...",
