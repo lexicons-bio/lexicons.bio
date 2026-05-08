@@ -35,6 +35,27 @@
               "ref": "com.atproto.repo.strongRef"
             },
             "maxLength": 10
+          },
+          "surveyTargetID": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "The SurveyTarget this Occurrence was intended to satisfy. Expresses observer intent."
+          },
+          "eventID": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "Event (e.g. a Survey) this Occurrence was a part of (sensu DarwinCore dwc:eventID)."
+          },
+          "organismQuantity": {
+            "type": "string",
+            "description": "The quantity of the organism present at the time of the Occurrence. Generally an integer or float but may be categorical, e.g. 'many' or '10-100' (sensu DarwinCore dwc:organismQuantity).",
+            "minimum": 0
+          },
+          "organismQuantityType": {
+            "type": "string",
+            "description": "The type of quantification system used for the quantity of organisms (sensu DarwinCore dwc:organismQuantityType).",
+            "knownValues": ["individual-count", "percent-cover"],
+            "default": "individual-count"
           }
         }
       }

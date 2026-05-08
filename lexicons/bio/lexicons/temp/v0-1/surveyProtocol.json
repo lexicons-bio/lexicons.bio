@@ -1,0 +1,45 @@
+{
+  "lexicon": 1,
+  "id": "bio.lexicons.temp.v0-1.surveyProtocol",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "Defines the contents of a Survey, including what participants should look for and what fields they must fill out.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["title", "description", "createdAt"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Name of the protocol (sensu DCMI dc:title)."
+          },
+          "description": {
+            "type": "string",
+            "description": "Narrative description of the protocol (sensu DCMI dc:description)."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime",
+            "description": "Client-declared timestamp when this protocol was originally created."
+          },
+          "requiredFields": {
+            "type": "array",
+            "description": "List of fields required to complete the survey. Known values: 'eventDate', 'eventDuration'.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "locationOptions": {
+            "type": "array",
+            "description": "Controlled list of locations where surveys may occur. When present, surveyors must choose from this list rather than entering a free-form location name.",
+            "items": {
+              "type": "ref",
+              "ref": "org.atgeo.place"
+            }
+          }
+        }
+      }
+    }
+  }
+}
