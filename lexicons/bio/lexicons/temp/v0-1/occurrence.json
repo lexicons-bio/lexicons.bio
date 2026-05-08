@@ -39,12 +39,12 @@
           "taxonID": {
             "type": "string",
             "format": "uri",
-            "description": "Identified taxon the occurrence user has accepted, preferably a stable URI (e.g. a GBIF species URI). Derived from identification specified by identificationID. Should not be present withough identificationID. Represents a more specific version of the DarwinCore equivalent."
+            "description": "Identified taxon the occurrence user has accepted, preferably a stable URI (e.g. a GBIF species URI). Derived from identification specified by acceptedIdentificationID. Should not be present without acceptedIdentificationID. Represents a more specific version of the DarwinCore equivalent (Darwin Core dwc:taxonID)."
           },
-          "identificationID": {
-            "type": "string",
-            "format": "at-uri",
-            "description": "Identification accepted by the occurrence user as the source of taxonID. Should not be present without taxonID."
+          "acceptedIdentificationID": {
+            "type": "ref",
+            "ref": "com.atproto.repo.strongRef",
+            "description": "Identification accepted by the occurrence user as the source of taxonID. Should not be present without taxonID. Indirectly maps to Darwin Core dwc:isAcceptedIdentification."
           }
         }
       }
