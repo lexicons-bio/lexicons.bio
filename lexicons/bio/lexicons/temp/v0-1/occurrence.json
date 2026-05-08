@@ -44,7 +44,7 @@
           "acceptedIdentificationID": {
             "type": "ref",
             "ref": "com.atproto.repo.strongRef",
-            "description": "Strong reference to the Identification accepted by the occurrence user as the source of taxonID. Should not be present without taxonID. A strongRef is used so that if the underlying Identification record changes (e.g. its taxon is updated), consumers can detect that taxonID may need to be re-derived. Indirectly maps to Darwin Core dwc:isAcceptedIdentification — because in ATProto only the Identification's author can edit that flag, the relationship is instead expressed from the Occurrence side."
+            "description": "Identification accepted by the occurrence user as the source of taxonID. Should not be present without taxonID. Indirectly maps to Darwin Core dwc:isAcceptedIdentification."
           }
         }
       }
