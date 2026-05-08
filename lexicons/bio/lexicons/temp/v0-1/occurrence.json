@@ -29,7 +29,7 @@
           },
           "media": {
             "type": "array",
-            "description": "Strong references to media records documenting the observation (Darwin Core dwc:associatedMedia).",
+            "description": "Strong references to media records documenting the observation. Conceptually maps to the DwC-DP Media table (https://gbif.github.io/dwc-dp/qrg/#Media), which replaced the legacy dwc:associatedMedia term.",
             "items": {
               "type": "ref",
               "ref": "com.atproto.repo.strongRef"
