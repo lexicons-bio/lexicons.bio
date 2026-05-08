@@ -77,7 +77,10 @@ export const MODELS: ModelConfig[] = [
         decimalLongitude: "-122.2727",
         coordinateUncertaintyInMeters: 15,
         taxonID: "https://www.gbif.org/species/2880791",
-        identificationID: "at://did:plc:abc123.../bio.lexicons.temp.v0-1.identification/3k...",
+        acceptedIdentificationID: {
+          uri: "at://did:plc:abc123.../bio.lexicons.temp.v0-1.identification/3k...",
+          cid: "bafyrei...",
+        },
         associatedMedia: [
           {
             uri: "at://did:plc:abc123.../bio.lexicons.temp.v0-1.media/3k...",
@@ -156,6 +159,7 @@ export const MODELS: ModelConfig[] = [
         },
         scientificName: "Aphelocoma californica (Vigors, 1839)",
         taxonRank: "species",
+        taxonID: "https://www.gbif.org/species/2880791",
         identificationRemarks:
           "Blue head and wings, white eyebrow, gray-brown back — classic California Scrub-Jay",
       },

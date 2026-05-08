@@ -39,12 +39,12 @@
           "taxonID": {
             "type": "string",
             "format": "uri",
-            "description": "Identified taxon the occurrence user has accepted, preferably a stable URI (e.g. a GBIF species URI). Derived from identification specified by identificationID. Should not be present withough identificationID. Represents a more specific version of the DarwinCore equivalent."
+            "description": "Identified taxon the occurrence user has accepted, preferably a stable URI (e.g. a GBIF species URI). Derived from identification specified by acceptedIdentificationID. Should not be present without acceptedIdentificationID. Represents a more specific version of the DarwinCore equivalent (Darwin Core dwc:taxonID)."
           },
-          "identificationID": {
-            "type": "string",
-            "format": "at-uri",
-            "description": "Identification accepted by the occurrence user as the source of taxonID. Should not be present without taxonID."
+          "acceptedIdentificationID": {
+            "type": "ref",
+            "ref": "com.atproto.repo.strongRef",
+            "description": "Strong reference to the Identification accepted by the occurrence user as the source of taxonID. Should not be present without taxonID. A strongRef is used so that if the underlying Identification record changes (e.g. its taxon is updated), consumers can detect that taxonID may need to be re-derived. Indirectly maps to Darwin Core dwc:isAcceptedIdentification — because in ATProto only the Identification's author can edit that flag, the relationship is instead expressed from the Occurrence side."
           }
         }
       }
