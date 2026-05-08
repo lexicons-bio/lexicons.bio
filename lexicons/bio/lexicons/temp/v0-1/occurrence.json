@@ -29,7 +29,7 @@
           },
           "media": {
             "type": "array",
-            "description": "Strong references to media records documenting the observation. Replaces the old Darwin Core dwc:associatedMedia term, which DwC-DP dropped in favor of an occurrence-media join.",
+            "description": "Strong references to media records documenting the observation (Darwin Core dwc:associatedMedia).",
             "items": {
               "type": "ref",
               "ref": "com.atproto.repo.strongRef"
