@@ -27,9 +27,9 @@
             "description": "The horizontal distance (in meters) from the given coordinates describing the smallest circle containing the whole of the Location (Darwin Core dwc:coordinateUncertaintyInMeters).",
             "minimum": 0
           },
-          "associatedMedia": {
+          "media": {
             "type": "array",
-            "description": "Strong references to media records documenting the observation (Darwin Core dwc:associatedMedia).",
+            "description": "Strong references to media records documenting the observation. Replaces the old Darwin Core dwc:associatedMedia term, which DwC-DP dropped in favor of an occurrence-media join.",
             "items": {
               "type": "ref",
               "ref": "com.atproto.repo.strongRef"
