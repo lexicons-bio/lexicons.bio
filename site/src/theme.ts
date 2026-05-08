@@ -38,6 +38,9 @@ export const theme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
+        html: {
+          overflowY: "scroll",
+        },
         body: {
           background: palette.bg,
           color: palette.ink,
