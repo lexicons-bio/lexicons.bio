@@ -8,7 +8,7 @@
       "key": "tid",
       "record": {
         "type": "object",
-        "required": ["protocol", "createdAt", "location"],
+        "required": ["protocol", "createdAt"],
         "properties": {
           "protocol": {
             "type": "ref",
@@ -38,10 +38,12 @@
           },
           "eventDurationUnit": {
             "type": "string",
-            "description": "Unit of eventDurationValue (sensu Humboldt eco:eventDurationUnit). Known values: 'minutes', 'hours', 'days'."
+            "description": "Unit of eventDurationValue (sensu Humboldt eco:eventDurationUnit).",
+            "knownValues": ["minutes", "hours", "days"]
           },
           "eventDurationValue": {
             "type": "integer",
+            "minimum": 0,
             "description": "Duration of the survey in units specified by eventDurationUnit (sensu Humboldt eco:eventDurationValue)."
           },
           "location": {

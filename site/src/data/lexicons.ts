@@ -1,6 +1,9 @@
 import occurrenceJson from "../../../lexicons/bio/lexicons/temp/v0-1/occurrence.json";
 import identificationJson from "../../../lexicons/bio/lexicons/temp/v0-1/identification.json";
 import mediaJson from "../../../lexicons/bio/lexicons/temp/v0-1/media.json";
+import surveyJson from "../../../lexicons/bio/lexicons/temp/v0-1/survey.json";
+import surveyProtocolJson from "../../../lexicons/bio/lexicons/temp/v0-1/surveyProtocol.json";
+import surveyTargetJson from "../../../lexicons/bio/lexicons/temp/v0-1/surveyTarget.json";
 
 export interface LexiconDef {
   type: string;
@@ -23,6 +26,7 @@ export interface LexiconProperty {
   format?: string;
   description?: string;
   ref?: string;
+  refs?: string[];
   maxLength?: number;
   minimum?: number;
   maximum?: number;
@@ -161,6 +165,159 @@ export const MODELS: ModelConfig[] = [
       2
     ),
   },
+  {
+    name: "Survey",
+    slug: "survey",
+    lexicon: surveyJson as unknown as Lexicon,
+    classes: ["Survey"],
+    description:
+      "An event where organism occurrence data is collected according to a Protocol.",
+    shortExample: JSON.stringify(
+      {
+        $type: "bio.lexicons.temp.v0-1.survey",
+        protocol: {
+          uri: "at://did:plc:abc123.../bio.lexicons.temp.v0-1.surveyProtocol/3k...",
+          cid: "bafyrei...",
+        },
+        createdAt: "2024-06-12T08:45:00Z",
+      },
+      null,
+      2
+    ),
+    fullExample: JSON.stringify(
+      {
+        $type: "bio.lexicons.temp.v0-1.survey",
+        protocol: {
+          uri: "at://did:plc:abc123.../bio.lexicons.temp.v0-1.surveyProtocol/3k...",
+          cid: "bafyrei...",
+        },
+        createdAt: "2024-06-12T08:45:00Z",
+        location: {
+          $type: "org.atgeo.place",
+          name: "Point Reyes National Seashore",
+          locations: [
+            {
+              $type: "community.lexicon.location.geo",
+              latitude: "38.0956",
+              longitude: "-122.8792",
+            },
+          ],
+        },
+        eventDate: "2024-06-12",
+        eventDurationValue: 90,
+        eventDurationUnit: "minutes",
+        surveyorCount: 3,
+        samplingPerformedByID: ["did:plc:def456...", "did:plc:ghi789..."],
+      },
+      null,
+      2
+    ),
+  },
+  {
+    name: "SurveyProtocol",
+    slug: "surveyProtocol",
+    lexicon: surveyProtocolJson as unknown as Lexicon,
+    classes: ["Survey Protocol"],
+    description:
+      "Defines the contents of a Survey, including what participants should look for and what fields they must fill out.",
+    shortExample: JSON.stringify(
+      {
+        $type: "bio.lexicons.temp.v0-1.surveyProtocol",
+        title: "Breeding Bird Atlas Block Survey",
+        description: "Standardized point-count protocol for breeding bird atlas blocks.",
+        createdAt: "2024-01-15T00:00:00Z",
+      },
+      null,
+      2
+    ),
+    fullExample: JSON.stringify(
+      {
+        $type: "bio.lexicons.temp.v0-1.surveyProtocol",
+        title: "Breeding Bird Atlas Block Survey",
+        description: "Standardized point-count protocol for breeding bird atlas blocks.",
+        createdAt: "2024-01-15T00:00:00Z",
+        requiredFields: ["eventDate", "eventDuration"],
+        locationOptions: [
+          {
+            $type: "org.atgeo.place",
+            name: "Block 37N-122W-A",
+          },
+          {
+            $type: "org.atgeo.place",
+            name: "Block 37N-122W-B",
+            locations: [
+              {
+                $type: "community.lexicon.location.geo",
+                latitude: "37.8031",
+                longitude: "-122.2576",
+              },
+            ],
+          },
+          {
+            $type: "org.atgeo.place",
+            name: "Block 37N-122W-C",
+            locations: [
+              {
+                $type: "community.lexicon.location.geo",
+                latitude: "37.811890",
+                longitude: "-122.269034",
+              },
+              {
+                $type: "community.lexicon.location.address",
+                country: "US",
+                region: "CA",
+                locality: "Oakland",
+                postalCode: "94609",
+                street: "Telegraph Ave & West Grand Ave",
+              },
+            ],
+          },
+        ],
+      },
+      null,
+      2
+    ),
+  },
+  {
+    name: "SurveyTarget",
+    slug: "surveyTarget",
+    lexicon: surveyTargetJson as unknown as Lexicon,
+    classes: ["Survey Target"],
+    description: "A subject for a Survey. Belongs to a single Protocol.",
+    shortExample: JSON.stringify(
+      {
+        $type: "bio.lexicons.temp.v0-1.surveyTarget",
+        protocol: "at://did:plc:abc123.../bio.lexicons.temp.v0-1.surveyProtocol/3k...",
+        scope: [
+          {
+            $type: "bio.lexicons.temp.v0-1.surveyTarget#taxonScope",
+            scientificName: "Aphelocoma californica",
+            taxonRank: "species",
+          },
+        ],
+      },
+      null,
+      2
+    ),
+    fullExample: JSON.stringify(
+      {
+        $type: "bio.lexicons.temp.v0-1.surveyTarget",
+        protocol: "at://did:plc:abc123.../bio.lexicons.temp.v0-1.surveyProtocol/3k...",
+        scope: [
+          {
+            $type: "bio.lexicons.temp.v0-1.surveyTarget#taxonScope",
+            scientificName: "Aphelocoma californica",
+            taxonRank: "species",
+            vernacularName: "California Scrub-Jay",
+            kingdom: "Animalia",
+            taxonID: "https://www.gbif.org/species/2482414",
+          },
+        ],
+      },
+      null,
+      2
+    ),
+  },
 ];
 
 /** Lexicon field -> DwC term_localName (when names differ) */
@@ -231,7 +388,11 @@ export function typeLabel(prop: LexiconProperty): string {
   if (t === "ref") {
     const ref = prop.ref ?? "";
     if (ref.startsWith("#")) return ref;
-    return ref.includes(".") ? ref.split(".").pop()! : "ref";
+    return ref || "ref";
+  }
+  if (t === "union") {
+    const refs = prop.refs ?? [];
+    return refs.length ? `(${refs.join(" | ")})` : "union";
   }
   if (t === "array") {
     const items = prop.items;
@@ -240,7 +401,11 @@ export function typeLabel(prop: LexiconProperty): string {
       if (inner === "ref") {
         const ref = items.ref ?? "";
         if (ref.startsWith("#")) return `${ref}[]`;
-        return ref.includes(".") ? `${ref.split(".").pop()!}[]` : "ref[]";
+        return ref ? `${ref}[]` : "ref[]";
+      }
+      if (inner === "union") {
+        const refs = items.refs ?? [];
+        return refs.length ? `(${refs.join(" | ")})[]` : "union[]";
       }
       return inner ? `${inner}[]` : "array";
     }

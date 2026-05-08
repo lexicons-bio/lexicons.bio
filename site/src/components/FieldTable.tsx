@@ -77,6 +77,20 @@ export default function FieldTable({ fields, dwcTerms }: Props) {
                   </>
                 )}
               </Box>
+              {prop.knownValues && (
+                <Box
+                  sx={{
+                    fontFamily: fonts.mono,
+                    fontSize: "10.5px",
+                    color: palette.inkFaint,
+                    mt: "3px",
+                    wordBreak: "break-word",
+                  }}
+                >
+                  <strong>{"Known values: "}</strong>
+                  {prop.knownValues.join(", ")}
+                </Box>
+              )}
             </Box>
           </Box>
         );
