@@ -7,7 +7,7 @@
   "comments": "",
   "examples": "",
   "namespace": "",
-  "dcterms:isVersionOf": "http://example.com/term-pending//survey-protocol",
+  "dcterms:isVersionOf": "http://example.com/term-pending/survey-protocol",
   "dcterms:references": "",
   "rdfs:comment": "",
   "fields": [

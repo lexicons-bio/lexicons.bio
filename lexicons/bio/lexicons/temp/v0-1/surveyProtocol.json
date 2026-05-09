@@ -31,11 +31,11 @@
           },
           "requiredFields": {
             "type": "array",
-            "description": "List of fields required to complete the survey.",
+            "description": "List of fields required to complete the survey. Note that eventDurationUnit and eventDurationValue should be required together.",
             "items": {
-              "type": "string"
-            },
-            "knownValues": ["eventDate", "eventDuration"]
+              "type": "string",
+              "knownValues": ["eventDate", "eventDurationValue", "eventDurationUnit"]
+            }
           },
           "locationOptions": {
             "type": "array",

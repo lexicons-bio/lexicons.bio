@@ -238,7 +238,7 @@ export const MODELS: ModelConfig[] = [
         protocolDescription: "Standardized point-count protocol for breeding bird atlas blocks.",
         protocolType: "presence-absence",
         createdAt: "2024-01-15T00:00:00Z",
-        requiredFields: ["eventDate", "eventDuration"],
+        requiredFields: ["eventDate", "eventDurationValue", "eventDurationUnit"],
         locationOptions: [
           {
             $type: "org.atgeo.place",

@@ -482,7 +482,7 @@
       "title": "Abundance Cap",
       "description": "The reported maximum number of dwc:Organisms.",
       "comments": "",
-      "examples": "`300; `700`",
+      "examples": "`300`; `700`",
       "type": "integer",
       "format": "default",
       "namespace": "eco",

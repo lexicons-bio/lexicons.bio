@@ -48,8 +48,7 @@
           },
           "organismQuantity": {
             "type": "string",
-            "description": "The quantity of the organism present at the time of the Occurrence. Generally an integer or float but may be categorical, e.g. 'many' or '10-100' (sensu DarwinCore dwc:organismQuantity).",
-            "minimum": 0
+            "description": "The quantity of the organism present at the time of the Occurrence. Generally an integer or float but may be categorical, e.g. 'many' or '10-100' (sensu DarwinCore dwc:organismQuantity)."
           },
           "organismQuantityType": {
             "type": "string",
