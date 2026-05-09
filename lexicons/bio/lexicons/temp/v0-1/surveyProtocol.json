@@ -8,15 +8,21 @@
       "key": "tid",
       "record": {
         "type": "object",
-        "required": ["title", "description", "createdAt"],
+        "required": ["protocolName", "protocolDescription", "createdAt"],
         "properties": {
-          "title": {
+          "protocolName": {
             "type": "string",
             "description": "Name of the protocol (sensu DCMI dc:title)."
           },
-          "description": {
+          "protocolDescription": {
             "type": "string",
             "description": "Narrative description of the protocol (sensu DCMI dc:description)."
+          },
+          "protocolType": {
+            "type": "string",
+            "description": "Type of survey to conduct",
+            "knownValues": ["census", "presence-absence"],
+            "default": "census"
           },
           "createdAt": {
             "type": "string",

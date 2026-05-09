@@ -53,6 +53,8 @@ export interface ModelConfig {
   description: string;
   shortExample: string;
   fullExample: string;
+  /** Note on how/why this lexicon diverges from its DarwinCore counterpart(s). */
+  dwcNote?: string;
 }
 
 export const MODELS: ModelConfig[] = [
@@ -170,8 +172,7 @@ export const MODELS: ModelConfig[] = [
     slug: "survey",
     lexicon: surveyJson as unknown as Lexicon,
     classes: ["Survey"],
-    description:
-      "An event where organism occurrence data is collected according to a Protocol.",
+    description: surveyJson.defs.main.description,
     shortExample: JSON.stringify(
       {
         $type: "bio.lexicons.temp.v0-1.survey",
@@ -217,14 +218,14 @@ export const MODELS: ModelConfig[] = [
     name: "SurveyProtocol",
     slug: "surveyProtocol",
     lexicon: surveyProtocolJson as unknown as Lexicon,
-    classes: ["Survey Protocol"],
-    description:
-      "Defines the contents of a Survey, including what participants should look for and what fields they must fill out.",
+    classes: ["Protocol"],
+    description: surveyProtocolJson.defs.main.description,
+    dwcNote: "SurveyProtocol is a DwC-DP Protocol for conducting Surveys, so it has more in common with a DwC-DP Protocol than with a DwC-DP Survey Protocol. The latter is more of a join model.",
     shortExample: JSON.stringify(
       {
         $type: "bio.lexicons.temp.v0-1.surveyProtocol",
-        title: "Breeding Bird Atlas Block Survey",
-        description: "Standardized point-count protocol for breeding bird atlas blocks.",
+        protocolName: "Breeding Bird Atlas Block Survey",
+        protocolDescription: "Standardized point-count protocol for breeding bird atlas blocks.",
         createdAt: "2024-01-15T00:00:00Z",
       },
       null,
@@ -233,8 +234,9 @@ export const MODELS: ModelConfig[] = [
     fullExample: JSON.stringify(
       {
         $type: "bio.lexicons.temp.v0-1.surveyProtocol",
-        title: "Breeding Bird Atlas Block Survey",
-        description: "Standardized point-count protocol for breeding bird atlas blocks.",
+        protocolName: "Breeding Bird Atlas Block Survey",
+        protocolDescription: "Standardized point-count protocol for breeding bird atlas blocks.",
+        protocolType: "presence-absence",
         createdAt: "2024-01-15T00:00:00Z",
         requiredFields: ["eventDate", "eventDuration"],
         locationOptions: [
@@ -283,7 +285,8 @@ export const MODELS: ModelConfig[] = [
     slug: "surveyTarget",
     lexicon: surveyTargetJson as unknown as Lexicon,
     classes: ["Survey Target"],
-    description: "A subject for a Survey. Belongs to a single Protocol.",
+    description: surveyTargetJson.defs.main.description,
+    dwcNote: "Diverges significantly from a DwC-DP Survey Target, which seems to be associated with the Survey, not the Protocol, and may not support combined scopes.",
     shortExample: JSON.stringify(
       {
         $type: "bio.lexicons.temp.v0-1.surveyTarget",

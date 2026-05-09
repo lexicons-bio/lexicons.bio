@@ -40,7 +40,7 @@ interface DwcTerm {
 }
 
 /** Table schemas to include, in display order */
-const TABLES = ["event", "occurrence", "identification", "media", "survey", "survey-protocol", "survey-target"];
+const TABLES = ["event", "occurrence", "identification", "media", "survey", "survey-protocol", "survey-target", "protocol"];
 
 const terms: Record<string, DwcTerm> = {};
 

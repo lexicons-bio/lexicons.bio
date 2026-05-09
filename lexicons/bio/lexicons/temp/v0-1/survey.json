@@ -4,7 +4,7 @@
   "defs": {
     "main": {
       "type": "record",
-      "description": "An event where organism occurrence data is collected according to a Protocol.",
+      "description": "An event where organism occurrence data is collected according to a Protocol. Organism presence is recorded with Occurrence records with eventID set to the Survey's at-uri and surveyTargetID set to one of the Survey's Protocol's SurveyTarget at-uris.",
       "key": "tid",
       "record": {
         "type": "object",
