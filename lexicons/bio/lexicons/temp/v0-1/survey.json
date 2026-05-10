@@ -1,0 +1,58 @@
+{
+  "lexicon": 1,
+  "id": "bio.lexicons.temp.v0-1.survey",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "An event where organism occurrence data is collected according to a Protocol. Organism presence is recorded with Occurrence records with eventID set to the Survey's at-uri and surveyTargetID set to one of the Survey's Protocol's SurveyTarget at-uris.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["protocol", "createdAt"],
+        "properties": {
+          "protocol": {
+            "type": "ref",
+            "ref": "com.atproto.repo.strongRef",
+            "description": "Protocol followed when conducting this survey."
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime",
+            "description": "Client-declared timestamp when this survey was originally created."
+          },
+          "surveyorCount": {
+            "type": "integer",
+            "description": "Total number of people conducting the Survey."
+          },
+          "samplingPerformedByID": {
+            "type": "array",
+            "description": "DIDs of participants in addition to the record owner (sensu Humboldt eco:samplingPerformedBy).",
+            "items": {
+              "type": "string",
+              "format": "did"
+            }
+          },
+          "eventDate": {
+            "type": "string",
+            "description": "Date or datetime the survey began, ISO 8601 supporting partial forms (e.g. 2026, 2026-02, 2026-02-03, 2026-02-03T00:01:02Z)."
+          },
+          "eventDurationUnit": {
+            "type": "string",
+            "description": "Unit of eventDurationValue (sensu Humboldt eco:eventDurationUnit).",
+            "knownValues": ["minutes", "hours", "days"]
+          },
+          "eventDurationValue": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Duration of the survey in units specified by eventDurationUnit (sensu Humboldt eco:eventDurationValue)."
+          },
+          "location": {
+            "type": "ref",
+            "ref": "org.atgeo.place",
+            "description": "Geographic location where the survey was conducted."
+          }
+        }
+      }
+    }
+  }
+}

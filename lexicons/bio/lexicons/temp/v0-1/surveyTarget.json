@@ -1,0 +1,74 @@
+{
+  "lexicon": 1,
+  "id": "bio.lexicons.temp.v0-1.surveyTarget",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A subject for a Survey. Belongs to a single Protocol.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["protocol", "scope"],
+        "properties": {
+          "protocol": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "Protocol this target belongs to."
+          },
+          "scope": {
+            "type": "array",
+            "description": "One or more scope criteria defining the subject.",
+            "minLength": 1,
+            "items": {
+              "type": "union",
+              "refs": ["#taxonScope", "#verbatimScope"]
+            }
+          }
+        }
+      }
+    },
+    "taxonScope": {
+      "type": "object",
+      "description": "A taxonomic criterion for a survey target.",
+      "required": ["scientificName", "taxonRank"],
+      "properties": {
+        "taxonID": {
+          "type": "string",
+          "format": "uri",
+          "description": "Identifier for the target taxon, preferably a stable URI, e.g. https://www.gbif.org/species/102151594."
+        },
+        "scientificName": {
+          "type": "string",
+          "description": "Full scientific name without rank modifiers.",
+          "maxLength": 256
+        },
+        "vernacularName": {
+          "type": "string",
+          "description": "Common or vernacular name for the taxon, following dwc:vernacularName. Set by the protocol author as the preferred label shown to surveyors."
+        },
+        "taxonRank": {
+          "type": "string",
+          "description": "Taxonomic rank, e.g. family, genus, subspecies, variety.",
+          "knownValues": ["kingdom", "phylum", "class", "order", "family", "genus", "species", "subspecies", "variety", "form"],
+          "maxLength": 32
+        },
+        "kingdom": {
+          "type": "string",
+          "description": "Taxonomic kingdom. Combined with scientificName and taxonRank, provides disambiguation for most homonyms.",
+          "maxLength": 64
+        }
+      }
+    },
+    "verbatimScope": {
+      "type": "object",
+      "description": "A free-text criterion for cases not covered by structured types (sensu Humboldt eco:verbatimTargetScope).",
+      "required": ["verbatimTargetScope"],
+      "properties": {
+        "verbatimTargetScope": {
+          "type": "string",
+          "description": "Free-text description of what is being targeted, e.g. 'trees > 10 cm DBH'."
+        }
+      }
+    }
+  }
+}

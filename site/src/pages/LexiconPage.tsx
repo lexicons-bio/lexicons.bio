@@ -131,6 +131,20 @@ export default function LexiconPage() {
         DwC-DP alignment
       </Box>
 
+      {model.dwcNote && (
+        <Box
+          sx={{
+            mb: "20px",
+            fontSize: "13px",
+            color: palette.inkSoft,
+            pl: "12px",
+            borderLeft: `2px solid ${palette.rule}`,
+          }}
+        >
+          {model.dwcNote}
+        </Box>
+      )}
+
       <DwcAlignmentTable
         classes={model.classes}
         dwcTerms={dwcTerms}
