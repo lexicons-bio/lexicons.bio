@@ -38,6 +38,9 @@ export const theme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: {
+        html: {
+          overflowY: "scroll", // prevents layout shift when navigating between short and tall pages
+        },
         body: {
           background: palette.bg,
           color: palette.ink,

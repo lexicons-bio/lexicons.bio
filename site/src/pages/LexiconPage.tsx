@@ -2,7 +2,7 @@ import { useParams, Navigate } from "react-router-dom";
 import { Box } from "@mui/material";
 import FieldTable from "../components/FieldTable";
 import DwcAlignmentTable from "../components/DwcAlignmentTable";
-import { MODELS, getFlatProperties } from "../data/lexicons";
+import { MODELS, getFlatProperties, getDefProperties } from "../data/lexicons";
 import { dwcTerms } from "../data/dwcTerms";
 import { palette, fonts } from "../theme";
 
@@ -12,6 +12,14 @@ export default function LexiconPage() {
   if (!model) return <Navigate to="/" replace />;
 
   const lexProps = getFlatProperties(model.lexicon);
+
+  const mainDef = model.lexicon.defs["main"];
+  const { properties: mainProps, required: mainRequired } = getDefProperties(mainDef);
+  const mainFields = Object.fromEntries(
+    Object.entries(mainProps).map(([k, v]) => [k, { ...v, required: mainRequired.has(k), def: "main" }])
+  );
+
+  const otherDefs = Object.entries(model.lexicon.defs).filter(([name]) => name !== "main");
   const lexId = model.lexicon.id;
   const lastDot = lexId.lastIndexOf(".");
   const nsidPrefix = lexId.slice(0, lastDot + 1);
@@ -62,7 +70,36 @@ export default function LexiconPage() {
         {model.description}
       </Box>
 
-      <FieldTable fields={lexProps} dwcTerms={dwcTerms} />
+      <FieldTable fields={mainFields} dwcTerms={dwcTerms} />
+
+      {otherDefs.map(([defName, defBody]) => {
+        const { properties, required } = getDefProperties(defBody);
+        const fields = Object.fromEntries(
+          Object.entries(properties).map(([k, v]) => [k, { ...v, required: required.has(k), def: defName }])
+        );
+        return (
+          <Box key={defName} sx={{ mb: "36px" }}>
+            <Box
+              component="h4"
+              sx={{
+                fontFamily: fonts.mono,
+                fontSize: "13px",
+                fontWeight: 500,
+                color: palette.inkSoft,
+                m: "0 0 4px",
+              }}
+            >
+              #{defName}
+            </Box>
+            {defBody.description && (
+              <Box sx={{ fontSize: "13px", color: palette.inkSoft, mb: "12px" }}>
+                {defBody.description}
+              </Box>
+            )}
+            <FieldTable fields={fields} dwcTerms={dwcTerms} />
+          </Box>
+        );
+      })}
 
       <Box
         component="pre"
