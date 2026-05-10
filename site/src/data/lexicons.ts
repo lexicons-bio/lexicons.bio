@@ -82,7 +82,7 @@ export const MODELS: ModelConfig[] = [
         decimalLatitude: "37.8716",
         decimalLongitude: "-122.2727",
         coordinateUncertaintyInMeters: 15,
-        associatedMedia: [
+        media: [
           {
             uri: "at://did:plc:abc123.../bio.lexicons.temp.v0-1.media/3k...",
             cid: "bafyrei...",
