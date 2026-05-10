@@ -180,6 +180,7 @@ export const ATPROTO_FIELDS = new Set([
   "aspectRatio",
   "width",
   "height",
+  "acceptedIdentificationID",
 ]);
 
 /** GBIF publishing requirements */
