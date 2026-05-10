@@ -81,7 +81,7 @@ export const MODELS: ModelConfig[] = [
           uri: "at://did:plc:abc123.../bio.lexicons.temp.v0-1.identification/3k...",
           cid: "bafyrei...",
         },
-        associatedMedia: [
+        media: [
           {
             uri: "at://did:plc:abc123.../bio.lexicons.temp.v0-1.media/3k...",
             cid: "bafyrei...",
