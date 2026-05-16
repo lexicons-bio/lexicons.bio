@@ -43,8 +43,7 @@
           "organismQuantityType": {
             "type": "string",
             "description": "The type of quantification system used for the quantity of organisms (Darwin Core dwc:organismQuantityType).",
-            "knownValues": ["individual-count", "percent-cover"],
-            "default": "individual-count"
+            "knownValues": ["individuals", "percent-cover"]
           },
           "taxonID": {
             "type": "string",
