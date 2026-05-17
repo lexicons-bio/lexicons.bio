@@ -27,7 +27,6 @@
           },
           "license": {
             "type": "string",
-            "format": "uri",
             "description": "URI of the license under which this media is published (Dublin Core dcterms:license). Creative Commons license URIs are the recommended values.",
             "knownValues": [
               "https://creativecommons.org/publicdomain/zero/1.0/",
