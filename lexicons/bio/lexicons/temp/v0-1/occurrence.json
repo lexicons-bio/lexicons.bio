@@ -36,6 +36,15 @@
             },
             "maxLength": 10
           },
+          "organismQuantity": {
+            "type": "string",
+            "description": "The quantity of the organism present at the time of the Occurrence. Generally an integer or float but may be categorical, e.g. 'many' or '10-100' (Darwin Core dwc:organismQuantity)."
+          },
+          "organismQuantityType": {
+            "type": "string",
+            "description": "The type of quantification system used for the quantity of organisms (Darwin Core dwc:organismQuantityType).",
+            "knownValues": ["individuals", "percent-cover"]
+          },
           "taxonID": {
             "type": "string",
             "format": "uri",
