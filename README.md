@@ -9,6 +9,7 @@ See **[lexicons.bio](https://lexicons.bio)** for the full reference.
 ```bash
 cd site
 npm install
+npm run prebuild
 npm run dev
 ```
 
