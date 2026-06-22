@@ -9,6 +9,15 @@ NSIDs include the version as a segment (e.g. `bio.lexicons.temp.v0-1.occurrence`
 The `temp.` prefix marks the schemas as not yet stable — breaking changes may
 ship in subsequent versions until the prefix is dropped.
 
+## [Unreleased]
+
+### Changed
+- `bio.lexicons.temp.v0-1.media.license` — replace SPDX identifiers
+  (`CC-BY-4.0`, …) with license URIs
+  (`https://creativecommons.org/licenses/by/4.0/`, …). SPDX is primarily
+  a software-license vocabulary, while Dublin Core `dcterms:license`
+  expects a URI of the license document. Closes #15.
+
 ## [0.1] — 2026-04-27
 
 Initial tagged release. Three record types under `bio.lexicons.temp.v0-1.*`.
