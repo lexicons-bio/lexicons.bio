@@ -41,6 +41,11 @@
             "type": "string",
             "description": "Explanation or reasoning for this identification (Darwin Core dwc:identificationRemarks).",
             "maxLength": 3000
+          },
+          "identifiedBy": {
+            "type": "union",
+            "refs": ["bio.lexicons.temp.v0-1.defs#agent"],
+            "description": "The agent responsible for this identification (Darwin Core dwc:identifiedBy). Modeled as an open union so further variants (e.g. a strong reference to a standalone agent record) can be added later without a breaking change. The only current variant is an inline agent object; use agentType \"software\" for model-generated identifications."
           }
         }
       }

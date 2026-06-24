@@ -1,0 +1,34 @@
+{
+  "lexicon": 1,
+  "id": "bio.lexicons.temp.v0-1.defs",
+  "defs": {
+    "agent": {
+      "type": "object",
+      "description": "A person, group, organization, machine, or software that played a role in producing a record (Darwin Core dcterms:Agent).",
+      "properties": {
+        "agentType": {
+          "type": "string",
+          "description": "The category that best matches the nature of the agent (Darwin Core dwc:agentType; see tdwg/dwc#614). Best practice is to use a controlled vocabulary.",
+          "knownValues": ["person", "group", "organization", "machine", "software"],
+          "maxLength": 32
+        },
+        "name": {
+          "type": "string",
+          "description": "Display name of the agent — a person or organization name, a device or camera label, or a model name.",
+          "maxLength": 256
+        },
+        "did": {
+          "type": "string",
+          "format": "did",
+          "description": "The atproto DID of the agent, when the agent is itself an account on the network."
+        },
+        "identifier": {
+          "type": "string",
+          "format": "uri",
+          "description": "A resolvable external identifier for the agent (e.g. an ORCID iD URI, a Wikidata URI, or a device/model URI). Maps to the Darwin Core ID-form terms such as dwc:identifiedByID.",
+          "maxLength": 512
+        }
+      }
+    }
+  }
+}
