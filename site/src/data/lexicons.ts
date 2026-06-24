@@ -1,6 +1,7 @@
 import occurrenceJson from "../../../lexicons/bio/lexicons/temp/v0-1/occurrence.json";
 import identificationJson from "../../../lexicons/bio/lexicons/temp/v0-1/identification.json";
 import mediaJson from "../../../lexicons/bio/lexicons/temp/v0-1/media.json";
+import defsJson from "../../../lexicons/bio/lexicons/temp/v0-1/defs.json";
 
 export interface LexiconDef {
   type: string;
@@ -33,6 +34,7 @@ export interface LexiconProperty {
   maxSize?: number;
   required?: boolean;
   def?: string;
+  refs?: string[];
 }
 
 export interface Lexicon {
@@ -162,12 +164,46 @@ export const MODELS: ModelConfig[] = [
         taxonID: "https://www.gbif.org/species/2880791",
         identificationRemarks:
           "Blue head and wings, white eyebrow, gray-brown back — classic California Scrub-Jay",
+        identifiedBy: {
+          $type: "bio.lexicons.temp.v0-1.defs#agent",
+          agentType: "person",
+          name: "Jane Naturalist",
+          identifier: "https://orcid.org/0000-0002-1825-0097",
+        },
       },
       null,
       2
     ),
   },
 ];
+
+/** All lexicons whose defs can be referenced by `<nsid>#<def>`. */
+const ALL_LEXICONS: Lexicon[] = [
+  occurrenceJson as unknown as Lexicon,
+  mediaJson as unknown as Lexicon,
+  identificationJson as unknown as Lexicon,
+  defsJson as unknown as Lexicon,
+];
+
+/** Registry of every def keyed by its fully-qualified ref `<nsid>#<def>`. */
+const REF_REGISTRY: Record<string, LexiconDef> = {};
+for (const lex of ALL_LEXICONS) {
+  for (const [defName, defBody] of Object.entries(lex.defs)) {
+    REF_REGISTRY[`${lex.id}#${defName}`] = defBody;
+  }
+}
+
+/** Resolve a fully-qualified `<nsid>#<def>` ref to its def body, if known. */
+export function resolveRef(ref: string): LexiconDef | undefined {
+  return REF_REGISTRY[ref];
+}
+
+/** Refs a property points to: union members, or a single `ref`. */
+export function refsOf(prop: LexiconProperty): string[] {
+  if (prop.type === "union") return prop.refs ?? [];
+  if (prop.type === "ref" && prop.ref) return [prop.ref];
+  return [];
+}
 
 /** Lexicon field -> DwC term_localName (when names differ) */
 export const FIELD_TO_DWC: Record<string, string> = {};
@@ -235,6 +271,12 @@ export function getFlatProperties(
 export function typeLabel(prop: LexiconProperty): string {
   const t = prop.type ?? "";
   const fmt = prop.format ?? "";
+  if (t === "union") {
+    const names = (prop.refs ?? []).map((r) =>
+      r.includes("#") ? r.split("#").pop()! : r
+    );
+    return names.length ? `union: ${names.join(" | ")}` : "union";
+  }
   if (t === "ref") {
     const ref = prop.ref ?? "";
     if (ref.startsWith("#")) return ref;
