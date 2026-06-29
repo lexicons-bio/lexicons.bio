@@ -32,10 +32,10 @@
             "description": "Taxonomic kingdom for disambiguating homonyms (Darwin Core dwc:kingdom).",
             "maxLength": 64
           },
-          "taxonID": {
-            "type": "string",
-            "format": "uri",
-            "description": "Stable URI for the identified taxon (e.g. a GBIF species URI). Maps to Darwin Core dwc:taxonID."
+          "taxon": {
+            "type": "union",
+            "refs": ["bio.lexicons.temp.v0-1.defs#taxonID"],
+            "description": "A reference to the identified taxon. Open union so more variants can be added later; currently an external identifier (defs#taxonID, Darwin Core dwc:taxonID)."
           },
           "identificationRemarks": {
             "type": "string",

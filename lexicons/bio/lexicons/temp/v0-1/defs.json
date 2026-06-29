@@ -1,0 +1,18 @@
+{
+  "lexicon": 1,
+  "id": "bio.lexicons.temp.v0-1.defs",
+  "defs": {
+    "taxonID": {
+      "type": "object",
+      "description": "A reference to a taxon by an identifier from an external taxonomic backbone (e.g. GBIF, ITIS, WoRMS).",
+      "required": ["taxonID"],
+      "properties": {
+        "taxonID": {
+          "type": "string",
+          "description": "An identifier for the identified taxon in an external taxonomic backbone. May be a globally unique identifier (e.g. a GBIF species URI or a UUID) or an identifier specific to that authority. Maps to Darwin Core dwc:taxonID.",
+          "maxLength": 512
+        }
+      }
+    }
+  }
+}
