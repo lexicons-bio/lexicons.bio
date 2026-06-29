@@ -9,6 +9,15 @@ NSIDs include the version as a segment (e.g. `bio.lexicons.temp.v0-1.occurrence`
 The `temp.` prefix marks the schemas as not yet stable — breaking changes may
 ship in subsequent versions until the prefix is dropped.
 
+## [Unreleased]
+
+### Changed
+- `bio.lexicons.temp.v0-1.occurrence` — renamed `acceptedIdentificationID` to
+  `acceptedIdentification`. The field holds a `strongRef` to the accepted
+  identification record, not a literal identifier, so the `ID` suffix was
+  misleading; dropping it reserves the `…ID` suffix for Darwin Core
+  literal-identifier terms.
+
 ## [0.1] — 2026-04-27
 
 Initial tagged release. Three record types under `bio.lexicons.temp.v0-1.*`.
