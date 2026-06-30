@@ -2,7 +2,7 @@
   "lexicon": 1,
   "id": "bio.lexicons.temp.v0-1.defs",
   "defs": {
-    "taxonID": {
+    "taxonExternal": {
       "type": "object",
       "description": "A reference to a taxon by an identifier from an external taxonomic backbone (e.g. GBIF, ITIS, WoRMS).",
       "required": ["taxonID"],

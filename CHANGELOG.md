@@ -13,14 +13,15 @@ ship in subsequent versions until the prefix is dropped.
 
 ### Added
 - `bio.lexicons.temp.v0-1.defs` — shared definitions lexicon. Introduces a
-  `taxonID` object def: a reference to a taxon by an identifier from an
+  `taxonExternal` object def: a reference to a taxon by an identifier from an
   external taxonomic backbone (GBIF/ITIS/WoRMS), carrying a single `taxonID`
   value (Darwin Core `dwc:taxonID`).
 
 ### Changed
 - `bio.lexicons.temp.v0-1.identification` — replaced the `taxonID` string with
-  a `taxon` field modeled as an open `union` (single variant `defs#taxonID`),
-  following the `app.bsky.embed` external/record pattern. Reserving the union
+  a `taxon` field modeled as an open `union` (single variant
+  `defs#taxonExternal`), following the `app.bsky.embed` external/record
+  pattern. Reserving the union
   shape lets a `strongRef` to a future in-network `Taxon` record be added
   additively rather than as a breaking change. The external identifier now
   lives at `taxon.taxonID` (Darwin Core `dwc:taxonID`).

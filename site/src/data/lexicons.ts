@@ -162,7 +162,7 @@ export const MODELS: ModelConfig[] = [
         scientificName: "Aphelocoma californica (Vigors, 1839)",
         taxonRank: "species",
         taxon: {
-          $type: "bio.lexicons.temp.v0-1.defs#taxonID",
+          $type: "bio.lexicons.temp.v0-1.defs#taxonExternal",
           taxonID: "https://www.gbif.org/species/2880791",
         },
         identificationRemarks:
