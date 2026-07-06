@@ -19,12 +19,12 @@ ship in subsequent versions until the prefix is dropped.
 
 ### Changed
 - `bio.lexicons.temp.v0-1.identification` — replaced the `taxonID` string with
-  a `taxon` field modeled as an open `union` (single variant
+  a `taxonRef` field modeled as an open `union` (single variant
   `defs#taxonExternal`), following the `app.bsky.embed` external/record
   pattern. Reserving the union
   shape lets a `strongRef` to a future in-network `Taxon` record be added
   additively rather than as a breaking change. The external identifier now
-  lives at `taxon.taxonID` (Darwin Core `dwc:taxonID`).
+  lives at `taxonRef.taxonID` (Darwin Core `dwc:taxonID`).
 
 ## [0.1] — 2026-04-27
 
