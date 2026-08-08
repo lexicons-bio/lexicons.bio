@@ -1,6 +1,7 @@
 import occurrenceJson from "../../../lexicons/bio/lexicons/temp/v0-1/occurrence.json";
 import identificationJson from "../../../lexicons/bio/lexicons/temp/v0-1/identification.json";
 import mediaJson from "../../../lexicons/bio/lexicons/temp/v0-1/media.json";
+import commentJson from "../../../lexicons/bio/lexicons/temp/v0-1/comment.json";
 
 export interface LexiconDef {
   type: string;
@@ -24,6 +25,7 @@ export interface LexiconProperty {
   description?: string;
   ref?: string;
   maxLength?: number;
+  maxGraphemes?: number;
   minimum?: number;
   maximum?: number;
   default?: string | number | boolean;
@@ -160,8 +162,39 @@ export const MODELS: ModelConfig[] = [
         scientificName: "Aphelocoma californica (Vigors, 1839)",
         taxonRank: "species",
         taxonID: "https://www.gbif.org/species/2880791",
-        identificationRemarks:
-          "Blue head and wings, white eyebrow, gray-brown back — classic California Scrub-Jay",
+      },
+      null,
+      2
+    ),
+  },
+  {
+    name: "Comment",
+    slug: "comment",
+    lexicon: commentJson as unknown as Lexicon,
+    classes: [],
+    description:
+      "Attributed, licensable free text about another record — the authored prose Darwin Core stores in inline remarks columns.",
+    shortExample: JSON.stringify(
+      {
+        $type: "bio.lexicons.temp.v0-1.comment",
+        subject:
+          "at://did:plc:abc123.../bio.lexicons.temp.v0-1.occurrence/3k...",
+        body: "Heard calling from the same oak at dusk three nights running.",
+        createdAt: "2024-06-12T09:02:00Z",
+      },
+      null,
+      2
+    ),
+    fullExample: JSON.stringify(
+      {
+        $type: "bio.lexicons.temp.v0-1.comment",
+        subject:
+          "at://did:plc:abc123.../bio.lexicons.temp.v0-1.identification/3k...",
+        subjectCid: "bafyrei...",
+        body: "Blue head and wings, white eyebrow, gray-brown back — classic California Scrub-Jay",
+        dwcTerm: "identificationRemarks",
+        license: "https://creativecommons.org/licenses/by/4.0/",
+        createdAt: "2024-06-12T09:02:00Z",
       },
       null,
       2
@@ -181,6 +214,10 @@ export const ATPROTO_FIELDS = new Set([
   "width",
   "height",
   "acceptedIdentificationID",
+  "subject",
+  "subjectCid",
+  "dwcTerm",
+  "createdAt",
 ]);
 
 /** GBIF publishing requirements */
@@ -260,7 +297,9 @@ export function typeLabel(prop: LexiconProperty): string {
 /** Get a human-readable constraints label */
 export function constraintsLabel(prop: LexiconProperty): string {
   const parts: string[] = [];
-  if (prop.maxLength !== undefined) parts.push(`max ${prop.maxLength}`);
+  if (prop.maxLength !== undefined) parts.push(`max ${prop.maxLength} bytes`);
+  if (prop.maxGraphemes !== undefined)
+    parts.push(`max ${prop.maxGraphemes} graphemes`);
   if (prop.minimum !== undefined) parts.push(`min ${prop.minimum}`);
   if (prop.maximum !== undefined) parts.push(`max ${prop.maximum}`);
   if (prop.default !== undefined) parts.push(`default: ${prop.default}`);
