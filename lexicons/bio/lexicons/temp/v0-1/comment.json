@@ -1,0 +1,64 @@
+{
+  "lexicon": 1,
+  "id": "bio.lexicons.temp.v0-1.comment",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A free-text statement about another record, attributed to its author and independently licensable. Comments carry the authored prose that Darwin Core stores in inline 'remarks' columns, keeping creative works separate from occurrence facts. DwC-DP has no Comment entity; a comment with dwcTerm set is the decentralized equivalent of the named remarks column on the subject's DwC-DP table.",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": ["subject", "body", "createdAt"],
+        "properties": {
+          "subject": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "AT-URI of the record this comment is about. Version-less by design: the comment stays attached to the subject across edits, mirroring the way DwC-DP joins on identifiers such as occurrenceID. Not constrained to bio.lexicons.* collections — a comment may address any record. A subject pointing at another comment forms a reply."
+          },
+          "subjectCid": {
+            "type": "string",
+            "format": "cid",
+            "description": "CID of the subject record version the author was looking at when writing this comment. Provenance only — association is carried by subject alone, so a stale subjectCid never detaches the comment."
+          },
+          "body": {
+            "type": "string",
+            "description": "The text of the comment.",
+            "maxLength": 3000,
+            "maxGraphemes": 1000
+          },
+          "dwcTerm": {
+            "type": "string",
+            "description": "The Darwin Core term on the subject record that this comment's body fulfills, e.g. 'occurrenceRemarks'. When set, an aggregator building a DwC-DP row knows which column to write the body into; when absent, the comment is freeform discussion with no Darwin Core mapping.",
+            "knownValues": [
+              "occurrenceRemarks",
+              "eventRemarks",
+              "identificationRemarks",
+              "organismRemarks",
+              "locationRemarks",
+              "taxonRemarks",
+              "fieldNotes"
+            ],
+            "maxLength": 128
+          },
+          "license": {
+            "type": "string",
+            "description": "URI of the license under which this text is published (Dublin Core dcterms:license). Creative Commons license URIs are the recommended values. Extends the DwC-DP UsagePolicy concept — which the standard attaches only to media and material entities — to authored text.",
+            "knownValues": [
+              "https://creativecommons.org/publicdomain/zero/1.0/",
+              "https://creativecommons.org/licenses/by/4.0/",
+              "https://creativecommons.org/licenses/by-nc/4.0/",
+              "https://creativecommons.org/licenses/by-sa/4.0/",
+              "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+            ],
+            "maxLength": 128
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime",
+            "description": "Time the comment was authored. Used for ordering, and to resolve which comment fulfills a dwcTerm when several exist (newest wins). Loosely maps to DwC-DP assertionMadeDate."
+          }
+        }
+      }
+    }
+  }
+}
