@@ -11,6 +11,13 @@ ship in subsequent versions until the prefix is dropped.
 
 ## [Unreleased]
 
+### Added
+- `bio.lexicons.temp.v0-1.occurrence.externalRecords` — an array of
+  `#externalRecord` (`uri`, `service`) tracking the same occurrence as held
+  outside this lexicon, whether in another AT Protocol lexicon or on a
+  service outside the network, for cross-linking and cross-platform
+  deduplication.
+
 ### Changed
 - `bio.lexicons.temp.v0-1.media.license` — replace SPDX identifiers
   (`CC-BY-4.0`, …) with license URIs
