@@ -1,0 +1,48 @@
+name: Deploy to HappyView
+
+on:
+  pull_request:
+    paths:
+      - "lexicons/**"
+      - "lua/**"
+      - ".github/workflows/happyview.yml"
+  push:
+    branches: [main]
+    paths:
+      - "lexicons/**"
+      - "lua/**"
+      - ".github/workflows/happyview.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Uploads are idempotent upserts, but a cancelled deploy can leave only some
+# lexicons applied. Queue runs instead of cancelling them.
+concurrency:
+  group: happyview
+  cancel-in-progress: false
+
+jobs:
+  lint:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Offline validation: invalid NSIDs, duplicate triggers, orphaned
+      # scripts. No network, no secrets.
+      - uses: gamesgamesgamesgamesgames/happyview-actions/lint@v1
+
+  deploy:
+    # Skips cleanly until HAPPYVIEW_URL is configured, so merges to main don't
+    # fail on repos that haven't set up an instance yet. See docs/happyview.md.
+    if: github.event_name != 'pull_request' && vars.HAPPYVIEW_URL != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: gamesgamesgamesgamesgames/happyview-actions/deploy@v1
+        with:
+          happyview-url: ${{ vars.HAPPYVIEW_URL }}
+          api-key: ${{ secrets.HAPPYVIEW_API_KEY }}

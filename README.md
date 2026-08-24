@@ -13,6 +13,12 @@ npm run prebuild
 npm run dev
 ```
 
+## AppView
+
+The lexicons are indexed by a [HappyView](https://happyview.dev) instance,
+deployed from this repository on every merge to `main`. See
+[docs/happyview.md](docs/happyview.md) for setup.
+
 ## License
 
 The lexicon schemas in this repository are licensed under [CC0 1.0 Universal](LICENSE).
