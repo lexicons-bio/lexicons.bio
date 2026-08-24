@@ -53,6 +53,15 @@ function authorDid(uri?: string): string | undefined {
   return uri?.split("/")[2];
 }
 
+/**
+ * A did:plc is 32 characters, which alone overflows the content column. The
+ * suffix is opaque, so truncating loses nothing the reader could use — the
+ * full value stays on the title attribute.
+ */
+function shortDid(did: string): string {
+  return did.length > 18 ? `${did.slice(0, 18)}…` : did;
+}
+
 function coords(o: Occurrence): string | undefined {
   if (!o.decimalLatitude || !o.decimalLongitude) return undefined;
   return `${o.decimalLatitude}, ${o.decimalLongitude}`;
@@ -82,7 +91,7 @@ function quantity(o: Occurrence): string | undefined {
 
 const CELL = {
   py: "9px",
-  pr: "16px",
+  pr: "14px",
   verticalAlign: "top",
   borderBottom: `1px solid ${palette.ruleSoft}`,
   fontFamily: fonts.mono,
@@ -93,7 +102,7 @@ const CELL = {
 
 const HEAD = {
   py: "8px",
-  pr: "16px",
+  pr: "14px",
   textAlign: "left",
   borderBottom: `1px solid ${palette.rule}`,
   fontSize: "11px",
@@ -188,7 +197,16 @@ export default function Occurrences() {
       )}
 
       {rows.length > 0 && (
-        <Box sx={{ overflowX: "auto", mb: "24px" }}>
+        <Box
+          sx={{
+            overflowX: "auto",
+            mb: "24px",
+            // Full-precision coordinates make this wider than the 760px prose
+            // column. Break out symmetrically once the viewport can afford it;
+            // below that the table scrolls inside the column instead.
+            "@media (min-width: 1100px)": { mx: "-125px" },
+          }}
+        >
           <Box component="table" sx={{ borderCollapse: "collapse", width: "100%", minWidth: 560 }}>
             <Box component="thead">
               <Box component="tr">
@@ -221,8 +239,12 @@ export default function Occurrences() {
                       dash
                     )}
                   </Box>
-                  <Box component="td" sx={{ ...CELL, color: palette.inkFaint }}>
-                    {authorDid(o.uri) ?? dash}
+                  <Box
+                    component="td"
+                    sx={{ ...CELL, color: palette.inkFaint }}
+                    title={authorDid(o.uri)}
+                  >
+                    {authorDid(o.uri) ? shortDid(authorDid(o.uri) as string) : dash}
                   </Box>
                 </Box>
               ))}
