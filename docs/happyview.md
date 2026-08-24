@@ -62,13 +62,20 @@ them.
 ## What gets deployed
 
 The action derives everything from directory layout — there is no manifest to
-maintain. Our three record lexicons map to collections one-to-one:
+maintain.
 
-| File                                             | NSID / collection                       |
-| ------------------------------------------------ | --------------------------------------- |
-| `lexicons/bio/lexicons/temp/v0-1/occurrence.json` | `bio.lexicons.temp.v0-1.occurrence`     |
-| `lexicons/bio/lexicons/temp/v0-1/identification.json` | `bio.lexicons.temp.v0-1.identification` |
-| `lexicons/bio/lexicons/temp/v0-1/media.json`      | `bio.lexicons.temp.v0-1.media`          |
+| File                                                  | NSID                                    | Type   |
+| ----------------------------------------------------- | --------------------------------------- | ------ |
+| `lexicons/bio/lexicons/temp/v0-1/occurrence.json`     | `bio.lexicons.temp.v0-1.occurrence`     | record |
+| `lexicons/bio/lexicons/temp/v0-1/identification.json` | `bio.lexicons.temp.v0-1.identification` | record |
+| `lexicons/bio/lexicons/temp/v0-1/media.json`          | `bio.lexicons.temp.v0-1.media`          | record |
+| `lexicons/bio/lexicons/temp/v0-1/listOccurrences.json` | `bio.lexicons.temp.v0-1.listOccurrences` | query  |
+| `lua/bio/lexicons/temp/v0-1/listOccurrences.lua`      | (handler for the above)                 | script |
+
+The Lua script pairs to the query lexicon because their paths match once the
+base directory (`lexicons/` vs `lua/`) and extension are removed. Renaming one
+without the other silently orphans the script — the lint job flags that on
+pull requests.
 
 Because we upload the JSON directly, HappyView treats these as *local* lexicons
 and no DNS is involved. Tracking them as [network lexicons](https://happyview.dev/guides/lexicons#network-lexicons)
@@ -105,18 +112,41 @@ handed to a client.
 
 Serving a public, unauthenticated endpoint means adding a `query`-type lexicon —
 HappyView maps one lexicon to one XRPC method, so there is no generic public
-`listRecords?collection=…`. A query lexicon named, say,
-`bio.lexicons.temp.v0-1.listOccurrences` would register
-`GET /xrpc/bio.lexicons.temp.v0-1.listOccurrences`, supporting `uri` for a single
-record or `limit`/`cursor`/`did` for a page, with no handler code required.
-Binding it to a collection needs either a `target_collection` on upload or a
-paired script at `lua/bio/lexicons/temp/v0-1/listOccurrences.lua` declaring
-`collection = "bio.lexicons.temp.v0-1.occurrence"`; the action pairs scripts to
-lexicons by matching path, ignoring base directory and extension.
+`listRecords?collection=…`. `bio.lexicons.temp.v0-1.listOccurrences` is that
+endpoint for occurrences:
 
-Nothing here needs that yet, and each query lexicon adds an NSID to the published
-`bio.lexicons.temp.v0-1.*` surface, so they are left out until a client calls for
-one.
+```
+GET /xrpc/bio.lexicons.temp.v0-1.listOccurrences?limit=50
+```
+
+It takes `limit`, `cursor`, and `did` for a page, or `uri` for a single record,
+and returns `{ records, cursor }` — `cursor` present only while more remain.
+
+The `target_collection` that binds a query to a record collection can only be
+set on the admin upload call, and the deploy action has no input for it. The
+paired Lua script supplies the binding instead by declaring `collection` at the
+top, which is the pattern HappyView's own statusphere tutorial uses.
+
+### Calling it from a browser
+
+Every XRPC request needs an `X-Client-Key` header, including anonymous reads —
+without one the response is `401 Missing client identification`. Create the
+client under **Settings > API Clients**; it issues an `hvc_` key and an `hvs_`
+secret. Only the `hvc_` key belongs in browser code.
+
+That custom header makes browsers send a CORS preflight first. HappyView answers
+it, reflecting the request origin and allowing `x-client-key`, so no proxy is
+needed in front:
+
+```bash
+curl -i -X OPTIONS "$HAPPYVIEW_URL/xrpc/bio.lexicons.temp.v0-1.listOccurrences" -H "Origin: https://lexicons.bio" -H "Access-Control-Request-Method: GET" -H "Access-Control-Request-Headers: x-client-key"
+```
+
+The site's Records page ([`site/src/pages/Occurrences.tsx`](../site/src/pages/Occurrences.tsx))
+consumes this endpoint. It reads `VITE_HAPPYVIEW_URL` and
+`VITE_HAPPYVIEW_CLIENT_KEY` — see [`site/.env.example`](../site/.env.example) —
+and renders a "no AppView configured" note when they are unset, so the site
+still builds and deploys without an instance behind it.
 
 ## Running locally
 

@@ -8,6 +8,7 @@ const navItems = [
   { to: "/occurrence", label: "Occurrence", end: false },
   { to: "/identification", label: "Identification", end: false },
   { to: "/media", label: "Media", end: false },
+  { to: "/records", label: "Records", end: false },
 ];
 
 const footerLinks = [

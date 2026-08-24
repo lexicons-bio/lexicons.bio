@@ -1,5 +1,7 @@
 site/node_modules/
 site/dist/
+site/.env
+site/.env.local
 site/src/data/dwc-terms.json
 site/tsconfig.tsbuildinfo
 .DS_Store

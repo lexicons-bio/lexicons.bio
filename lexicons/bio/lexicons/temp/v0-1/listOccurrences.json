@@ -1,0 +1,57 @@
+{
+  "lexicon": 1,
+  "id": "bio.lexicons.temp.v0-1.listOccurrences",
+  "defs": {
+    "main": {
+      "type": "query",
+      "description": "List indexed occurrence records, most recently indexed first. Reads from the bio.lexicons.temp.v0-1.occurrence collection. Requires no user authentication.",
+      "parameters": {
+        "type": "params",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "description": "Maximum number of records to return.",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 20
+          },
+          "cursor": {
+            "type": "string",
+            "description": "Opaque pagination cursor taken from a previous response. Present only while more records remain."
+          },
+          "did": {
+            "type": "string",
+            "format": "did",
+            "description": "Only return occurrences authored by this DID."
+          },
+          "uri": {
+            "type": "string",
+            "format": "at-uri",
+            "description": "Fetch a single occurrence by AT URI instead of listing. When supplied, the response carries record rather than records."
+          }
+        }
+      },
+      "output": {
+        "encoding": "application/json",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "records": {
+              "type": "array",
+              "description": "Indexed occurrences, each carrying its AT URI alongside the record fields.",
+              "items": { "type": "unknown" }
+            },
+            "cursor": {
+              "type": "string",
+              "description": "Cursor for the next page. Absent when no further records remain."
+            },
+            "record": {
+              "type": "unknown",
+              "description": "The single occurrence addressed by the uri parameter."
+            }
+          }
+        }
+      }
+    }
+  }
+}

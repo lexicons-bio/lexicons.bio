@@ -11,6 +11,13 @@ ship in subsequent versions until the prefix is dropped.
 
 ## [Unreleased]
 
+### Added
+- `bio.lexicons.temp.v0-1.listOccurrences` — query lexicon exposing a public,
+  unauthenticated read endpoint over indexed occurrence records. Takes `limit`,
+  `cursor`, and `did` to page, or `uri` to fetch one. This is the first
+  non-record NSID in the namespace: it describes an AppView read API rather
+  than data anyone stores in their repo.
+
 ### Changed
 - `bio.lexicons.temp.v0-1.media.license` — replace SPDX identifiers
   (`CC-BY-4.0`, …) with license URIs
