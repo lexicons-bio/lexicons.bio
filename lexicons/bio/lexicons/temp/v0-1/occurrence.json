@@ -80,7 +80,7 @@
         "service": {
           "type": "string",
           "description": "Short identifier for the service holding the record. For an AT Protocol-based app, use the app name (e.g. \"gainforest\"). Lets consumers group records by platform without parsing hostnames or at-uri collections, which is unreliable across localised network nodes (e.g. inaturalist.nz) and self-hosted instances. Known values are not exhaustive. No Darwin Core equivalent.",
-          "knownValues": ["inaturalist", "ebird", "bugguide"],
+          "knownValues": ["inaturalist", "bugguide"],
           "maxLength": 64
         }
       }
