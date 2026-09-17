@@ -77,6 +77,12 @@ export const MODELS: ModelConfig[] = [
         decimalLongitude: "-122.2727",
         coordinateUncertaintyInMeters: 15,
         taxonID: "https://www.gbif.org/species/2880791",
+        externalRecords: [
+          {
+            uri: "https://www.inaturalist.org/observations/123456789",
+            service: "inaturalist",
+          },
+        ],
         acceptedIdentificationID: {
           uri: "at://did:plc:abc123.../bio.lexicons.temp.v0-1.identification/3k...",
           cid: "bafyrei...",
@@ -181,6 +187,8 @@ export const ATPROTO_FIELDS = new Set([
   "width",
   "height",
   "acceptedIdentificationID",
+  "uri",
+  "service",
 ]);
 
 /** GBIF publishing requirements */

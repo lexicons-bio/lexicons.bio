@@ -45,6 +45,35 @@ The CID ensures that a reference always points to a specific version of the targ
 
 Latitude and longitude are stored as strings rather than numbers to preserve exact decimal precision. Floating-point representation can introduce rounding artifacts (e.g., `37.7749` might become `37.774899999999997`). String storage preserves the user's original coordinate values exactly.
 
+### Cross-Platform References
+
+Observations are routinely posted to more than one platform, so consumers
+need to cross-link between them and aggregators need to avoid counting the
+same organism twice. `externalRecords` carries this, each entry pairing a
+`uri` with the `service` holding it.
+
+Entries are objects rather than URL strings because `service` cannot be
+derived reliably from the URL, hostnames being poor platform identifiers:
+`inaturalist.nz` is iNaturalist, `waarneming.nl` is Observation.org. It also
+leaves room to describe which copy came first, should consumers turn out to
+need it, where widening `string[]` to `object[]` later would be a breaking
+change.
+
+"External" means outside this lexicon, not outside the AT Protocol network:
+an occurrence in another atproto lexicon is as external as an iNaturalist
+observation. Reference those by at-uri, which is canonical and does not tie
+the reference to one appview, and everything else by canonical web URL. One
+`uri` field covers both, since
+[`format: uri`](https://atproto.com/specs/lexicon#uri) accepts any scheme
+and lists `at`. A separate `atUri` field would duplicate it, and with
+neither individually required would leave `required: ["uri"]` unenforceable.
+
+No DwC-DP term covers this. On export the entry URIs concatenate into
+`dwc:otherCatalogNumbers`, which did not survive into DwC-DP.
+`dwc:ResourceRelationship` models it fully but is an extension class, worth
+revisiting as a separate lexicon if third parties ever need to assert
+duplicates the author did not declare.
+
 ## Namespace
 
 The lexicons use the `bio.lexicons.*` namespace, corresponding to the `lexicons.bio` domain. See the [AT Protocol NSID specification](https://atproto.com/specs/nsid) for how domain-based namespacing works.
