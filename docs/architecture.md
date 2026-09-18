@@ -2,7 +2,7 @@
 
 ## Record Relationships
 
-The lexicons follow a star schema with the occurrence record at the center. Records reference each other via `com.atproto.repo.strongRef` — a pair of URI + CID that creates an immutable, content-addressed link. Identifications reference occurrences, and occurrences reference media.
+The lexicons follow a star schema with the occurrence record at the center. Identifications reference occurrences, occurrences reference media, and occurrences and identifications reference their remarks. Most references use `com.atproto.repo.strongRef`, a pair of URI + CID that creates an immutable, content-addressed link. References to remarks use a bare `at-uri` instead; see [Remarks as Separate Records](#remarks-as-separate-records).
 
 ## Key Design Decisions
 
@@ -31,15 +31,64 @@ Per the [AT Protocol Lexicon Style Guide](https://atproto.com/guides/lexicon-sty
 - **`knownValues`**: Validators accept any string, but suggest these specific values. Forward-compatible — new values can be added without breaking existing clients.
 - **`enum`**: Validators reject unknown values. Used only when the set is truly closed.
 
-Fields using `knownValues`: `license`, `taxonRank`
+Fields using `knownValues`: `license`, `taxonRank`, `dwcTerm`
 
 ### `strongRef` for Immutable References
 
-All cross-record references use AT Protocol's `com.atproto.repo.strongRef`, which contains:
+References to a specific version of a record use AT Protocol's `com.atproto.repo.strongRef`, which contains:
 - **`uri`**: The AT Protocol URI (`at://did/collection/rkey`)
 - **`cid`**: Content identifier (hash of the record content)
 
 The CID ensures that a reference always points to a specific version of the target record. If the target is updated, the CID changes, making the reference point to the historical version.
+
+### Remarks as Separate Records
+
+Darwin Core has many free-text "remarks" terms (`occurrenceRemarks`,
+`eventRemarks`, `identificationRemarks`, and others). Unlike coordinates or
+dates, that prose is potentially a creative work, so it should be possible
+to attribute and license it on its own (see
+[#5](https://github.com/lexicons-bio/lexicons.bio/issues/5)). Remarks
+therefore live in `remark` records rather than inline strings, the same way
+images live in `media` records.
+
+The record being described points to its remarks with an `at-uri` field
+named for the Darwin Core term plus an `ID` suffix, e.g.
+`occurrence.occurrenceRemarksID`. Everywhere else in these lexicons, a
+field named for a Darwin Core term holds that term's value; the suffix
+keeps it that way, so a consumer mapping fields by name skips the
+reference instead of exporting an at-uri as remarks text. The direction of
+that reference matters:
+
+- **Forward references are cheap to resolve.** A client holding an
+  occurrence fetches each referenced remark with
+  `com.atproto.repo.getRecord`, as it does media. Assembling a complete
+  Darwin Core row needs no index.
+- **Backlinks are not.** Finding the remark about an occurrence without a
+  forward reference needs an AppView or backlink index, or a `listRecords`
+  scan of the author's entire remark collection, since `listRecords` cannot
+  filter.
+- **Cardinality is enforced.** An occurrence has at most one
+  `occurrenceRemarksID`, so consumers never need a rule for picking among
+  several (though AppViews do).
+- **Remarks can't be spoofed.** Author intent is explicit, rather than
+  preserved by a convention like most recently-created remark referencing a
+  term in the occurrence author's PDS.
+
+The reference is a bare `at-uri`, not a `strongRef`, so editing a remark's
+text (a `putRecord` to the same URI) does not change the CID of the record
+that references it. The referencing record changes only when a remark is added or
+removed. Since neither side carries a CID, a client can generate both
+record keys up front and write an occurrence and its remarks in a single
+`com.atproto.repo.applyWrites` call.
+
+Each `remark` also names its `subject` and `dwcTerm`, so it is self-describing
+when read on its own, and a consumer can check that a forward reference
+points at a remark about that record.
+
+`remark` is only for text that fills a Darwin Core term. Discussion
+(comments by anyone, replies, threads) has different rules for
+authorship, cardinality, editing, and length, and belongs in its own
+lexicon.
 
 ### Coordinates as Strings
 

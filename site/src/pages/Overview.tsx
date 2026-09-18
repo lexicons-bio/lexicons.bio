@@ -21,11 +21,14 @@ export default function Overview() {
         <Box component="a" href="https://github.com/gbif/dwc-dp" target="_blank" rel="noopener" sx={{ color: palette.link }}>
           DwC-DP
         </Box>
-        . Three records:{" "}
+        . Four records:{" "}
         <Box component="span" sx={{ fontFamily: fonts.mono }}>occurrence</Box>,{" "}
         <Box component="span" sx={{ fontFamily: fonts.mono }}>identification</Box>,{" "}
-        <Box component="span" sx={{ fontFamily: fonts.mono }}>media</Box>. Cross-record links use{" "}
-        <Box component="span" sx={{ fontFamily: fonts.mono }}>com.atproto.repo.strongRef</Box>.
+        <Box component="span" sx={{ fontFamily: fonts.mono }}>media</Box>,{" "}
+        <Box component="span" sx={{ fontFamily: fonts.mono }}>remark</Box>. Cross-record links use{" "}
+        <Box component="span" sx={{ fontFamily: fonts.mono }}>com.atproto.repo.strongRef</Box>, except links
+        to remarks, which use a bare{" "}
+        <Box component="span" sx={{ fontFamily: fonts.mono }}>at-uri</Box>.
       </Box>
 
       <Box
