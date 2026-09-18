@@ -118,24 +118,28 @@ export default function LexiconPage() {
         {model.fullExample}
       </Box>
 
-      <Box
-        component="h3"
-        sx={{
-          fontFamily: fonts.serif,
-          fontSize: "16px",
-          fontWeight: 600,
-          m: "0 0 8px",
-          color: palette.inkSoft,
-        }}
-      >
-        DwC-DP alignment
-      </Box>
+      {model.classes.length > 0 && (
+        <>
+          <Box
+            component="h3"
+            sx={{
+              fontFamily: fonts.serif,
+              fontSize: "16px",
+              fontWeight: 600,
+              m: "0 0 8px",
+              color: palette.inkSoft,
+            }}
+          >
+            DwC-DP alignment
+          </Box>
 
-      <DwcAlignmentTable
-        classes={model.classes}
-        dwcTerms={dwcTerms}
-        lexProps={lexProps}
-      />
+          <DwcAlignmentTable
+            classes={model.classes}
+            dwcTerms={dwcTerms}
+            lexProps={lexProps}
+          />
+        </>
+      )}
     </>
   );
 }

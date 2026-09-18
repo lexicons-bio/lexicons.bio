@@ -1,6 +1,7 @@
 import occurrenceJson from "../../../lexicons/bio/lexicons/temp/v0-1/occurrence.json";
 import identificationJson from "../../../lexicons/bio/lexicons/temp/v0-1/identification.json";
 import mediaJson from "../../../lexicons/bio/lexicons/temp/v0-1/media.json";
+import remarkJson from "../../../lexicons/bio/lexicons/temp/v0-1/remark.json";
 
 export interface LexiconDef {
   type: string;
@@ -76,6 +77,7 @@ export const MODELS: ModelConfig[] = [
         decimalLatitude: "37.8716",
         decimalLongitude: "-122.2727",
         coordinateUncertaintyInMeters: 15,
+        occurrenceRemarksID: "at://did:plc:abc123.../bio.lexicons.temp.v0-1.remark/3k...",
         taxonID: "https://www.gbif.org/species/2880791",
         externalRecords: [
           {
@@ -166,8 +168,36 @@ export const MODELS: ModelConfig[] = [
         scientificName: "Aphelocoma californica (Vigors, 1839)",
         taxonRank: "species",
         taxonID: "https://www.gbif.org/species/2880791",
-        identificationRemarks:
-          "Blue head and wings, white eyebrow, gray-brown back — classic California Scrub-Jay",
+        identificationRemarksID: "at://did:plc:abc123.../bio.lexicons.temp.v0-1.remark/3k...",
+      },
+      null,
+      2
+    ),
+  },
+  {
+    name: "Remark",
+    slug: "remark",
+    lexicon: remarkJson as unknown as Lexicon,
+    classes: [],
+    description:
+      "Free text filling a Darwin Core remarks term on another record, licensed on its own.",
+    shortExample: JSON.stringify(
+      {
+        $type: "bio.lexicons.temp.v0-1.remark",
+        subject: "at://did:plc:abc123.../bio.lexicons.temp.v0-1.occurrence/3k...",
+        dwcTerm: "occurrenceRemarks",
+        body: "Heard calling from the same oak at dusk three nights running.",
+      },
+      null,
+      2
+    ),
+    fullExample: JSON.stringify(
+      {
+        $type: "bio.lexicons.temp.v0-1.remark",
+        subject: "at://did:plc:abc123.../bio.lexicons.temp.v0-1.identification/3k...",
+        dwcTerm: "identificationRemarks",
+        body: "Blue head and wings, white eyebrow, gray-brown back — classic California Scrub-Jay",
+        license: "https://creativecommons.org/licenses/by/4.0/",
       },
       null,
       2
@@ -176,7 +206,11 @@ export const MODELS: ModelConfig[] = [
 ];
 
 /** Lexicon field -> DwC term_localName (when names differ) */
-export const FIELD_TO_DWC: Record<string, string> = {};
+export const FIELD_TO_DWC: Record<string, string> = {
+  occurrenceRemarksID: "occurrenceRemarks",
+  eventRemarksID: "eventRemarks",
+  identificationRemarksID: "identificationRemarks",
+};
 
 /** Fields that are AT Protocol infrastructure (no DwC mapping) */
 export const ATPROTO_FIELDS = new Set([
