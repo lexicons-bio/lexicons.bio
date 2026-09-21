@@ -32,11 +32,11 @@ ship in subsequent versions until the prefix is dropped.
   a software-license vocabulary, while Dublin Core `dcterms:license`
   expects a URI of the license document. Closes #15.
 
-### Removed
+### Deprecated
 - `bio.lexicons.temp.v0-1.identification.identificationRemarks` — the inline
-  string is superseded by `identificationRemarksID`. Existing records that
-  set it still validate, since undeclared fields are ignored, but consumers
-  following the schema will no longer read it.
+  string is superseded by `identificationRemarksID`. The field is kept so
+  existing records stay valid and no version bump is needed. When both are
+  set, `identificationRemarksID` takes precedence.
 
 ## [0.1] — 2026-04-27
 

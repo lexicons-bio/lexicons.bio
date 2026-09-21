@@ -56,7 +56,7 @@ named for the Darwin Core term plus an `ID` suffix, e.g.
 `occurrence.occurrenceRemarksID`. Everywhere else in these lexicons, a
 field named for a Darwin Core term holds that term's value; the suffix
 keeps it that way, so a consumer mapping fields by name skips the
-reference instead of exporting an at-uri as remarks text. The direction of
+reference instead of exporting an AT-URI as remarks text. The direction of
 that reference matters:
 
 - **Forward references are cheap to resolve.** A client holding an

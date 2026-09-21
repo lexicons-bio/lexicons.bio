@@ -4,7 +4,7 @@
   "defs": {
     "main": {
       "type": "record",
-      "description": "Free text that fills a Darwin Core remarks term on another record, such as dwc:occurrenceRemarks on an occurrence. Kept in its own record so authored prose, a potential creative work, can be attributed and licensed separately from the facts in the record it describes. The record it describes points to it with an at-uri field named for the term (e.g. occurrence.occurrenceRemarksID), and that forward reference is authoritative: a remark nothing references fills no term. Not for discussion or replies.",
+      "description": "Free text that fills a Darwin Core remarks term on another record, such as dwc:occurrenceRemarks on an occurrence. Kept in its own record so authored prose, a potential creative work, can be attributed and licensed separately from the facts in the record it describes. The record it describes points to it with an AT-URI field named for the term (e.g. occurrence.occurrenceRemarksID), and that forward reference is authoritative: a remark nothing references fills no term. Not for discussion or replies.",
       "key": "tid",
       "record": {
         "type": "object",
