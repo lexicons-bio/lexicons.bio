@@ -19,10 +19,9 @@ const OUT_PATH = resolve(SITE_ROOT, "src/data/dwc-terms.json");
 
 interface DwcDpField {
   name: string;
-  title: string;
-  description: string;
+  title?: string;
+  description?: string;
   "dcterms:isVersionOf"?: string;
-  [key: string]: unknown;
 }
 
 interface DwcDpSchema {
@@ -39,6 +38,44 @@ interface DwcTerm {
   tables: string[];
 }
 
+/**
+ * Runtime-validate the shape of a parsed DwC-DP schema file. JSON.parse
+ * returns `any`, so we can't just type-annotate the result — we have to
+ * actually inspect it.
+ */
+function parseDwcDpSchema(value: unknown, source: string): DwcDpSchema {
+  if (typeof value !== "object" || value === null) {
+    throw new Error(`${source}: expected object at top level`);
+  }
+  const v = value as Record<string, unknown>;
+  if (typeof v.name !== "string") {
+    throw new Error(`${source}: missing string \`name\``);
+  }
+  if (typeof v.title !== "string") {
+    throw new Error(`${source}: missing string \`title\``);
+  }
+  if (!Array.isArray(v.fields)) {
+    throw new Error(`${source}: missing array \`fields\``);
+  }
+  const fields: DwcDpField[] = v.fields.map((raw, i) => {
+    if (typeof raw !== "object" || raw === null) {
+      throw new Error(`${source}: field[${i}] is not an object`);
+    }
+    const f = raw as Record<string, unknown>;
+    if (typeof f.name !== "string") {
+      throw new Error(`${source}: field[${i}] missing string \`name\``);
+    }
+    const field: DwcDpField = { name: f.name };
+    if (typeof f.title === "string") field.title = f.title;
+    if (typeof f.description === "string") field.description = f.description;
+    if (typeof f["dcterms:isVersionOf"] === "string") {
+      field["dcterms:isVersionOf"] = f["dcterms:isVersionOf"];
+    }
+    return field;
+  });
+  return { name: v.name, title: v.title, fields };
+}
+
 /** Table schemas to include, in display order */
 const TABLES = ["event", "occurrence", "identification", "media"];
 
@@ -46,7 +83,10 @@ const terms: Record<string, DwcTerm> = {};
 
 for (const table of TABLES) {
   const path = resolve(SCHEMA_DIR, `${table}.json`);
-  const schema: DwcDpSchema = JSON.parse(readFileSync(path, "utf-8"));
+  const schema = parseDwcDpSchema(
+    JSON.parse(readFileSync(path, "utf-8")),
+    `${table}.json`
+  );
 
   for (const field of schema.fields) {
     const name = field.name;
@@ -64,7 +104,7 @@ for (const table of TABLES) {
       name,
       label: field.title ?? name,
       definition: field.description ?? "",
-      term_iri: (field["dcterms:isVersionOf"] as string) ?? "",
+      term_iri: field["dcterms:isVersionOf"] ?? "",
       tables: [schema.title],
     };
   }
