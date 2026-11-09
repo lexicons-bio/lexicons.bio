@@ -28,3 +28,14 @@ jobs:
       # Warnings fail the job too (goat exits non-zero on any lint).
       - name: Lint lexicon schemas
         run: goat lex lint lexicons/
+
+  lexicons-policy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Node 24 runs the TypeScript script directly; it has no dependencies.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Check lexicon policy
+        run: node scripts/lint-policy.ts
