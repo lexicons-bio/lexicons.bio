@@ -1,0 +1,168 @@
+{
+  "$comment": "Policy classification for every lexicon field; checked by scripts/lint-policy.ts. See that file for what each kind means.",
+  "extraTerms": {
+    "dcterms:license": "Dublin Core license term; the vendored DwC-DP tables have no license column, but Audubon Core media metadata uses it.",
+    "dwc:otherCatalogNumbers": "Classic Darwin Core term outside DwC-DP's vendored tables; used only on export (externalRecords URIs concatenate into it)."
+  },
+  "defs": {
+    "bio.lexicons.temp.v0-1.identification#main": {
+      "required": [
+        "occurrence",
+        "scientificName"
+      ],
+      "fields": {
+        "occurrence": {
+          "kind": "pinned"
+        },
+        "scientificName": {
+          "kind": "value",
+          "term": "dwc:scientificName"
+        },
+        "taxonRank": {
+          "kind": "value",
+          "term": "dwc:taxonRank"
+        },
+        "kingdom": {
+          "kind": "value",
+          "term": "dwc:kingdom"
+        },
+        "taxonID": {
+          "kind": "external",
+          "term": "dwc:taxonID",
+          "why": "TODO"
+        },
+        "identificationRemarks": {
+          "kind": "value",
+          "term": "dwc:identificationRemarks"
+        },
+        "identificationRemarksID": {
+          "kind": "floating",
+          "term": "dwc:identificationRemarks"
+        }
+      }
+    },
+    "bio.lexicons.temp.v0-1.media#main": {
+      "required": [
+        "image"
+      ],
+      "fields": {
+        "image": {
+          "kind": "blob"
+        },
+        "alt": {
+          "kind": "value"
+        },
+        "aspectRatio": {
+          "kind": "embedded"
+        },
+        "license": {
+          "kind": "value",
+          "term": "dcterms:license"
+        }
+      }
+    },
+    "bio.lexicons.temp.v0-1.media#aspectRatio": {
+      "required": [
+        "width",
+        "height"
+      ],
+      "fields": {
+        "width": {
+          "kind": "value"
+        },
+        "height": {
+          "kind": "value"
+        }
+      }
+    },
+    "bio.lexicons.temp.v0-1.occurrence#main": {
+      "required": [],
+      "fields": {
+        "eventDate": {
+          "kind": "value",
+          "term": "dwc:eventDate"
+        },
+        "decimalLatitude": {
+          "kind": "value",
+          "term": "dwc:decimalLatitude"
+        },
+        "decimalLongitude": {
+          "kind": "value",
+          "term": "dwc:decimalLongitude"
+        },
+        "coordinateUncertaintyInMeters": {
+          "kind": "value",
+          "term": "dwc:coordinateUncertaintyInMeters"
+        },
+        "media": {
+          "kind": "pinned"
+        },
+        "organismQuantity": {
+          "kind": "value",
+          "term": "dwc:organismQuantity"
+        },
+        "organismQuantityType": {
+          "kind": "value",
+          "term": "dwc:organismQuantityType"
+        },
+        "occurrenceRemarksID": {
+          "kind": "floating",
+          "term": "dwc:occurrenceRemarks"
+        },
+        "eventRemarksID": {
+          "kind": "floating",
+          "term": "dwc:eventRemarks"
+        },
+        "taxonID": {
+          "kind": "external",
+          "term": "dwc:taxonID",
+          "why": "TODO"
+        },
+        "acceptedIdentificationID": {
+          "kind": "pinned",
+          "term": "dwc:isAcceptedIdentification"
+        },
+        "externalRecords": {
+          "kind": "embedded",
+          "term": "dwc:otherCatalogNumbers"
+        }
+      }
+    },
+    "bio.lexicons.temp.v0-1.occurrence#externalRecord": {
+      "required": [
+        "uri"
+      ],
+      "fields": {
+        "uri": {
+          "kind": "external",
+          "why": "Deliberately any URI scheme (https or at://) for records on other platforms; there is no in-network record type this could later point to instead."
+        },
+        "service": {
+          "kind": "value"
+        }
+      }
+    },
+    "bio.lexicons.temp.v0-1.remark#main": {
+      "required": [
+        "subject",
+        "dwcTerm",
+        "body"
+      ],
+      "fields": {
+        "subject": {
+          "kind": "floating"
+        },
+        "dwcTerm": {
+          "kind": "value"
+        },
+        "body": {
+          "kind": "value"
+        },
+        "license": {
+          "kind": "value",
+          "term": "dcterms:license"
+        }
+      }
+    }
+  }
+}
